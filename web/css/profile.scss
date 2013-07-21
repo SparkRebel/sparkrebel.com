@@ -1,0 +1,1155 @@
+/*-------------------------------------------------------------------
+    Compass Modules
+-------------------------------------------------------------------*/
+@import "compass/css3/border-radius";
+@import "compass/css3/box-shadow";
+@import "compass/css3/images";
+@import "compass/css3/inline-block";
+@import "compass/css3/transform";
+@import "compass/utilities/general/clearfix";
+
+/*-------------------------------------------------------------------
+    PW Modules
+-------------------------------------------------------------------*/
+@import "variables.scss";
+@import "mixins.scss";
+
+/*--------------------------------------
+    User Profile
+----------------------------------------*/
+#userProfile {
+    background-color: #dcdcd8;
+    padding: 20px;
+    position: relative;
+    @include border-radius(4px);
+    @include pie-clearfix;
+    
+    #userLevel {
+        position: absolute;
+        right: 20px;
+        top: 0;
+        @include size(89px, 103px);
+        
+        .userLevelArrow {
+            background: image-url("profile/backgrounds/bg.level.png") center top no-repeat;
+            position: absolute;
+            top: 0;
+            z-index: 1;
+            @include size(89px, 50px);
+        }
+        
+        img {
+            bottom: 0;
+            position: absolute;
+            z-index: 0;
+            @include size(89px, 93px);
+        }
+    }
+    
+    #userProfileInfo {
+        margin-bottom: 20px;
+        @include pie-clearfix;
+        
+        .userPicture {
+            float: left;
+            margin-right: 20px;
+            
+            img {
+                background-color: #fff;
+                border: 1px solid #bdbdbd;
+                display: block;
+                max-height: 125px;
+                max-width: 125px;
+                padding: 2px;
+                @include border-radius(4px);
+            }
+        }
+        
+        .userInformation {
+            float: left;
+            margin-right: 40px;
+            width: 300px;
+            @include pie-clearfix;
+            
+            .userName {
+                background: image-url("profile/backgrounds/bg.phonebook.png") left 3px no-repeat;
+                font-family: 'MuseoSans900';
+                font-size: $baseFontSize + 11;
+                padding: 5px 0 5px 32px;
+            }
+            
+            .userFollows {
+                background: image-url("icons/follow.png") left 2px no-repeat;
+                color: #adadad;
+                font-size: $baseFontSize - 2;
+                margin-bottom: 10px;
+                padding: 3px 0 0 20px;
+                @include pie-clearfix;
+                
+                span {
+                    margin-right: 10px;
+                    @include inline-block;
+                    
+                    strong {
+                        color: #4d4d4d;
+                        font-size: $baseFontSize + 2;
+                    }
+                }
+            }
+            
+            .followButtons {
+                margin-bottom: 10px;
+                @include pie-clearfix;
+            }
+            
+            .userWebsite {
+                label {
+                    color: #adadad;
+                }
+            }
+            
+            .button {
+                display: none;
+                float: left;
+                margin-right: 10px;
+                padding-left: 30px;
+                
+                &.follow {
+                    &:before {
+                        background-position: -300px -248px;
+                    }
+                    
+                    &:hover:before {
+                        background-position: -300px -284px;
+                    }
+                }
+                
+                &.unfollow {
+                    &:before {
+                        background-position: -300px -356px;
+                    }
+                    
+                    &:hover:before {
+                        background-position: -300px -284px;
+                    }
+                }
+                
+                &.morph {
+                    padding-left: 10px;
+                    display: block;
+                }
+            }
+        }
+        
+        .userAbout {
+            border-bottom: 1px dotted #808080;
+            border-top: 1px dotted #808080;
+            float: left;
+            padding: 10px 0;
+            width: 270px;
+            
+            h4 {
+                color: #4d4d4d;
+                font-family: 'MuseoSans900';
+                font-size: $baseFontSize - 2;
+                margin-bottom: 5px;
+                text-transform: uppercase;
+            }
+            
+            p {
+                font-size: $baseFontSize - 3;
+                line-height: 1.3;
+            }
+        }
+    }
+    
+    #userProfileSidebar {
+        float: left;
+        padding-top: 20px;
+        width: 220px;
+        
+        h3 {
+            color: #4d4d4d;
+            font-family: 'MuseoSans900';
+            font-size: $baseFontSize - 2;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+        
+        #userFriends {
+            position: relative;
+            
+            .jcarousel {
+                margin: 0 auto 20px;
+                overflow: hidden;
+                position: relative;
+                @include pie-clearfix;
+                @include size(200px, 50px);
+                
+                ul {
+                    position: absolute;
+                    width: 20000em;
+                    
+                    li {
+                        float: left;
+                        margin-right: 2px;
+                        @include square(50px);
+                        
+                        img {
+                            display: block;
+                            @include square(50px);
+                        }
+                    }
+                }
+            }
+            
+            .jcarousel-next {
+                background: image-url("backgrounds/bg.sprite.global.png") no-repeat 0 -816px;
+                display: none;
+                position: absolute;
+                right: -2px;
+                text-indent: -9999px;
+                top: 18px;
+                @include size(8px, 14px);
+                
+                &:hover {
+                    background-position: 0 -884px;
+                }
+                
+                &.jcarousel-control-active {
+                    display: block;
+                }
+            }
+        
+            .jcarousel-prev {
+                background: image-url("backgrounds/bg.sprite.global.png") no-repeat 0 -850px;
+                display: none;
+                left: -2px;
+                position: absolute;
+                text-indent: -9999px;
+                top: 18px;
+                @include size(8px, 14px);
+                
+                &:hover {
+                    background-position: 0 -918px;
+                }
+                
+                &.jcarousel-control-active {
+                    display: block;
+                }
+            }
+        }
+
+        .userProfileBlock {
+            background-color: #d3d3cd;
+            border-bottom: 1px solid #e4e4e1;
+            border-left: 1px solid #c5c5be;
+            border-right: 1px solid #c5c5be;
+            border-top: 1px solid #c5c5be;
+            margin-bottom: 20px;
+            padding: 10px;
+            position: relative;
+            @include border-radius(4px);
+            @include box-shadow(inset #c5c5be 0 2px 5px);
+            
+            &.single {
+                padding: 20px 10px;
+                text-align: center;
+            }
+            
+            .close {
+                bottom: 5px;
+                color: #818181;
+                font-size: $baseFontSize - 2;
+                position: absolute;
+                right: 5px;
+                text-decoration: none;
+                
+                &:hover {
+                    color: #929292;
+                }
+            }
+        }
+        
+        #userActivity {
+            position: relative;
+            
+            .jcarousel {
+                margin: 5px auto 10px;
+                overflow: hidden;
+                position: relative;
+                @include pie-clearfix;
+                @include size(200px, 250px);
+                
+                ul {
+                    height: 20000em;
+                    position: absolute;
+                    
+                    li {
+                        border-bottom: 1px dotted #575757;
+                        font-size: $baseFontSize - 3;
+                        padding: 10px 0;
+                        @include pie-clearfix;
+                        @include size(200px, 64px);
+                        
+                        .activityPicture {
+                            background-color: #fff;
+                            border: 1px solid #bdbdbd;
+                            float: left;
+                            margin-right: 10px;
+                            padding: 2px;
+                            text-align: center;
+                            vertical-align: middle;
+                            @include border-radius(4px);
+                            @include square(60px);
+                            
+                            img {
+                                max-height: 100%;
+                                max-width: 100%;
+                                @include border-radius(4px);
+                            }
+                        }
+                    }
+                }
+            }
+            
+            .jcarousel-next {
+                background: image-url("backgrounds/bg.sprite.global.png") no-repeat 0 -816px;
+                bottom: -15px;
+                display: none;
+                position: absolute;
+                left: 94px;
+                text-indent: -9999px;
+                @include rotate(90deg);
+                @include size(8px, 14px);
+                
+                &:hover {
+                    background-position: 0 -884px;
+                }
+                
+                &.jcarousel-control-active {
+                    display: block;
+                }
+            }
+            
+            .jcarousel-prev {
+                background: image-url("backgrounds/bg.sprite.global.png") no-repeat 0 -850px;
+                display: none;
+                left: 94px;
+                position: absolute;
+                text-indent: -9999px;
+                top: -10px;
+                @include rotate(90deg);
+                @include size(8px, 14px);
+                
+                &:hover {
+                    background-position: 0 -918px;
+                }
+                
+                &.jcarousel-control-active {
+                    display: block;
+                }
+            }
+        }
+    }
+    
+    #userProfileContent {
+        background-color: #373737;
+        float: right;
+        margin-top: 28px;
+        padding-top: 10px;
+        position: relative;
+        width: 680px;
+        @include border-radius(4px);
+        @include box-shadow(#b1b1ab 0 0 3px);
+        
+        #userTabs {
+            height: 34px;
+            position: absolute;
+            top: -30px;
+            
+            li {
+                float: left;
+                height: 14px;
+                margin-right: 20px;
+                padding: 8px 0 12px;
+                
+                &.current {
+                    background-color: #373737;
+                    padding: 8px 20px 12px;
+                    position: relative;
+                    @include border-radius(4px);
+                    @include box-shadow(#b1b1ab 0 0 3px);
+                    
+                    &:after {
+                        background-color: #373737;
+                        bottom: -3px;
+                        content: "";
+                        height: 7px;
+                        left: -2px;
+                        position: absolute;
+                        width: 105%;
+                    }
+                    
+                    &.first {
+                        &:after {
+                            left: 0;
+                        }
+                    }
+                    
+                    a {
+                        color: $linkColor;
+                    }
+                }
+                
+                &.last {
+                    margin-right: 0;
+                }
+                
+                img {
+                    float: left;
+                    margin-right: 5px;
+                    @include square(20px);
+                }
+                
+                a {
+                    color: #4d4d4d;
+                    font-family: 'MuseoSans900';
+                    text-decoration: none;
+                    text-transform: uppercase;
+                    
+                    &:hover {
+                        color: $linkColor;
+                    }
+                }
+            }
+        }
+        
+        .noItems {
+            color: #d1d3d5;
+            font-size: $baseFontSize - 2;
+            padding: 10px 20px 20px;
+        }
+        
+        .boardsList {
+            clear: both;
+            
+            li {
+                margin: 10px 5px;
+                width: 206px;
+                
+                .boardThumb {
+                    background: image-url("backgrounds/bg.thumb.noise.png") repeat;
+                    padding: 7px;
+                    @include border-radius(4px);
+                    
+                    h3 {
+                        color: #fff;
+                    }
+                    
+                    ul {
+                        width: 192px;
+                        
+                        li {
+                            margin: 7px 7px 0 0;
+                            overflow: hidden;
+                            @include square(59px);
+                            
+                            &.big {
+                                display: table-cell;
+                                vertical-align: middle;
+                                @include square(192px);
+                                
+                                img {
+                                    display: block;
+                                    height: auto;
+                                    margin: 0 auto;
+                                    max-height: 100%;
+                                    max-width: 192px;
+                                }
+                            }
+                            
+                            &.last {
+                                margin-right: 0;
+                            }
+                            
+                            img {
+                                height: 100%;
+                                max-width: 100%;
+                            }
+                        }
+                    }
+                    
+                    .boardActions {
+                        .button {
+                            float: none;
+                            margin-left: 0;
+                        }
+                    }
+                }
+            }
+        }
+        
+        #mySparks,
+        #onSale {
+            padding: 10px 20px 0;
+            
+            .noItems {
+                padding: 0 0 20px;
+            }
+            
+            #stream {
+                padding-bottom: 60px;
+            }
+            
+            .sqBricks_col {
+                width: 203px;
+            }
+            
+            .post {
+                width: 203px;
+                
+                .postImage {
+                    width: 195px;
+                }
+                
+                .postComments {
+                    ul {
+                        li {
+                            .commentDetails,
+                            .commentMeta {
+                                width: 148px;
+                            }
+                            
+                            ul {
+                                li {
+                                    .commentDetails {
+                                        width: 138px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    .postCommentForm {
+                        textarea {
+                            width: 160px;
+                        }
+                    }
+                }
+                
+                .button.buy {
+                    float: right;
+                    margin-left: 0;
+                }
+            }
+        }
+        
+        #myBoards {
+            padding: 0 16px;
+            
+            h2,
+            .category {
+                border-top: 1px dotted #7d7d7d;
+                color: #b0b0b0;
+                font-family: 'MuseoSans900';
+                font-size: $baseFontSize;
+                margin: 20px 20px 0;
+                padding-top: 8px;
+                text-transform: uppercase;
+            }
+            
+            .boardsList {
+                .boardThumb {
+                    .boardThumbDetails {
+                        .boardAuthor {
+                            display: none;
+                        }
+                    }
+                }
+            }
+        }
+
+        #collectionsIFollow {
+            padding: 0 16px;
+            
+            .subTabs {
+                @include pie-clearfix;
+                
+                a {
+                    background-color: lighten(#373737, 20%);
+                    color: #fff;
+                    float: left;
+                    font-family: 'MisoRegular';
+                    font-size: $baseFontSize + 4;
+                    margin-right: 10px;
+                    padding: 5px 15px;
+                    position: relative;
+                    text-decoration: none;
+                    text-transform: uppercase;
+                    @include border-radius(15px);
+                    
+                    &:hover {
+                        background-color: lighten(#373737, 10%);
+                    }
+                    
+                    &.users {
+                        padding-left: 30px;
+                        
+                        &:before {
+                            background: image-url("backgrounds/bg.sprite.global.png") -300px -699px no-repeat;
+                            content: " ";
+                            left: 10px;
+                            overflow: hidden;
+                            position: absolute;
+                            top: 6px;
+                            vertical-align: middle;
+                            @include square(16px);
+                        }
+                    }
+                    
+                    &.current {
+                        background-color: $linkColor;
+                    }
+                }
+            }
+            
+            .noItems {
+                padding: 20px 20px 20px 10px;
+            }
+            
+            #collectionsIFollowContainer {
+                padding-bottom: 50px;
+                
+                #infscr-loading {
+                    left: 16px;
+                    width: 648px;
+                }
+            }
+        }
+        
+        #peopleIFollow {
+            padding: 10px 20px 20px;
+            
+            .noItems {
+                padding: 0;
+            }
+            
+            h3 {
+                color: #fff;
+                font-family: 'MuseoSans900';
+                font-size: $baseFontSize - 2;
+                margin-bottom: 10px;
+                text-transform: uppercase;
+            }
+            
+            h4 {
+                color: #999;
+            }
+            
+            ul {
+                font-size: $baseFontSize - 2;
+                margin-bottom: 20px;
+                overflow: hidden;
+                @include border-radius(4px);
+                
+                li {
+                    background-color: #c5c5bf;
+                    padding: 10px;
+                    @include pie-clearfix;
+                    
+                    &:nth-child(even) {
+                        background-color: #d2d2cd;
+                    }
+                    
+                    .userPicture {
+                        float: left;
+                        margin-right: 10px;
+                        @include square(50px);
+                    }
+                    
+                    .userName {
+                        float: left;
+                        margin: 12px 10px 0 0;
+                    }
+                    
+                    .button {
+                        display: none;
+                        float: right;
+                        margin: 12px 0 0 0;
+                        
+                        &:before {
+                            padding-top: 2px;
+                        }
+                        
+                        &.follow {
+                            padding-left: 30px;
+                            
+                            &:before {
+                                background-position: -300px -320px;
+                            }
+                            
+                            &:hover:before {
+                                background-position: -300px -284px;
+                            }
+                        }
+                        
+                        &.unfollow {
+                            padding-left: 30px;
+                            
+                            &:before {
+                                background-position: -300px -356px;
+                            }
+                            
+                            &:hover:before {
+                                background-position: -300px -284px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*--------------------------------------
+    Edit User Form
+----------------------------------------*/
+#userEdit {
+    .form {
+        label {
+            width: 130px;
+        }
+        
+        strong {
+            color: #fff;
+            float: left;
+            padding-top: 8px;
+        }
+        
+        input[type="checkbox"] {
+            float: left;
+            margin: 7px 20px 0 0;
+        }
+        
+        .userPicture {
+            float: left;
+            margin-right: 10px;
+        }
+        
+        .userPictureDelete,
+        .userPictureNew {
+            label {
+                width: auto;
+            }
+        }
+    }
+}
+
+/*--------------------------------------
+    Responsive: Tablet and Facebook
+----------------------------------------*/
+@media only screen and (max-width: 810px) {
+    #userProfile {
+        #userProfileInfo {
+            .userPicture {
+                img {
+                    max-height: 90px;
+                    max-width: 90px;
+                }
+            }
+            
+            .userInformation {
+                margin-right: 20px;
+                width: 200px;
+                
+                .userName {
+                    font-size: $baseFontSize + 2;
+                    padding-top: 10px;
+                }
+            }
+            
+            .userAbout {
+                width: 230px;
+            }
+        }
+
+        #userProfileContent {
+            width: 440px;
+            
+            #userTabs {
+                li {
+                    font-size: $baseFontSize - 3;
+                    margin-right: 10px;
+                    
+                    &.current {
+                        padding: 8px 6px 12px;
+                    }
+                    
+                    img {
+                        display: none;
+                    }
+                }
+            }
+            
+            .boardsList {
+                li {
+                    margin: 10px 2px;
+                    width: 200px;
+                    
+                    .boardThumb {
+                        ul {
+                            width: 186px;
+                            
+                            li {
+                                @include square(57px);
+                                
+                                &.big {
+                                    @include square(186px);
+                                    
+                                    img {
+                                        max-width: 186px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            #mySparks,
+            #onSale {
+                .sqBricks_col {
+                    width: 190px;
+                }
+                
+                .post {
+                    width: 190px;
+                    
+                    .postImage {
+                        width: 182px;
+                    }
+                    
+                    .postComments {
+                        ul {
+                            li {
+                                .commentDetails,
+                                .commentMeta {
+                                    width: 135px;
+                                }
+                                
+                                ul {
+                                    li {
+                                        .commentDetails {
+                                            width: 125px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                        .postCommentForm {
+                            textarea {
+                                width: 147px;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            #collectionsIFollow {
+                #collectionsIFollowContainer {
+                    #infscr-loading {
+                        width: 408px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*--------------------------------------
+	Responsive: Mobile
+----------------------------------------*/
+@media only screen and (max-device-width: 480px) {
+    #userProfile {
+        #userProfileInfo {
+            .userPicture {
+                float: none;
+                margin: 0 0 10px;
+            }
+            
+            .userInformation {
+                float: none;
+                margin: 0 0 10px;
+                width: 100%;
+                
+                .userName {
+                    font-size: $baseFontSize + 6;
+                    padding-top: 8px;
+                }
+            }
+            
+            .userAbout {
+                float: none;
+                width: 100%;
+            }
+        }
+        
+        #userProfileSidebar {
+            float: none;
+            margin-bottom: 30px;
+            padding-top: 0;
+            width: 260px;
+            
+            #userActivity {
+                .jcarousel-next,
+                .jcarousel-prev {
+                    left: 120px;
+                }
+            }
+        }
+        
+        #userProfileContent {
+            float: none;
+            width: 260px;
+            
+            #userTabs {
+                height: auto;
+                padding: 0 10px;
+                position: relative;
+                top: 0;
+                
+                li {
+                    background-color: lighten(#373737, 15%);
+                    float: none;
+                    margin: 0 0 5px;
+                    padding: 5px 10px;
+                    @include border-radius(4px);
+                    
+                    a {
+                        color: #bbb;
+                        
+                        &:hover {
+                            color: #fff;
+                        }
+                    }
+                    
+                    &.current {
+                        background-color: $linkColor;
+                        padding: 5px 10px;
+                        @include box-shadow(transparent 0 0 0);
+                        
+                        a {
+                            color: #fff;
+                        }
+                        
+                        &:after {
+                            display: none;
+                        }
+                        
+                        &.first {
+                            &:after {
+                                display: none;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            .boardsList {
+                li {
+                    margin: 10px 2px;
+                    width: 240px;
+                    
+                    .boardThumb {
+                        ul {
+                            width: 226px;
+                            
+                            li {
+                                margin-right: 6px;
+                                @include square(71px);
+                                
+                                &.big {
+                                    float: none;
+                                    @include square(226px);
+                                    
+                                    img {
+                                        max-width: 226px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            #mySparks,
+            #onSale {
+                .sqBricks_col {
+                    width: 220px;
+                }
+                
+                .post {
+                    width: 220px;
+                    
+                    .postImage {
+                        width: 212px;
+                    }
+                    
+                    .postComments {
+                        ul {
+                            li {
+                                .commentDetails,
+                                .commentMeta {
+                                    width: 165px;
+                                }
+                                
+                                ul {
+                                    li {
+                                        .commentDetails {
+                                           width: 155px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                        .postCommentForm {
+                            textarea {
+                                width: 177px;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            #myBoards {
+                padding: 0 8px;
+            }
+            
+            #collectionsIFollow {
+                padding: 0 8px;
+                
+                #collectionsIFollowContainer {
+                    #infscr-loading {
+                        left: 8px;
+                        width: 244px;
+                    }
+                }
+            }
+            
+            #peopleIFollow {
+                ul {
+                    li {
+                        .userName {
+                            margin-right: 0;
+                            margin-top: 0;
+                            width: 140px;
+                        }
+                        
+                        .button {
+                            float: left;
+                            margin-top: 5px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*--------------------------------------
+	Responsive: Wide
+----------------------------------------*/
+@media only screen and (min-width : 1220px) {
+    #userProfile {
+        #userProfileInfo {
+            .userInformation {
+                width: 400px;
+            }
+            
+            .userAbout {
+                width: 370px;
+            }
+        }
+        
+        #userProfileContent {
+            width: 920px;
+            
+            .boardsList {
+                li {
+                    width: 210px;
+                    margin: 10px 6px;
+                    
+                    .boardThumb {
+                        ul {
+                            width: 196px;
+                            
+                            li {
+                                margin-right: 8px;
+                                @include square(60px);
+                                
+                                &.big {
+                                    @include square(196px);
+                                    
+                                    img {
+                                        max-width: 196px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            #mySparks,
+            #onSale {
+                .sqBricks_col {
+                    width: 210px;
+                }
+                
+                .post {
+                    width: 210px;
+                    
+                    .postImage {
+                        width: 202px;
+                    }
+                    
+                    .postComments {
+                        ul {
+                            li {
+                                .commentDetails,
+                                .commentMeta {
+                                    width: 155px;
+                                }
+                                
+                                ul {
+                                    li {
+                                        .commentDetails {
+                                            width: 145px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                        .postCommentForm {
+                            textarea {
+                                width: 167px;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            #collectionsIFollow {
+                #collectionsIFollowContainer {
+                    #infscr-loading {
+                        width: 888px;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,59 @@
+{% extends '::admin/base.html.twig' %}
+
+{% block title %}Admin : Category{% endblock %}
+
+{% block content %}
+        <header class="adminNav">
+            <ul>
+                <li><h2><a href="{{ path('admin_dashboard_index') }}">Admin</a> : </h2></li>
+                <li><h3>Signup Process: Category Collections (2nd screen)</h3></li>
+            </ul>
+        </header>
+        
+        <div>
+            <form action="{{ path('admin_signup_category_add') }}" method="post">
+                Add Board ID: <input type="text" name="board_id" value="" style="width: 200px;" />
+                <input type="submit" name="submit" value="Add" />
+            </form>
+        </div>
+
+        <table width="50%" class="datagrid">
+            {% for category, boards in data  %}
+                    <thead>
+                        <tr>
+                            <th colspan="4"><strong>{{category}}</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if boards.count %}
+                            {% for board in boards %}
+                                <tr {% if loop.index is odd %}class="odd"{% endif %}>
+                                    <td>
+                                        <a href="{{ path('pw_board_default_view', {'id': board.id, 'slug': board.slug}) }}" data-class="Board" data-id="{{ board.id }}">
+                                            {{ board.name }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ path('user_profile_view', {'name': board.createdBy.name} ) }}" data-class="User" data-id="{{ board.createdBy.id }}" class="aLink userPicture">
+                                            <img src="{{ board.createdBy | user_icon('thumb') }}" alt=""> {{ board.createdBy.name }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        score: {{board.adminScore}}
+                                    </td>
+
+                                    <td>
+                                        <a data-method="delete" data-confirm="Are You sure?" href="{{ path('admin_signup_category_delete', {'id': board.id}) }}">
+                                            delete
+                                        </a>                                        
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <td colspan="100" class="no-results">No collections to display</td>
+                        {% endif %}
+                    </tbody>
+            {% endfor %}
+        </table>
+
+{% endblock %}

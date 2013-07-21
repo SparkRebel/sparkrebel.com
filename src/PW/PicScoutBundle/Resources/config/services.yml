@@ -1,0 +1,22 @@
+parameters:
+    pw_picscout.service.class: PW\PicScoutBundle\Services\PicScout
+    pw_picscout.service.api.key: ~
+    pw_picscout.service.api.domain: api.picscout.com
+    pw_picscout.email:
+        template:
+            welcome: PWPicScoutBundle:Default:deleted.email.twig
+        from_email:
+            welcome:
+                address:     no-reply@sparkrebel.com
+                sender_name: SparkRebel
+
+services:
+    pw_picscout.service:
+        class: %pw_picscout.service.class%
+        arguments: [%pw_picscout.service.api.domain%, %pw_picscout.service.api.key%, "@buzz",  "@pw_post.post_manager"]
+
+    pw_picscout.mailer:
+        class: PW\PicScoutBundle\Mailer\Mailer
+        parent: pw.mailer
+        calls:
+            - [ setParameters, ["%pw_picscout.email%"] ]

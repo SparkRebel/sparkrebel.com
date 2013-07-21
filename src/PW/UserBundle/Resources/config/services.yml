@@ -1,0 +1,99 @@
+parameters:
+    pw_user.user.class: PW\UserBundle\Document\User
+    pw_user.follow.class: PW\UserBundle\Document\Follow
+
+    pw_user.email:
+        template:
+            welcome: PWUserBundle:Register:welcome.email.twig
+        from_email:
+            welcome:
+                address:     no-reply@sparkrebel.com
+                sender_name: SparkRebel
+
+services:
+    pw_user.user_manager:
+        class: PW\UserBundle\Model\UserManager
+        parent: fos_user.user_manager.default
+        public: true
+        calls:
+            - [ setContainer, ["@service_container"] ]
+
+    pw_user.follow_manager:
+        class: PW\UserBundle\Model\FollowManager
+        parent: pw.model_manager
+        calls:
+            - [ setClass, ["%pw_user.follow.class%"] ]
+
+    pw_user.user_listener:
+        class: PW\UserBundle\EventListener\UserListener
+        parent: pw.event_listener
+        public: false
+        tags:
+            - { name: doctrine_mongodb.odm.event_listener, event: postUpdate }
+            - { name: doctrine_mongodb.odm.event_listener, event: postPersist }
+            - { name: doctrine.odm.mongodb.soft_delete.event_listener, event: preSoftDelete }
+            - { name: doctrine.odm.mongodb.soft_delete.event_listener, event: postSoftDelete }
+
+    pw_user.mailer:
+        class: PW\UserBundle\Mailer\Mailer
+        parent: pw.mailer
+        calls:
+            - [ setParameters, ["%pw_user.email%"] ]
+
+    pw_user.follow_listener:
+        class: PW\UserBundle\EventListener\FollowListener
+        calls:
+            - [ setContainer, ["@service_container"] ]
+        tags:
+            - { name: doctrine_mongodb.odm.event_listener, event: prePersist, method: prePersist }
+            - { name: doctrine_mongodb.odm.event_listener, event: postPersist, method: postPersist }
+            - { name: doctrine_mongodb.odm.event_listener, event: preUpdate, method: preUpdate }
+            - { name: doctrine_mongodb.odm.event_listener, event: postUpdate, method: postUpdate }
+            - { name: doctrine_mongodb.odm.event_listener, event: preRemove, method: preRemove }
+
+    pw.facebook.user:
+        class: PW\UserBundle\Security\User\Provider\FacebookProvider
+        calls:
+            - [ setSession, ["@session"] ]
+            - [ setEventManager, ["@pw.event"] ]
+        arguments:
+            facebook: "@fos_facebook.api"
+            userManager: "@fos_user.user_manager"
+            validator: "@validator"
+
+    pw.user.registration.form.type:
+        class: PW\UserBundle\Form\Type\RegistrationFormType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: pw_user_registration }
+
+    pw.twig.user.icon:
+        class: PW\UserBundle\Extension\UserIcon
+        tags:
+            - { name: twig.extension }
+
+    pw.twig.user.isfollowedby:
+        class: PW\UserBundle\Extension\IsFollowedBy
+        calls:
+            - [ setContainer, ["@service_container"] ]
+        tags:
+            - { name: twig.extension }
+
+    pw.twig.profile.link:
+        class: PW\UserBundle\Extension\ProfileLink
+        calls:
+            - [ setGenerator, ["@router"] ]
+        tags:
+            - { name: twig.extension }
+
+    pw_user.listener.ajax_authentication:
+        class: PW\UserBundle\EventListener\AjaxAuthenticationListener
+        tags:
+            - { name: kernel.event_listener, priority: 10, event: kernel.exception, method: onCoreException }
+
+    pw.listener.user.login:
+        class: PW\UserBundle\EventListener\UserLoginListener
+        calls:
+            - [ setContainer, ["@service_container"] ]
+        tags:
+            - { name: kernel.event_listener, event: security.interactive_login, method: onSecurityInteractiveLogin }

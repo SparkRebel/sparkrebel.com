@@ -1,0 +1,85 @@
+{% if brandsPosts and brandsOnSalePosts %}
+
+{% set baseUri = url('home') | replace({'app_dev.php/': ''}) %}
+{% set baseImageUri = baseUri ~ 'images/' %}
+
+<td width="274">
+    <table border="0" cellpadding="5" cellspacing="0" width="274" style="background: url({{ baseImageUri }}backgrounds/bg.nav.noise.png) repeat; border-radius: 4px; margin-bottom: 5px;">
+        <tr>
+            <td height="60">
+                <h4 style="font-family: Arial; margin: 0 0 5px; padding: 0;"><a href="{{ url('brands_stream') }}?{{ tracking }}" style="color: #fff; text-decoration: none;">New Arrivals</a></h4>
+                <h5 style="color: #ed2978; font-family: Arial; margin: 0; padding: 0;">{# brandsPosts.0.board.createdBy.name|truncate(18) #}</h5>
+            </td>
+        </tr>
+    </table>
+    <a href="{{ url('brands_stream') }}?{{ tracking }}" title="New Arrivals">
+        <table border="0" cellpadding="0" cellspacing="0" width="274">
+            <tr>
+                <td align="center" height="274" valign="middle" width="274" style="background-color: #ffffff; border-radius: 4px;">
+                    <img data-id="{{ brandsPosts.0.id }}" src="{{ brandsPosts.0.image | version('large', true) }}" style="border-radius: 4px; max-height: 270px; max-width: 270px;">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="0" cellspacing="0" width="274" style="margin-top: 5px;">
+                        <tr>
+                            <td align="center" height="87" width="32%" style="background-color: #ffffff; border-radius: 4px;">
+                                <img data-id="{{ brandsPosts.1.id }}" src="{{ brandsPosts.1.image | version('small', true) }}" style="border-radius: 4px; max-height: 82px; max-width: 82px;">
+                            </td>
+                            <td width="5">&nbsp;</td>
+                            <td align="center" height="87" width="32%" style="background-color: #ffffff; border-radius: 4px;">
+                                <img data-id="{{ brandsPosts.2.id }}" src="{{ brandsPosts.2.image | version('small', true) }}" style="border-radius: 4px; max-height: 82px; max-width: 82px;">
+                            </td>
+                            <td width="5">&nbsp;</td>
+                            <td align="center" height="87" width="32%" style="background-color: #ffffff; border-radius: 4px;">
+                                <img data-id="{{ brandsPosts.3.id }}" src="{{ brandsPosts.3.image | version('small', true) }}" style="border-radius: 4px; max-height: 82px; max-width: 82px;">
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </a>
+</td>
+<td width="2%">
+    &nbsp;
+</td>
+<td width="274">
+    <table border="0" cellpadding="5" cellspacing="0" width="274" style="background: url({{ baseImageUri }}backgrounds/bg.nav.noise.png) repeat; border-radius: 4px; margin-bottom: 5px;">
+        <tr>
+            <td height="60">
+                <h4 style="font-family: Arial; margin: 0 0 5px; padding: 0;"><a href="{{ url('onsale_stream') }}?{{ tracking }}" style="color: #fff; text-decoration: none;">On Sale</a></h4>
+                <h5 style="color: #ed2978; font-family: Arial; margin: 0; padding: 0;">{# brandsOnSalePosts.0.board.createdBy.name|truncate(18) #}</h5>
+            </td>
+        </tr>
+    </table>
+    <a href="{{ url('onsale_stream') }}?{{ tracking }}" title="On Sale">
+        <table border="0" cellpadding="0" cellspacing="0" width="274">
+            <tr>
+                <td align="center" height="274" valign="middle" width="274" style="background-color: #ffffff; border-radius: 4px;">
+                    <img data-id="{{ brandsOnSalePosts.0.id }}" src="{{ brandsOnSalePosts.0.image | version('large', true) }}" style="border-radius: 4px; max-height: 270px; max-width: 270px;">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="0" cellspacing="0" width="274" style="margin-top: 5px;">
+                        <tr>
+                            <td align="center" height="87" width="32%" style="background-color: #ffffff; border-radius: 4px;">
+                                <img data-id="{{ brandsOnSalePosts.1.id }}" src="{{ brandsOnSalePosts.1.image | version('small', true) }}" style="border-radius: 4px; max-height: 82px; max-width: 82px;">
+                            </td>
+                            <td width="5">&nbsp;</td>
+                            <td align="center" height="87" width="32%" style="background-color: #ffffff; border-radius: 4px;">
+                                <img data-id="{{ brandsOnSalePosts.2.id }}" src="{{ brandsOnSalePosts.2.image | version('small', true) }}" style="border-radius: 4px; max-height: 82px; max-width: 82px;">
+                            </td>
+                            <td width="5">&nbsp;</td>
+                            <td align="center" height="87" width="32%" style="background-color: #ffffff; border-radius: 4px;">
+                                <img data-id="{{ brandsOnSalePosts.3.id }}" src="{{ brandsOnSalePosts.3.image | version('small', true) }}" style="border-radius: 4px; max-height: 82px; max-width: 82px;">
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </a>
+</td>
+{% endif %}

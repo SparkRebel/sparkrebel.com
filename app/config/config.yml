@@ -1,0 +1,106 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: bundles/assetic.yml }
+    - { resource: bundles/avalanche_imagine.yml }
+    - { resource: bundles/craue_twig_extensions.yml }
+    - { resource: bundles/doctrine_mongodb.yml }
+    - { resource: bundles/doctrine_mongodb_softdelete.yml }
+    - { resource: bundles/foq_elastica.yml }
+    - { resource: bundles/fos_facebook.yml }
+    - { resource: bundles/fos_oauth_server.yml }
+    - { resource: bundles/fos_user.yml }
+    - { resource: bundles/genemu_form.yml }
+    - { resource: bundles/jms_aop.yml }
+    - { resource: bundles/jms_di_extra.yml }
+    - { resource: bundles/jms_serializer.yml }
+    - { resource: bundles/knp_menu.yml }
+    - { resource: bundles/knp_paginator.yml }
+    - { resource: bundles/nsm_emoji.yml }
+    - { resource: bundles/snc_redis.yml }
+    - { resource: bundles/stfalcon_tinymce.yml }
+    - { resource: bundles/stof_doctrine_extensions.yml }
+    - { resource: bundles/cybernox_amazon_web_services.yml }
+    - { resource: bundles/leezy_pheanstalk.yml }
+
+framework:
+    esi:        false
+    translator: false
+    secret:     %secret%
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: %kernel.debug%
+    form:            true
+    csrf_protection: true
+    validation:      { enable_annotations: true }
+    templating:      { engines: ['twig'] }
+    default_locale:  %locale%
+    trust_proxy_headers: false
+    session:
+        cookie_lifetime: 25920000
+
+sensio_framework_extra:
+    router:  { annotations: true }
+    request: { converters:  false }
+    view:    { annotations: true }
+    cache:   { annotations: true }
+
+#
+# Twig
+twig:
+    debug: %kernel.debug%
+    strict_variables: %kernel.debug%
+    globals:
+        google_analytics:
+            account:   %google.analytics.account%
+        adroll:
+            adv_id: %adroll.adv_id%
+            pix_id: %adroll.pix_id%
+        facebook:
+            namespace: %facebook.namespace%
+            appId:     %facebook.app_id%
+        javascripts:
+            onerror: false
+        settings:
+            max_sparks_for_non_logged_users: %settings.max_sparks_for_non_logged_users%
+        meta_default_description: Keep up with the latest trends, celeb style, and share your own style! SparkRebel is the ultimate destination to discover styles, get inspired, shop, and keep up-to-date with the current sales and promos from your favorite brands.
+
+#
+# Swiftmailer
+swiftmailer:
+    delivery_address: %mailer.delivery_address%
+    disable_delivery: %mailer.disable_delivery%
+    transport:        %mailer.transport%
+    encryption:       %mailer.encryption%
+    host:             %mailer.host%
+    port:             %mailer.port%
+    username:         %mailer.user%
+    password:         %mailer.password%
+    spool:
+        type: file
+        path: %kernel.root_dir%/spool/%kernel.environment%
+
+pw_invite:
+    invite_only_mode: false
+
+pw_getty_images:
+    system_id:       %gettyimages.system_id%
+    system_password: %gettyimages.system_password%
+    user_name:       %gettyimages.user_name%
+    user_password:   %gettyimages.user_password%
+
+parameters:
+    host:                     %hostname%
+    pw_event.mode:            %settings.event_mode%
+    pw_post.stream_page_size: %settings.stream_page_size%
+    redis.max_queue_size:     500
+
+services:
+    pw.elastica_model_transformer.item:
+        class: PW\ItemBundle\Provider\ItemElasticaTransformer
+    cache.apc:
+        class: Doctrine\Common\Cache\ApcCache
+    twig.extension.text:
+        class: Twig_Extensions_Extension_Text
+        tags:
+            - { name: twig.extension }

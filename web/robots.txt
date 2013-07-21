@@ -1,0 +1,10 @@
+User-agent: *
+Disallow: /*?
+Disallow: /*.js$
+Disallow: /*.css$
+Disallow: /admin/
+Disallow: /css/
+Disallow: /js/
+Disallow: /login/
+Disallow: /register/
+Disallow: /stream/

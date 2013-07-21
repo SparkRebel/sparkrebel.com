@@ -1,0 +1,41 @@
+#!/bin/bash
+# @crodas
+
+# config
+WORKERS=5
+PID=/var/tmp/gearman.pid
+LOG=/tmp/gearman.prod.log
+ARGS=
+
+# do not modify below this line
+pid_content=""
+to_load=$WORKERS
+if [ -f $PID ]
+then
+    sleep 1
+    # if the pid file exists check how many of those
+    # pids are alive
+    for p in `cat $PID`
+    do
+        kill -0 $p > /dev/null 2>&1 #check if the process is alive
+        if [ $? -eq 0 ]
+        then
+            # is alive
+            pid_content="$pid_content $p"
+            to_load=$(($to_load - 1))
+        fi
+    done
+fi
+
+cd `dirname $0`
+for i in `seq 1 $to_load`
+do
+    ../app/console job:worker:gearman $ARGS >> $LOG 2>&1 &
+    pid_content="$pid_content $!"
+done
+
+if [ $to_load -gt 0 ]
+then
+    echo "Started $to_load gearman workers"
+    echo $pid_content > $PID
+fi

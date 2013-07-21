@@ -1,0 +1,19 @@
+parameters:
+    pw_cms.routing_loader.doctrine_mongodb.class: PW\CmsBundle\Routing\Loader\DoctrineMongoDBLoader
+    pw_cms.page.class: PW\CmsBundle\Document\Page
+    pw_cms.page.controller.default: PWCmsBundle:Page:index
+
+services:
+    pw_cms.routing_loader.doctrine_mongodb:
+        class: %pw_cms.routing_loader.doctrine_mongodb.class%
+        arguments:
+            pageManager: "@pw_cms.page_manager"
+            pageController: %pw_cms.page_controller%
+        tags:
+            - { name: routing.loader }
+
+    pw_cms.page_manager:
+        class: PW\CmsBundle\Model\PageManager
+        parent: pw.model_manager
+        calls:
+            - [ setClass, ["%pw_cms.page.class%"] ]

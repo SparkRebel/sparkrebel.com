@@ -1,0 +1,10 @@
+{% if res.standard is defined %}
+<h3>Items</h3>
+<ul class="itemsList">
+    {% for item in res.standard %}
+        <li>
+        {% include 'PWPostBundle:Default:partials/itemPost.html.twig' %}
+        </li>
+    {% endfor %}
+</ul>
+{% endif %}

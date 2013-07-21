@@ -1,0 +1,16 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Create Collection{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='compass,?yui_css' 'css/forms.scss' %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block content %}
+    <h2>Add a new collection</h2>
+
+    {% include 'PWBoardBundle:Default:partials/form.html.twig' %}
+{% endblock %}

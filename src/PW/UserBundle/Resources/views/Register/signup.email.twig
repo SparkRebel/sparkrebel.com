@@ -1,0 +1,71 @@
+{% extends '::base.email.twig' %}
+
+{% block subject %}You are almost there...{% endblock %}
+
+{% block left_column %}
+    <td align="right" valign="top" width="17" height="450">
+        <img src="{{ baseImageUri }}email/bg.left.short.png" width="17" height="450" border="0" style="display:block;">
+    </td>
+{% endblock %}
+
+{% block middle_column %}
+    <td width="100%" height="328" valign="top" style="padding: 0 10px;">
+{% endblock %}
+
+{% block opener_html %}
+    {% if user.firstName %}
+        <h2>Hi {{ user.firstName }}!</h2>
+    {% endif %}
+{% endblock %}
+
+{% block content_html %}
+    {% set tag = 'utm_source=startupquestions_email&utm_medium=email&utm_campaign=transactional_emails' %}
+    <p style="font-family: 'Arial Narrow';">
+        Thank you for signing up to SparkRebel!
+    </p>
+    <p style="font-family: 'Arial Narrow';">
+        You are one step away from completing your registration.
+    </p>
+    <p style="font-family: 'Arial Narrow';">
+        Build your personal style profile by answering 4 simple questions, and get a customized stream full of sparks you'll love.
+    </p>
+    <br />
+    <p style="text-align: center; font-family: 'Arial Narrow';">
+        <a href="{{ url('home') }}register/welcome?{{ tag }}" class="button primary"><img src="{{ baseImageUri }}email/btn.build.my.profile.png" width="170" height="28"></a>
+    </p>
+{% endblock %}
+
+{% block signature_html %}
+    <p style="margin: 0; padding: 20px 0 5px 0; font-family: 'Arial Narrow';">Join the Style Revolution!</p>
+    <h4 style="margin: 0; font-family: 'Arial Narrow';">Team SparkRebel</h4>
+{% endblock %}
+
+{% block right_column %}
+    <td align="left" valign="top" width="17" height="450">
+        <img src="{{ baseImageUri }}email/bg.right.short.png" width="17" height="450" style="display:block;">
+    </td>
+{% endblock %}
+
+
+{% block opener_text %}
+{% if user.firstName %}
+Hi {{ user.firstName }}!
+{% endif %}
+{% endblock %}
+
+{% block content_text %}
+{% autoescape false %}
+Thank you for signing up to SparkRebel!
+
+You are one step away from completing your registration.
+
+Build your personal style profile by answering 4 simple questions, and get a customized stream full of sparks you'll love.
+
+Build My Profile: {{ url('home') }}register/welcome
+{% endautoescape %}
+{% endblock %}
+
+{% block signature_text %}
+Join the Style Revolution!
+- Team SparkRebel
+{% endblock %}

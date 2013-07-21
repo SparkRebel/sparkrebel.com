@@ -1,0 +1,29 @@
+
+<form id="{% if board.id is defined %}edit{% else %}add{% endif %}BoardForm" action="{{ form_path }}" method="post" {{ form_enctype(form) }} class="form">
+    <div class="error">
+        {{ form_errors(form) }}
+    </div>
+    <ul>
+        <li>
+            {{ form_errors(form.board.name) }}
+            {{ form_label(form.board.name) }}
+            {{ form_widget(form.board.name) }}
+        </li>
+        
+        {% if board.id is defined %}
+        <li>
+            {{ form_errors(form.board.description) }}
+            {{ form_label(form.board.description) }}
+            {{ form_widget(form.board.description) }}
+        </li>
+        {% endif %}
+        
+        <li>
+            {{ form_errors(form.board.category) }}
+            {{ form_label(form.board.category) }}
+            {{ form_widget(form.board.category) }}
+        </li>
+    </ul>
+    <button class="button">{% if board.id is defined %}Save{% else %}Create{% endif %}</button>
+    {{ form_rest(form) }}
+</form>

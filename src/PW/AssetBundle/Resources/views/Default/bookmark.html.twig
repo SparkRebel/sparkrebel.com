@@ -1,0 +1,21 @@
+
+{% set basePath = app.request.getUriForPath('/') | replace({'http:': ''}) %}
+
+{% set bookmarklet %}
+void((function(){
+    var e = document.createElement('scr'+'ipt');
+        e.setAttribute('type', 'text/javascript');
+        e.setAttribute('charset', 'UTF-8');
+        e.setAttribute('src','{{ basePath }}js/compiled/share.js?t=' + (new Date().getTime()));
+    document.body.appendChild(e)
+})());
+{% endset %}
+
+{% set bookmarkletUrl = bookmarklet | replace({'\n': '', '    ': ''}) | url_encode(true) | raw %}
+
+<a href="javascript:{{- bookmarkletUrl -}}" class="button">
+    <span style="display:none">¤</span> Spark it! <span style="display:none">¤</span></a>
+
+{# Note: This has to be somewhere so assetic knows about it #}
+{% javascripts filter='?yui_js' output='js/compiled/share.js' 'js/share.js' %}{% endjavascripts %}
+{% stylesheets filter='compass,?yui_css' output='css/compiled/share.css' 'css/share.scss' %}{% endstylesheets %}

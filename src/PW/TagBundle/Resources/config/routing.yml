@@ -1,0 +1,3 @@
+pw_tag:
+    resource: "@PWTagBundle/Controller/"
+    type:     annotation

@@ -1,0 +1,25 @@
+{% extends popup ? '::popup/base.html.twig' : '::base.html.twig' %}
+
+{% block title %}Post on Collection{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='compass,?yui_css' 'css/add.scss' %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block content %}
+    <div id="postAddContainer" style="display:none">
+        {% include 'PWPostBundle:Add:partials/postForm.html.twig' %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+<script>
+$(function() {
+    APP.posts.loadPostDialog();
+});
+</script>
+{% endblock %}

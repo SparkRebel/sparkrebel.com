@@ -1,0 +1,5 @@
+
+<form action="{{ path('add_site_fetchimages') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <input type="submit" value="Get Images or Video" class="button requireAuth">
+</form>

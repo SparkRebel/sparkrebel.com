@@ -1,0 +1,4 @@
+db.cms_pages.insert({"url" : "/press/about", "section" : "press", "subsection" : "about", "subsectionOrder" : NumberLong(1), "title" : "About Us", "slug" : "about_us", "isActive" : true, "created" : ISODate("2012-06-05T14:55:10Z") });
+db.cms_pages.insert({"url" : "/press/team", "section" : "press", "subsection" : "team", "subsectionOrder" : NumberLong(2), "title" : "Our Team", "slug" : "our_team", "isActive" : true, "created" : ISODate("2012-06-05T14:56:01Z") });
+db.cms_pages.insert({"url" : "/press/press", "section" : "press", "subsection" : "press", "subsectionOrder" : NumberLong(3), "title" : "Press", "slug" : "press", "isActive" : true, "created" : ISODate("2012-06-05T14:54:25Z") });
+db.cms_pages.insert({"url" : "/press/downloads", "section" : "press", "subsection" : "downloads", "subsectionOrder" : NumberLong(4), "title" : "Downloads", "slug" : "downloads", "isActive" : true, "created" : ISODate("2012-06-05T14:55:40Z") });

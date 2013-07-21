@@ -1,0 +1,9 @@
+parameters:
+    pw_api.client.class: PW\ApiBundle\Document\Client
+
+services:
+    pw_api.client_manager:
+        class: PW\ApiBundle\Model\ClientManager
+        parent: pw.model_manager
+        calls:
+            - [ setClass, ["%pw_api.client.class%"] ]

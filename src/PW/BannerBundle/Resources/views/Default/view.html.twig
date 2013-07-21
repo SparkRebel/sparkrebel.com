@@ -1,0 +1,93 @@
+{% extends '::base.html.twig' %}
+
+{% set canonicalUrl = url('promo_default_view', {'id': promo.id, 'slug': promo.description | sluggify}) %}
+
+{% set pageTitle = 'Promo: ' ~ promo.description|slice(0, 50) ~ (promo.description|length > 50 ? '…' : '') %}
+{% set metaDescription = promo.description ~ '. See more on SparkRebel.com' %}
+
+
+{% block title %}{{pageTitle}}{% endblock %}
+
+{% block opengraph %}
+    {{ parent() }}
+    <meta property="og:type"  content="{{ facebook.namespace }}:spark">
+    <meta property="og:url"   content="{{ canonicalUrl | clean_env }}">
+    <meta property="og:title" content="{{ promo.description }}">
+    <meta property="og:image" content="{{ promo.image | version('large',true) }}">
+    <meta property="{{ facebook.namespace }}:collection" content="{{ url('promo_default_view', {'id': promo.id, 'slug': promo.description | sluggify}) | clean_env }}">
+    <meta property="{{ facebook.namespace }}:channel" content="{{ url('board_category_view', {'slug': promosCategory ? promosCategory.slug : '' }) | clean_env }}">
+{% endblock %}
+
+{% block meta %}
+    {{ parent() }}
+    <meta name="description" content="{{ metaDescription }}">
+{% endblock %}
+
+{% block canonical %}{{ canonicalUrl }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='compass,?yui_css' combine=true
+        'css/instance/instance.scss'
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block content %}
+
+    {% set twitterText = promo.description|slice(0, 50) ~ (promo.description|length > 50 ? '…' : '') %}
+    {% set twitterCountUrl = url('promo_default_view', {'id': promo.id }) %}
+    <div class="itemDetail itemPromo">
+        <div class="itemPicture" data-class="Post" data-id="{{ promo.id }}" >
+            {% if not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                {% set promoUrl = '' %}
+                <div class="postPromo">
+                    <div class="postPromoContent">
+                        <div class="postPromoIcon"></div>
+                        <p>Promos available for members only</p>
+                        <a class="requireAuth" data-url="{{ path('fos_user_security_login') }}">Click here to login/sign-up</a>
+                    </div>
+                </div>
+            {% else %}
+                {% set promoUrl = promo.url %}
+            {% endif %}
+            <div class="itemPictureImage">
+                <a href="{{ promoUrl }}"{% if promo.isUrlTargetBlank %} target="_blank"{% endif %}>
+                    <img src="{{ promo.image | version('large') }}" alt="{{ promo.description }}" data-class="Asset" data-id="{{ promo.image.id }}">
+                </a>
+            </div>
+            <div class="itemPictureOverlayTop">
+                {% if not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                    <a href="{{ path('fos_user_security_login') }}" class="button store" rel="nofollow" target="_blank"><span>(please login)</span></a>
+                {% else %}
+                    <a href="{{ promoUrl }}" class="button store" rel="nofollow"{% if promo.isUrlTargetBlank %} target="_blank"{% endif %}><span>Redeem now</span></a>
+                {% endif %}
+                <div class="addthis_toolbox addthis_default_style ">
+                    <div class="fb-like" data-href="{{ canonicalUrl | clean_env }}" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false" data-font="lucida grande"></div>
+                    <div class="fb-send" data-href="{{ canonicalUrl | clean_env }}" data-font="lucida grande"></div>
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-url="{{ canonicalUrl | clean_env }}" data-counturl="{{ twitterCountUrl | clean_env }}" data-text="{{ twitterText }}" data-via="SparkRebel">Tweet</a>
+                </div>
+            </div>
+            <div class="itemPictureTag"></div>
+        </div>
+        
+        <div class="itemShare">
+            
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts filter='?yui_js' combine=true
+        'js/libs/jquery.jcarousel.js'
+        'js/libs/jquery.jcarousel.control.js'
+        'js/promo.js'
+        'js/flag.js'
+    %}
+        <script src="{{ asset_url }}"></script>
+
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    {% endjavascripts %}
+{% endblock %}

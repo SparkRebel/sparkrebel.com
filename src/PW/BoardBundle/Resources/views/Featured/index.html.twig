@@ -1,0 +1,31 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}
+    Featured Collections
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='compass,?yui_css' 'css/boards.scss' %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block content %}
+    {% if featured.count %}
+        <ul class="boardsList">
+            {% for feature in featured %}
+                <li>{% include 'PWBoardBundle:Default:partials/thumb.html.twig' with {'data': feature.target} %}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h2>No featured collections exist.</h2>
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts filter='?yui_js' 'js/boards.js' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

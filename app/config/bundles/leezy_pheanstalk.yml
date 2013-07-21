@@ -1,0 +1,13 @@
+defrag_pheanstalk:
+    enabled: true
+    connection:
+        primary:
+            server: %beanstalkd.web1.url%
+            port: 11300
+            timeout: 60
+            default: true
+
+        feeds:
+            server: %beanstalkd.feeds.url%
+            port: 11300
+            timeout: 60

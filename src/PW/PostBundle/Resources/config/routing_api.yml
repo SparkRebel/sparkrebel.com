@@ -1,0 +1,10 @@
+pw_post_api:
+    resource: PW\PostBundle\Controller\Api\PostController
+    type:     rest
+
+#
+# Frontend Routes
+post_default_view:
+    pattern:      /spark/{id}/{slug}
+    defaults:     { _controller: PWPostBundle:Default:view, slug: ~ }
+    requirements: { _method:  GET }

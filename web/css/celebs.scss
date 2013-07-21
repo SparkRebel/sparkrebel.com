@@ -1,0 +1,229 @@
+/*-------------------------------------------------------------------
+    Compass Modules
+-------------------------------------------------------------------*/
+@import "compass/css3/border-radius";
+@import "compass/css3/box-shadow";
+@import "compass/utilities/general/clearfix";
+
+/*-------------------------------------------------------------------
+    PW Modules
+-------------------------------------------------------------------*/
+@import "variables.scss";
+@import "mixins.scss";
+
+/*--------------------------------------
+    Celebs - Settings
+----------------------------------------*/
+.celebsSettings {
+    padding-top: 15px;
+    
+    p {
+        color: #fff;
+        font-family: "MuseoSans500";
+        font-size: $baseFontSize + 2;
+        margin-bottom: 20px;
+    }
+    
+    ul {
+        background-color: #373737;
+        color: #c7c7c7;
+        font-size: $baseFontSize - 2;
+        margin-bottom: 40px;
+        padding: 20px;
+        @include border-radius(4px);
+        @include box-shadow(rgba(#000, 0.5) 0 0 2px);
+        @include pie-clearfix;
+        
+        li {
+            float: left;
+            margin: 0 10px 10px 0;
+            width: 220px;
+            @include pie-clearfix;
+            
+            &.empty {
+                float: none;
+                margin: 0;
+                width: 100%;
+            }
+            
+            input {
+                float: left;
+                margin-right: 5px;
+            }
+            
+            label {
+                float: left;
+                padding-top: 4px;
+                width: 196px;
+            }
+        }
+
+        .sp-container-column {
+            ul {
+                float: left;
+                margin: 0 10px 0 0;
+                padding: 0;
+                width: 220px;
+                @include box-shadow(none);
+            }
+        }
+    }
+    
+    .button {
+        height: 27px;
+    }
+}
+
+/*--------------------------------------
+    Celebs - My Celebs
+----------------------------------------*/
+.myCelebsFilters {
+    background: image-url("backgrounds/bg.filters.noise.png") repeat;
+    margin-bottom: 20px;
+    padding: 10px;
+    @include border-radius(4px);
+    
+    h3 {
+        color: #b2b2b2;
+        font-family: "MuseoSans500";
+        font-size: $baseFontSize - 1;
+        margin-bottom: 10px;
+    }
+    
+    ul {
+        max-height: 185px;
+        overflow-y: auto;
+        position: relative;
+        @include pie-clearfix;
+        
+        li {
+            border: 1px solid transparent;
+            cursor: pointer;
+            float: left;
+            margin: 0 5px 5px 0;
+            padding: 4px 2px;
+            @include border-radius(4px);
+            @include size(91px, 80px);
+            
+            a {
+                text-decoration: none;
+            }
+            
+            .brandLogo {
+                background-color: #fff;
+                margin: 0 auto 5px;
+                @include border-radius(4px);
+                @include square(50px);
+                
+                img {
+                    display: block;
+                    @include border-radius(4px);
+                    @include square(50px);
+                }
+            }
+            
+            p {
+                color: #737373;
+                font-family: "MisoRegular";
+                font-size: $baseFontSize - 1;
+                text-align: center;
+                text-transform: uppercase;
+            }
+            
+            &:hover {
+                border-color: #ccc;
+            }
+            
+            &.selected {
+                border-color: $linkColor;
+            }
+        }
+    }
+    
+    a {
+        font-size: $baseFontSize - 2;
+    }
+}
+
+/*--------------------------------------
+    Responsive: Tablet and Facebook
+----------------------------------------*/
+@media only screen and (max-width: 810px) {
+    .celebsSettings {
+        ul {
+            li {
+                width: 215px;
+                
+                label {
+                    width: 191px;
+                }
+            }
+            
+            .sp-container-column {
+                ul {
+                    width: 215px;
+                }
+            }
+        }
+    }
+    
+    .myCelebsFilters {
+        ul {
+            padding-left: 20px;
+            
+            li {
+                margin-right: 10px;
+            }
+        }
+    }
+}
+
+/*--------------------------------------
+	Responsive: Mobile
+----------------------------------------*/
+@media only screen and (max-device-width: 480px) {
+    .celebsSettings {
+        ul {
+            li {
+                float: none;
+                margin-right: 0;
+                width: 100%;
+                
+                label {
+                    width: 236px;
+                }
+            }
+            
+            .sp-container-column {
+                ul {
+                    float: none;
+                    margin-right: 0;
+                    width: 100%;
+                }
+            }
+        }
+    }
+    
+    .myCelebsFilters {
+        ul {
+            padding-left: 20px;
+            
+            li {
+                margin-right: 20px;
+            }
+        }
+    }
+}
+
+/*--------------------------------------
+	Responsive: Wide
+----------------------------------------*/
+@media only screen and (min-width : 1220px) {
+    .myCelebsFilters {
+        ul {
+            li {
+                margin-right: 8px;
+            }
+        }
+    }
+}

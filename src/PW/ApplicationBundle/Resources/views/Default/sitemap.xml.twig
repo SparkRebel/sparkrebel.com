@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+{% for item in knp_menu_get('PWApplicationBundle:Builder:mainMenu') %}
+
+{% if item.uri %}
+<url>
+    <loc>http://sparkrebel.com{{ item.uri }}</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+</url>
+{% endif %}
+
+{% if item.hasChildren %}
+{% for child_item in item.children %}
+<url>
+    <loc>http://sparkrebel.com{{ child_item.uri }}</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+</url>
+{% endfor %}
+{% endif %}
+
+{% endfor %}
+</urlset>

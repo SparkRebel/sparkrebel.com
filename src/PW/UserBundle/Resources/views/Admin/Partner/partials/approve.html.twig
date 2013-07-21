@@ -1,0 +1,33 @@
+
+{% block content %}
+    <header>
+        <h1>Approve Partner Request</h1>
+    </header>
+
+    <ul>
+        <li><a href="{{ path('admin_user_partner_index') }}">Partners</a></li>
+    </ul>
+
+    <form action="{{ path('admin_user_partner_status', {action: 'approve', id: partner.id}) }}" method="post" {{ form_enctype(form) }}>
+        {{ form_errors(form) }}
+        <fieldset>
+            <legend>Approving User: {{ partner.name }}</legend>
+            <ul>
+                {% if partner.icon is defined %}
+                    <li><img src="{#{ partner.icon.url }#}"></li>
+                {% endif %}
+                <li><label>E-mail:</label> {{ partner.email }}</li>
+                <li><label>Phone:</label> {{ partner.phone }}</li>
+                <li><label>Site URL:</label> {{ partner.link }}</li>
+                <li><label>Reqested Slug:</label> {{ partner.requestedSlug }}</li>
+                <li>
+                    {{ form_errors(form.type) }}
+                    Select the type for this User:
+                    {{ form_widget(form.type) }}
+                </li>
+            </ul>
+        </fieldset>
+        {{ form_rest(form) }}
+        <input type="submit" value="Approve">
+    </form>
+{% endblock %}

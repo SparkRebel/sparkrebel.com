@@ -1,0 +1,135 @@
+{% extends '::admin\\base.html.twig' %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+    <header class="adminNav">
+        <ul>
+            <li><h2>Admin : </h2></li>
+            <li><h3>Dashboard</h3></li>
+        </ul>
+    </header>
+    
+    <div id="admin-dashboard-stats">
+        <div class="box">Total active users: <p class="sum">{{ total_users|number_format }}</p></div>
+        <div class="box">Total active sparks: <p class="sum">{{ total_sparks|number_format }}</p></div>
+        <div class="box">Total active boards: <p class="sum">{{ total_boards|number_format }}</p></div>
+        <div class="box">Curator posts in queue: <p class="sum">{{ curator_posts_to_be_processed|number_format }}</p></div>
+
+    </div>    
+    <div style="clear: both;">
+    
+    <nav>
+        <h4>Boards</h3>
+        <ul class="adminSubnav">
+            <li><a href="{{ path('admin_board_index') }}">Boards</a></li>
+            <li><a href="{{ path('admin_feature_board_index') }}">Featured</a></li>
+        </ul>
+    </nav>
+
+    <nav>
+        <h4>Posts</h3>
+        <ul class="adminSubnav">
+            <li><a href="{{ path('admin_post_index') }}">Posts</a></li>
+        </ul>
+    </nav>
+
+    <nav>
+        <h4>Celebs</h3>
+        <ul class="adminSubnav">
+            <li><a href="{{ path('admin_celebs') }}">Celebs</a></li>
+            <li><a href="{{ path('admin_celeb_create') }}">Create new Celeb</a></li>            
+        </ul>
+    </nav>
+
+    <nav>
+        <h4>Assets</h3>
+        <ul class="adminSubnav">
+            <li><a href="{{ path('admin_getty_images') }}">Getty images</a></li>
+            <li><a href="{{ path('admin_getty_reports') }}">Getty reports</a></li>
+        </ul>
+    </nav>
+
+    <nav>
+        <h4>CMS</h3>
+        <ul class="adminSubnav">
+            <li><a href="{{ path('admin_cms_page_index') }}">Pages</a></li>
+        </ul>
+    </nav>
+
+    <nav>
+        <h4>Reported Items</h3>
+        <ul class="adminSubnav">
+            <li><a href="{{ path('admin_flag_index', {type: 'posts'}) }}">Posts</a></li>
+            <li><a href="{{ path('admin_flag_index', {type: 'comments'}) }}">Comments</a></li>
+        </ul>
+    </nav>
+
+    <nav>
+        <h4>Users</h3>
+        {{ knp_menu_render('PWUserBundle:Admin\\Builder:usersMenu') }}
+    </nav>
+
+    <nav>
+        <h4>Partner Requests</h3>
+        <ul class="adminSubnav">
+            <li><a href="{{ path('admin_user_partner_index', {status: 'pending'}) }}">Pending</a></li>
+            <li><a href="{{ path('admin_user_partner_index', {status: 'approved'}) }}">Approved</a></li>
+            <li><a href="{{ path('admin_user_partner_index', {status: 'rejected'}) }}">Rejected</a></li>
+        </ul>
+    </nav>
+
+    <nav>
+        <h4>Invite Requests</h3>
+        {{ knp_menu_render('PWInviteBundle:Admin\\Builder:requestsMenu') }}
+    </nav>
+
+    <nav>
+        <h4>Invite Codes</h3>
+        {{ knp_menu_render('PWInviteBundle:Admin\\Builder:codesMenu') }}
+    </nav>
+
+    <nav>
+        <h4>Signup Process Collections</h3>
+        <ul class="adminSubnav">
+            <li><a href="{{ path('admin_signup_areas') }}">Collections per Areas of Interest (1st screen)</a></li>
+            <li><a href="{{ path('admin_signup_categories') }}">Collections per Category (2nd screen)</a></li>
+        </ul>
+    </nav>
+    
+    <nav>
+        <h4>Brands and Stores</h3>
+        <ul class="adminSubnav">
+            <li><a href="{{ path('admin_whitelist_index') }}">Whitelist</a></li>
+            <li><a href="{{ path('admin_alias_index') }}">Aliases</a></li>
+            <li><a href="{{ path('admin_feature_brand_index') }}">Featured</a></li>
+        </ul>
+    </nav>
+    
+    <nav>
+        <h4>Automated Collections</h3>
+        <ul class="adminSubnav">
+            <li><a href="{{ path('admin_job_index') }}">Getty Automated Collections</a></li>
+        </ul>
+    </nav>
+    
+    <nav>
+        <h4>Banners</h3>
+        <ul class="adminSubnav">
+            <li><a href="{{ path('admin_banner_index') }}">Banners</a></li>
+            <li><a href="{{ path('admin_promo_index') }}">Promos</a></li>
+        </ul>
+    </nav>
+
+    <nav>
+        <h4>Newsletter</h4>
+            <ul class="adminSubnav">
+                <li><a href="{{ path('admin_newsletter_index') }}">Newsletter</a></li>
+            </ul>
+    </nav>
+
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+{% endblock %}

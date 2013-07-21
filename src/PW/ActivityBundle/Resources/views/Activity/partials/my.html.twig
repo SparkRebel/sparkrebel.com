@@ -1,0 +1,8 @@
+{% block icon %}
+<a class="activityPicture" href="{{ activity.user | profile_link }}">
+	<img src="{{ activity.user.icon | version('medium') }}" alt="{{ activity.user.name }}">
+</a>
+{% endblock %}
+{% block name %}<span>{{ activity.user.name }}</span>{% endblock %}
+ {% block message %}triggered a {{ activity.type }} event{% endblock %}
+ <small>{{ activity.created | humane_date | raw }}</small>.

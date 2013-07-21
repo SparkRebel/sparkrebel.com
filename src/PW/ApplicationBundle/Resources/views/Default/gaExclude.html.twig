@@ -1,0 +1,11 @@
+{% extends '::base.html.twig' %}
+
+{% block googleAnalytics %}
+    {{ parent() }}
+    <script>_gaq.push(['_setCustomVar', 5, 'exclude', '1', 1]);</script>
+{% endblock %}
+
+{% block content %}
+    <h2>You are now being excluded from all Google Analytics reporting.</h2>
+    <p><a href="{{ path('home') }}">Home</a></p>
+{% endblock %}

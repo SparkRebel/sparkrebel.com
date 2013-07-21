@@ -1,0 +1,43 @@
+{% extends '::admin/base.html.twig' %}
+
+{% block title %}Admin : Interns and curator boards{% endblock %}
+
+{% block content %}
+    <header class="adminNav">
+        <ul>
+            <li><h2><a href="{{ path('admin_dashboard_index') }}">Admin</a> : </h2></li>
+            <li><h3>Interns and curator boards</h3></li>
+        </ul>
+    </header>
+    
+    <div id="internsBoards">
+        
+    {% if interns.count %}    
+        {% for user in interns %}
+        
+            <div class="internsBoardsIntern">
+                <h3>                    
+                    <span>{{ user.name }}</span>
+                </h3>
+                <p>Boards:</p>
+                <ul>
+                {% for board in user.boards %}
+                    {% if board.isActive %}
+                        <li>
+                            {{ board.name }}
+                            -
+                            <a href="{{ path('admin_change_board_owner', {'id': board.id}) }}">Change owner</a>
+                        </li>
+                    {% endif %}                    
+                {% endfor %}
+                </ul>
+            </div>
+        
+        {% endfor %}
+    
+    {% else %}
+        <p><strong>There are currently no interns.</strong></p>
+    {% endif %}
+    
+    </div>
+{% endblock %}

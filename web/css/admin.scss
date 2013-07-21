@@ -1,0 +1,558 @@
+/*-------------------------------------------------------------------
+    Compass Modules
+-------------------------------------------------------------------*/
+@import "compass/css3/border-radius";
+@import "compass/css3/box-shadow";
+@import "compass/css3/images";
+@import "compass/css3/text-shadow";
+@import "compass/utilities/general/clearfix";
+
+/*-------------------------------------------------------------------
+	PW Modules
+-------------------------------------------------------------------*/
+@import "variables.scss";
+@import "mixins.scss";
+
+/*--------------------------------------
+    Admin Modal
+----------------------------------------*/
+#adminToggle {
+    border: 2px solid #fff;
+    border-radius: 4px;
+    background: #ccc;
+    color: #fff;
+    position:fixed;
+	padding: 5px;
+    z-index: 1001;
+    top: 42px;
+    right: 0;
+    cursor: pointer;
+}
+
+#adminToggle.enabled {
+    background: #3B8230;
+}
+
+#adminData {
+    border: 2px solid #fff;
+    border-radius: 4px;
+    background: #fff;
+    position:fixed;
+    display: none;
+    z-index: 1001;
+    width: 400px;
+    height: 400px;
+    bottom: 0;
+    right: 0;
+    overflow: auto;
+    @include box-shadow(#222 0 0 10px);
+    
+    a {
+        @include border-radius(2px);
+        color: white;
+        background: #000;
+        text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
+        padding: 2px 5px;
+        text-align: center;
+        
+        &.close {
+            color: inherit;
+            background: #fff;
+            position: absolute;
+            top: 7px;
+            right: 5px;
+        }
+        
+        &.refresh {
+            color: inherit;
+            background: #fff;
+            position: absolute;
+            top: 7px;
+            right: 25px;
+        }
+    }
+    
+    h2 {
+        background-color: darken($linkColor, 20%);
+        color: #fff;
+        cursor: pointer;
+        font-family: 'MuseoSans900';
+        font-size: 100%;
+        margin-bottom: 1em;
+        padding: 10px 5px;
+        text-transform: uppercase;
+        @include text-shadow(rgba(0, 0, 0, 0.3) 0 -1px 0);
+        @include background-image(linear-gradient($linkColor, darken($linkColor, 20%)));
+    }
+    
+    h3 {
+        margin: 0.5em;
+        font-size: 120%;
+        font-weight: bold;
+    }
+}
+
+#adminActionContainer {
+    padding: 5px;
+    
+    li {
+        display: inline;
+        margin-right: 5px;
+        
+        a:hover {
+            background-color: $linkColor;
+            text-decoration: none;
+        }
+    }
+}
+
+#adminMetaContainer {
+    padding: 5px;
+    
+    dl {
+        &.collabsible {
+            
+        }
+        
+        &.expandable {
+            
+        }
+    }
+}
+
+dl.adminMeta {
+    display: none;
+    font-size: $baseFontSize - 2;
+    @include pie-clearfix;
+
+    dt {
+        clear: both;
+        float: left;
+        font-weight: bold;
+        margin: 0 10px 10px 0;
+        width: 100px;
+        word-wrap: break-word;
+        
+        &:after {
+            content: ":";
+        }
+    }
+
+    dd {
+        float: left;
+        margin-bottom: 10px;
+        width: 265px;
+        word-wrap: break-word;
+    }
+
+    dl {
+        @include pie-clearfix;
+        
+        dd {
+            width: 155px;
+        }
+    }
+}
+
+.hovered {
+    border: 2px solid red;
+}
+
+.adminHighlight {
+    border: 2px solid green;
+}
+
+/*--------------------------------------
+    Admin Dashboard
+----------------------------------------*/
+#adminContainer {
+    color: #ccc;
+    padding-top: 40px;
+  
+    .adminNav {
+        font-family: 'MisoLight';
+        margin-bottom: 20px;
+        @include pie-clearfix;
+        
+        li {
+            float: left;
+            margin-right: 5px;
+        }
+        
+        h2 {
+            font-size: $baseFontSize + 20;
+            color: #ccc;
+        }
+        
+        h3 {
+            font-size: $baseFontSize + 20;
+            color: #999;
+        }
+    }
+  
+    .adminSubnav {
+        margin: 25px 0 0 10px;
+        display: block;
+        float: left;
+        color: #666;
+        
+        li {
+            display: block;
+            float: left;
+            margin-right: 10px;
+            border-right: 1px solid #111;
+            padding-right: 10px;
+            
+            &.current {
+                a {
+                    color: #666;
+                    text-decoration: none;
+                }
+            }
+            
+            &:last-child {
+                border: 0;
+                padding-right: 0;
+            }
+        }
+    }
+    
+    nav {
+        margin-bottom: 20px;
+        
+        h4 {
+            color: #ccc;
+            font-family: 'MuseoSans900';
+            font-size: $baseFontSize + 4;
+            margin: 10px 0 0 10px;
+        }
+        
+        .adminSubnav {
+            margin: 5px 0 10px 20px;
+            float: none;
+            
+            li {
+                float: none;
+                border: 0;
+                margin-bottom: 5px;
+            }
+        }
+    }
+    
+    .tools {
+        float: right;
+        margin: 15px 15px 8px 0;
+        padding-right: 15px;
+        border-right: 1px solid #111;
+    }
+    
+    .massactions {
+        float: right;
+        margin: 15px 10px 8px 0;
+        color: #ccc;
+        
+        select {
+            min-width: 200px;
+        }
+    }
+    
+    .datagrid {
+        margin: 10px auto;
+        
+        th {
+            white-space: nowrap;
+            font-weight: bold;
+            padding: 10px 5px;
+            background-color: #000;
+            color: #ccc;
+            
+            a {
+                color: #fff;
+                padding-right: 25px;
+                text-decoration: none;
+                
+                &.asc {
+                    background: image-url("icons/sort.asc.png") no-repeat right;
+                }
+                
+                &.desc {
+                    background: image-url("icons/sort.desc.png") no-repeat right;
+                }
+            }
+            
+            &:first-child {
+                @include border-top-left-radius(5px);
+            }
+            
+            &:last-child {
+                @include border-top-right-radius(5px);
+            }
+        }
+        
+        tr {
+            &:last-child {
+                td {
+                    &:first-child {
+                        @include border-bottom-left-radius(5px);
+                    }
+                    
+                    &:last-child {
+                        @include border-bottom-right-radius(5px);
+                    }
+                }
+            }
+            
+            &.odd {
+                td {
+                    background-color: #111;
+                }
+            }
+            
+            &.selected, &.selected:hover {
+                td {
+                    background-color: #999;
+                    color: #333;
+                    
+                    a {
+                        color: #000;
+                    }
+                }
+            }
+            
+            &:hover {
+                td {
+                    background-color: #202020;
+                }
+            }
+        }
+        
+        td {
+            white-space: nowrap;
+            padding: 5px;
+            background-color: #191919;
+            color: #ddd;
+            
+            &.actions {
+                li {
+                    display: block;
+                    float: left;
+                    margin-right: 5px;
+                    border-right: 1px solid #000;
+                    padding-right: 5px;
+                    font-size: 0.85em;
+                    
+                    &:last-child {
+                        border: 0;
+                        padding-right: 0;
+                    }
+                }
+            }
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 25px 0;
+            
+            &:hover {
+                background-color: #191919;
+            }
+        }
+    }
+    
+    .pager-container {
+        height: 25px;
+        line-height: 25px;
+    }
+    
+    .pager .page a, .page-sizer a {
+        @include border-radius(2px);
+        padding: 2px 4px 3px 4px;
+        text-decoration: none;
+        border: 1px solid #555;
+        
+        &:hover {
+            background-color: #555;
+            color: #ccc;
+        }
+    }
+    
+    .pager {
+        float: left;
+        line-height: 25px;
+        margin-bottom: 5px;
+        margin-left: 10px;
+        
+        span {
+            margin-right: 1px;
+            color: #999;
+        }
+        
+        .page a, .current {
+            padding: 2px 4px 3px 4px;
+            text-decoration: none;
+            border-width: 1px;
+            @include border-radius(2px);
+        }
+    }
+    
+    .page-sizer {
+        float: right;
+        line-height: 25px;
+        margin-bottom: 5px;
+        margin-right: 10px;
+        color: #999;
+        
+        .current {
+            text-decoration: none;
+            border-width: 1px;
+            @include border-radius(2px);
+        }
+    }
+    
+    .pager, .page-sizer {
+        .current {
+            padding: 3px 5px 4px 4px;
+            background-color: #FF0078;
+            border-color: #FF0078;
+            color: #fff;
+        }
+    }
+    
+    .kd {
+        font-size: 0.8em;
+        color: #666;
+        
+        .helpful {
+            color: #01b354;
+        }
+        
+        .unhelpful {
+            color: #d52039;
+        }
+    }
+}
+
+/*--------------------------------------
+    CMS
+----------------------------------------*/
+#adminContainer {
+    .form {
+        label {
+            display: block;
+            float: none;
+            font-family: 'MuseoSans900';
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+        
+        input[type='text'],
+        input[type='email'],
+        input[type='password'],
+        input[type='url'],
+        textarea {
+            display: block;
+            float: none;
+            margin-bottom: 4px;
+        }
+        
+        .note {
+            color: #999;
+            font-size: $baseFontSize - 2;
+        }
+    }
+    
+    .actions {
+        margin-bottom: 20px;
+        @include pie-clearfix;
+        
+        .button {
+            float: left;
+            margin-right: 10px;
+        }
+    }
+}
+
+/*--------------------------------------
+    Interns Boards
+----------------------------------------*/
+.internsBoardsIntern {
+    background: image-url("backgrounds/bg.hr.dashed.png") left bottom repeat-x;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    
+    h3 {
+        color: #c7c7c7;
+        font-family: 'MuseoSans900';
+        font-size: $baseFontSize + 2;
+        margin-bottom: 5px;
+        text-transform: uppercase;
+        
+        span {
+            color: #fff;
+        }
+    }
+    
+    p {
+        color: #c7c7c7;
+        font-size: $baseFontSize + 2;
+        margin-bottom: 5px;
+        padding-left: 10px;
+    }
+    
+    ul {
+        font-size: $baseFontSize - 1;
+        padding-left: 25px;
+        
+        li {
+            color: #fff;
+            list-style-type: disc;
+            margin-bottom: 5px;
+            
+            a {
+                font-size: $baseFontSize - 3;
+            }
+        }
+    }
+}
+
+#admin-dashboard-stats {
+    .box {
+        float: left;
+        height: 74px;
+        width: 160px;
+        padding: 10px 7px;
+        
+        .sum {
+            padding-top: 5px;
+            font-size: 17px;
+            font-weight: bold;
+            padding-bottom: 5px;
+            color: white;
+        }
+    }
+}
+
+/*--------------------------------------
+    Weekly Newsletter
+----------------------------------------*/
+.weeklyNewsletter {
+    #pw_newsletter_create_newsletter_topType,
+    #pw_newsletter_create_newsletter_bottomType {
+        @include pie-clearfix;
+        
+        label {
+            float: left;
+            margin-right: 20px;
+            width: auto;
+            
+            &:after {
+                content: "";
+            }
+        }
+        
+        input[type='radio'] {
+            float: left;
+            margin: 9px 5px 0 0;
+        }
+    }
+}

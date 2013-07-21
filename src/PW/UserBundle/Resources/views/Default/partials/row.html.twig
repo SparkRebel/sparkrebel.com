@@ -1,0 +1,12 @@
+{% block content %}
+	{% if user.userType == 'user' %}
+		<a data-class="User" data-id="{{ user.id }}" href="{{path('user_profile_view', {'name': user.name}) }}"><img src="{{ user | user_icon('thumb') }}" width="50" height="50"  alt="{{ user.name }}" class="userPicture" /></a>
+		<a data-class="User" data-id="{{ user.id }}" href="{{path('user_profile_view', {'name': user.name}) }}" class="userName">{{ user.name }}</a>
+		<a id="follow-user-{{ user.id }}" class="button follow" href="{{ path('pw_user_follow_user', {'name' : user.name })}}">Follow</a>
+	{% else %}
+
+		<a data-class="{{ user.userType }}" data-id="{{ user.id }}" href="{{path('pw_user_brand_view', {'slug': user.username}) }}"><img src="{{ user | user_icon('thumb') }}" width="50" height="50" alt="{{ user.name }}" class="userPicture"></a>
+		<a data-class="{{ user.userType }}" data-id="{{ user.id }}" href="{{path('pw_user_brand_view', {'slug': user.username}) }}" class="userName">{{ user.name }}</a>
+		<a id="follow-brand-{{ user.id }}" class="button follow" href="{{ path('pw_user_follow_user', {'name' : user.name })}}">Follow</a>
+	{% endif %}
+{% endblock %}

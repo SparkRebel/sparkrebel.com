@@ -1,0 +1,15 @@
+{% extends '::admin/base.html.twig' %}
+
+{% block title %}Admin : Users : Create User{% endblock %}
+
+{% block content %}
+    <header class="adminNav">
+        <ul>
+            <li><h2><a href="{{ path('admin_dashboard_index') }}">Admin</a> : </h2></li>
+            <li><h3><a href="{{ path('admin_user_index') }}">Users</a> : </h3></li>
+            <li><h3>Create User</h3></li>
+        </ul>
+    </header>
+
+    {% include 'PWUserBundle:Edit:partials/form.html.twig' %}
+{% endblock %}

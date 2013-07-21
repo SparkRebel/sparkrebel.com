@@ -1,0 +1,64 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Brands settings{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='compass,?yui_css' 'css/brands.scss' %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block content %}
+
+	<h2>Brands settings</h2>
+
+	<h3>Below you can change the brands you follow.</h3>
+	<h3>New products from the brands you follow will be added daily to your "My Brands" stream.</h3>
+
+	<form action="{{ path('brands_settings') }}" method="post" class="brandsSettings">
+    	<p>1. Currenly following: <small>(uncheck the boxes next to the brands you want to unfollow)</small></p>
+
+        <ul class="brandsCurrent">
+        {% if brands_i_follow.count %}
+            {% for brand in brands_i_follow %}
+                <li><input checked="checked" name="brands[]" type="checkbox" value="{{ brand.id }}" id="brand-{{ brand.id }}"> <label for="brand-{{ brand.id }}">{{ brand.name }}</label></li>
+            {% endfor %}
+        {% else %}
+            <li class="empty">Not following any brands yet.</li>
+        {% endif %}
+        </ul>
+
+        <p>2. Follow more brands</p>
+
+        <ul class="brandsAll">
+        {% if brands.count %}
+            {% for brand in brands %}
+                <li><input name="brands[]" type="checkbox" value="{{ brand.id }}" id="brand-{{ brand.id }}"> <label for="brand-{{ brand.id }}">{{ brand.name }}</label></li>
+            {% endfor %}
+        {% else %}
+            <li class="empty">You're following all the brands.</li>
+        {% endif %}
+        </ul>
+
+        <input type="submit" value="Update My Brands" class="button primary">
+    </form>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts filter='?yui_js' combine=true
+        'js/libs/listSorting.js'
+    %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+        srSort($('.brandsCurrent'));
+        srSort($('.brandsAll'));
+    });
+    </script>
+{% endblock %}

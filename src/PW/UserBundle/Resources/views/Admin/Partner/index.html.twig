@@ -1,0 +1,88 @@
+{% extends '::admin/base.html.twig' %}
+
+{% block title %}Admin - Partners{% endblock %}
+
+{% block content %}
+    <header>
+        <h1>Partners</h1>
+    </header>
+
+    <ul>
+        <li>
+            {% if status == 'pending' %}
+                Pending
+            {% else %}
+                <a href="{{ path('admin_user_partner_index', {status: 'pending'}) }}">Pending</a>
+            {% endif %}
+        </li>
+        <li>
+            {% if status == 'approved' %}
+                Approved
+            {% else %}
+                <a href="{{ path('admin_user_partner_index', {status: 'approved'}) }}">Approved</a>
+            {% endif %}
+        </li>
+        <li>
+            {% if status == 'rejected' %}
+                Rejected
+            {% else %}
+                <a href="{{ path('admin_user_partner_index', {status: 'rejected'}) }}">Rejected</a>
+            {% endif %}
+        </li>
+    </ul>
+
+    {% if partners.count %}
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Name</th>
+                    <th>E-mail</th>
+                    <th>Phone</th>
+                    <th>URL</th>
+                    <th>Requested Slug</th>
+                    <th>Status</th>
+                    {% if status == 'rejected' %}
+                        <th>Reason</th>
+                    {% endif %}
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for partner in partners %}
+                    <tr>
+                        <td>{{ partner.created | date('Y-m-d') }}</td>
+                        <td>
+                            {% if partner.user %}
+                                <a href="{{ path('user_profile_view', {name: partner.user.name}) }}">{{ partner.name }}</a>
+                            {% else %}
+                                {{ partner.name }}
+                            {% endif %}
+                        </td>
+                        <td>{{ partner.email }}</td>
+                        <td>{{ partner.phone }}</td>
+                        <td>{{ partner.link }}</td>
+                        <td>{{ partner.requestedSlug }}</td>
+                        <td>{{ partner.status | capitalize }}</td>
+                        {% if status == 'rejected' %}
+                            <td>{{ partner.statusReason }}</td>
+                        {% endif %}
+                        <td>
+                            {% if partner.status == 'approved' %}
+
+                            {% elseif partner.status == 'rejected' %}
+                                <a href="{{ path('admin_user_partner_status', {action: 'unreject', id: partner.id}) }}">Un-Reject</a>
+                            {% else %}
+                                <a href="{{ path('admin_user_partner_edit', {id: partner.id}) }}">Edit</a> |
+                                <a href="{{ path('admin_user_partner_status', {action: 'approve', id: partner.id}) }}">Approve</a> |
+                                <a href="{{ path('admin_user_partner_status', {action: 'reject', id: partner.id}) }}">Reject</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        No Partners to display with status "{{ status }}".
+    {% endif %}
+{% endblock %}

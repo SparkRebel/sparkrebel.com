@@ -1,0 +1,43 @@
+{% block content %}
+    {% set globalRepostCount = data.repostCount %}
+    <div class="post" data-class="Post" data-id="{{ data.id }}">
+        {% if data.original %}
+        {% set globalRepostCount = data.original.aggregateRepostCount + 1 %}
+        <div class="postAttribution">
+            1st Spark: <a href="{{ data.original.createdBy | profile_link }}" class="aLink">{{ data.original.createdBy.name }}</a>
+            <small>{{ globalRepostCount }} Collections</small>
+        </div>
+        {% endif %}
+
+        <div class="postImage">
+          <div class="postActions">
+            <a href="{{ path('post_add_index', {'type': 'repost', 'id': data.id}) }}" class="button repost">Respark</a>
+          </div>
+          <a href="{{ path('pw_post_default_view', {'id': data.id, 'slug': data.description | sluggify} ) }}" class="aLink">
+            <img src="{{ data.image | version('large') }}" alt="{{ data.description }}" data-class="Asset" data-id="{{ data.image.id }}">
+          </a>
+        </div>
+
+        {% if data.targetType == 'items' %}
+        <div class="postItemInformation">
+          <p class="itemBrand">
+            <a href="{{ data.target.createdBy | profile_link }}" class="aLink">{{ data.target.createdBy.name }}</a>
+          </p>
+          <p class="itemPrice">
+            {{ data.target.price | craue_currency }}
+          </p>
+        </div>
+        {% endif %}
+
+        <p class="postDescription">{{ data.description }}</p>
+        <p class="repostTo">
+            <a href="{{ data.createdBy | profile_link }}" data-class="{{ data.createdBy.type | capitalize }}" data-id="{{ data.createdBy.id }}" class="aLink userPicture"><img src="{{ data.createdBy | user_icon('thumb') }}" alt=""></a>
+            <a href="{{ data.createdBy | profile_link }}" data-class="{{ data.createdBy.type | capitalize }}" data-id="{{ data.createdBy.id }}" class="aLink">{{ data.createdBy.name }}</a>
+            to
+            {% if data.board %}
+            <a data-class="Board" data-id="{{ data.board.id }}" href="{{ path('pw_board_default_view', {'id': data.board.id, 'slug': data.board.slug} ) }}">{{ data.board.name }}</a>
+            {% endif %}
+            <small>{{ data.created | humane_date | raw }}</small>
+        </p>
+    </div>
+{% endblock %}

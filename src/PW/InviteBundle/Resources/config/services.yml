@@ -1,0 +1,39 @@
+parameters:
+    pw_invite.invite_only_mode.default: false
+    pw_invite.code.class: PW\InviteBundle\Document\Code
+    pw_invite.request.class: PW\InviteBundle\Document\Request
+
+services:
+    pw_invite.code_manager:
+        class: PW\InviteBundle\Model\CodeManager
+        parent: pw.model_manager
+        calls:
+            - [ setClass, ["%pw_invite.code.class%"] ]
+
+    pw_invite.request_manager:
+        class: PW\InviteBundle\Model\RequestManager
+        parent: pw.model_manager
+        calls:
+            - [ setClass, ["%pw_invite.request.class%"] ]
+
+    validator.email.not.registered:
+        class: PW\InviteBundle\Validator\EmailNotRegisteredValidator
+        calls:
+            - [ setContainer, ["@service_container"] ]
+        tags:
+            - { name: validator.constraint_validator, alias: validator.email.not.registered }
+
+    validator.code.is.valid:
+        class: PW\InviteBundle\Validator\CodeIsValidValidator
+        calls:
+            - [ setContainer, ["@service_container"] ]
+        tags:
+            - { name: validator.constraint_validator, alias: validator.code.is.valid }
+
+    validator.user.not.assigned.code:
+        class: PW\InviteBundle\Validator\UserNotAssignedCodeValidator
+        tags:
+            - { name: validator.constraint_validator, alias: validator.user.not.assigned.code }
+
+#    pw_invite.listener.invite_only:
+#        class: PW\InviteBundle\EventListener\InviteOnlyListener

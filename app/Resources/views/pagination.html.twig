@@ -1,0 +1,72 @@
+<div class="pager-container">
+    <div class="pager">
+        {% if first is defined %}
+            <span class="first">
+                {% if current != first and first > 0 %}
+                    <a href="{{ path(route, query|merge({(pageParameterName): first})) }}">first</a>
+                {% else %}
+                    first
+                {% endif %}
+            </span>
+        {% endif %}
+
+        <span class="previous">
+            {% if previous is defined %}
+                <a href="{{ path(route, query|merge({(pageParameterName): previous})) }}">previous</a>
+            {% else %}
+                previous
+            {% endif %}
+        </span>
+
+        {% for page in pagesInRange %}
+            {% if page > 0 %}
+                {% if page != current %}
+                    <span class="page">
+                        <a href="{{ path(route, query|merge({(pageParameterName): page})) }}">{{ page }}</a>
+                    </span>
+                {% else %}
+                    <span class="current">{{ page }}</span>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+
+        <span class="next">
+            {% if next is defined %}
+                <a href="{{ path(route, query|merge({(pageParameterName): next})) }}">next</a>
+            {% else %}
+                next
+            {% endif %}
+        </span>
+
+        {% if last is defined %}
+            <span class="last">
+                {% if current != last and last > 0 %}
+                    <a href="{{ path(route, query|merge({(pageParameterName): last})) }}">last</a>
+                {% else %}
+                    last
+                {% endif %}
+            </span>
+        {% endif %}
+    </div>
+
+    {% if numItemsPerPage is defined %}
+        <div class="page-sizer">
+            {% if numItemsPerPage == 15 %}
+                <span class="current">15</span>
+            {% else %}
+                <span><a href="{{ path(route, query|merge({'pagesize': 15})) }}">15</a></span>
+            {% endif %}
+            {% if numItemsPerPage == 30 %}
+                <span class="current">30</span>
+            {% else %}
+                <span><a href="{{ path(route, query|merge({'pagesize': 30})) }}">30</a></span>
+            {% endif %}
+            {% if numItemsPerPage == 50 %}
+                <span class="current">50</span>
+            {% else %}
+                <span><a href="{{ path(route, query|merge({'pagesize': 50})) }}">50</a></span>
+            {% endif %}
+            <span>per page</span>
+        </div>
+    {% endif %}
+</div>

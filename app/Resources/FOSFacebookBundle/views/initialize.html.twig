@@ -1,0 +1,39 @@
+<div id="fb-root"></div>
+<script>
+{% autoescape false %}
+window.fbAsyncInit = function() {
+    if (typeof(FB) != 'undefined' && FB != null ) {
+        {%
+        set fbSettings = {
+            'appId': appId,
+            'channelUrl': app.request.getUriForPath('/channel.php') | replace({'app_dev.php/': ''}),
+            'xfbml': xfbml,
+            'oauth': oauth,
+            'status': status,
+            'cookie': cookie,
+            'logging': logging
+        }
+        %}
+        FB.init({{ fbSettings | json_encode | raw }});
+
+        // Like
+        FB.Event.subscribe('edge.create', function(url) {
+            _gaq.push(['_trackSocial', 'Facebook', 'Like', url]);
+        });
+
+        // Unlike
+        FB.Event.subscribe('edge.remove', function(url) {
+            _gaq.push(['_trackSocial', 'Facebook', 'Unlike', url]);
+        });
+    }
+};
+
+(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "{{ "//connect.facebook.net/%s/all.js#xfbml=1&appId=%s" | format(culture, appId) }}";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+{% endautoescape %}
+</script>

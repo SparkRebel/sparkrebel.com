@@ -1,0 +1,81 @@
+pw_tagging:
+    resource: "@PWTaggingBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+home:
+    pattern:  /
+    defaults: { _controller: PWPostBundle:Default:index }
+    requirements:
+        _method:  GET
+
+#
+# Bundles
+PWSearchBundle:
+    resource: "@PWSearchBundle/Resources/config/routing.yml"
+
+PWCmsBundle:
+    resource: "@PWCmsBundle/Resources/config/routing.yml"
+
+PWFeatureBundle:
+    resource: "@PWFeatureBundle/Resources/config/routing.yml"
+
+PWStoreBundle:
+    resource: "@PWStoreBundle/Resources/config/routing.yml"
+
+PWActivityBundle:
+    resource: "@PWActivityBundle/Resources/config/routing.yml"
+
+PWFeedbackBundle:
+    resource: "@PWFeedbackBundle/Resources/config/routing.yml"
+
+PWTagBundle:
+    resource: "@PWTagBundle/Resources/config/routing.yml"
+
+PWOutfitBundle:
+    resource: "@PWOutfitBundle/Resources/config/routing.yml"
+
+PWItemBundle:
+    resource: "@PWItemBundle/Resources/config/routing.yml"
+
+PWCategoryBundle:
+    resource: "@PWCategoryBundle/Resources/config/routing.yml"
+
+PWAssetBundle:
+    resource: "@PWAssetBundle/Controller/"
+
+PWFlagBundle:
+    resource: "@PWFlagBundle/Resources/config/routing.yml"
+
+PWBoardBundle:
+    resource: "@PWBoardBundle/Resources/config/routing.yml"
+
+PWPostBundle:
+    resource: "@PWPostBundle/Resources/config/routing.yml"
+
+PWApplicationBundle:
+    resource: "@PWApplicationBundle/Resources/config/routing.yml"
+
+PWUserBundle:
+    resource: "@PWUserBundle/Resources/config/routing.yml"
+
+PWInviteBundle:
+    resource: "@PWInviteBundle/Resources/config/routing.yml"
+
+PWBannerBundle:
+    resource: "@PWBannerBundle/Resources/config/routing.yml"
+    
+PWJobBundle:
+    resource: "@PWJobBundle/Resources/config/routing.yml"
+
+PWAdminBundle:
+    resource: "@PWAdminBundle/Resources/config/routing.yml"
+
+PWStatsBundle:
+    resource: "@PWStatsBundle/Resources/config/routing.yml"
+
+PWGettyImagesBundle:
+    resource: "@PWGettyImagesBundle/Resources/config/routing.yml"
+
+@PWNewsletterBundle:
+    resource: "@PWNewsletterBundle/Resources/config/routing.yml"

@@ -1,0 +1,18 @@
+{% extends 'PWActivityBundle:Notification:partials/base.html.twig' %}
+
+{% block icon %}
+    <a href="{{ path('pw_post_default_view', {id: notification.data.post.id}) }}" class="notificationLink"></a>
+    <a class="notificationPicture" href="{{ path('pw_post_default_view', {id: notification.target.post.id}) }}">
+        <img src="{{ notification.createdBy | user_icon('thumb') }}" alt="{{ notification.createdBy.name }}" width="50" height="50">
+    </a>
+{% endblock %}
+
+{% block message %}
+   replied to
+   <a href="{{ path('pw_post_default_view', {id: notification.data.post.id}) }}#notificationList">
+   {% if notification.category == "friend" %}
+       a comment</a>.
+   {% else %}
+       your comment</a>.
+   {% endif %}
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}SparkRebel - Your place for Fashion, Beauty, Celebrity Style, and DIY Fashion{% endblock %}
+
+{% set metaDescription = meta_default_description %}
+
+{% block opengraph %}
+    {{ parent() }}
+    <meta name="description" content="{{ metaDescription }}">
+    <meta property="og:image" content="{{ app.request.getUriForPath('/') | clean_env }}images/facebook/logo.png">
+    <meta property="og:title" content="SparkRebel.com">
+    <meta property="og:description" content="{{ metaDescription }}">
+    <meta property="og:url" content="{{ app.request.getUriForPath('/') | clean_env }}">
+    <meta property="og:type" content="website">
+{% endblock %}
+
+{% block content %}
+    {% render 'PWPostBundle:Stream:stream' with {'type': type, 'id': id} %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts filter='?yui_js' combine=true
+        'js/jquery.sqbricks.js'
+        'js/libs/webfont.js'
+        'js/libs/jquery.jail.js'
+        'js/libs/jquery.infinitescroll.js'
+        'js/libs/jquery.rwdImageMaps.js'
+        'js/libs/jquery.tooltip.js'
+        'js/stream.js'
+    %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+{% endblock %}

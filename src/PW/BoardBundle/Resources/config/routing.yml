@@ -1,0 +1,3 @@
+pw_board:
+    resource: "@PWBoardBundle/Controller/"
+    type:     annotation

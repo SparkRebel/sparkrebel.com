@@ -1,0 +1,26 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Featured Brands{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='compass,?yui_css' 'css/brands.scss' %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+    {{ block('stream_stylesheets') }}
+{% endblock %}
+
+{% block content %}
+    {% if featured.count %}
+        <div id="featuredBrands">
+          <div class="featuredBrandsRibbon">Featured Brands</div>
+          <ul>
+              {% for feature in featured %}
+                  <li data-class="Feature" data-id="{{ feature.id }}">{% include 'PWUserBundle:FeaturedBrands:partials/featured.html.twig' with {'user': feature.target} %}</li>
+              {% endfor %}
+          </ul>
+        </div>
+    {% else %}
+        <h2>No featured brands exist.</h2>
+    {% endif %}
+{% endblock %}

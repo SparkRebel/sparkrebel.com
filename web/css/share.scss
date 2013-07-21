@@ -1,0 +1,319 @@
+/*-------------------------------------------------------------------
+    Compass Modules
+-------------------------------------------------------------------*/
+@import "compass/css3/opacity";
+@import "compass/css3/border-radius";
+@import "compass/css3/box-shadow";
+@import "compass/css3/images";
+@import "compass/css3/text-shadow";
+
+/*-------------------------------------------------------------------
+    PW Modules
+-------------------------------------------------------------------*/
+@import "variables.scss";
+
+$radius: 10px;
+$width: 780px;
+$height: 490px;
+
+@font-face {
+	font-family: 'MisoRegular';
+	src: url('/fonts/miso-webfont.eot');
+	src: url('/fonts/miso-webfont.eot?#iefix') format('embedded-opentype'),
+		 url('/fonts/miso-webfont.woff') format('woff'),
+		 url('/fonts/miso-webfont.ttf') format('truetype'),
+		 url('/fonts/miso-webfont.svg#MisoLight') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'MuseoSans900';
+	src: url('/fonts/museosans-900-webfont.eot');
+	src: url('/fonts/museosans-900-webfont.eot?#iefix') format('embedded-opentype'),
+		 url('/fonts/museosans-900-webfont.woff') format('woff'),
+		 url('/fonts/museosans-900-webfont.ttf') format('truetype'),
+		 url('/fonts/museosans-900-webfont.svg#MisoLight') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/*
+   When this is loaded it will share styles with whatever page
+   it is loaded on. For that reason - we use #id's when possible
+   and prefix everything with sparkrebel__
+*/
+
+#sparkrebel__container {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 2147483640 !important;
+    padding: 0;
+    border: 0;
+    position: fixed;
+}
+
+#sparkrebel__shadow {
+    background-color: black;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    padding: 0;
+    border: 0;
+    position: fixed;
+    @include opacity(0.5);
+}
+
+#sparkrebel__content {
+    text-align: center;
+    color: black;
+    z-index: 2;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    padding: 0;
+    border: 0;
+    width: $width;
+    height: $height;
+    margin-left: -($width / 2);
+    margin-top: -($height / 2);
+    @include single-box-shadow(black, 0, 5px, 25px);
+    @include border-radius($radius);
+    
+    header {
+        background-color: #414243;
+        height: 28px;
+        margin: 0;
+        padding: 7px 0 5px 0;
+        width: $width;
+        color: #fff;
+        font-size: 12px;
+        display: block;
+        position: relative;
+        @include border-top-radius($radius);
+        @include background-image(linear-gradient(#4d4e51, #414243));
+    }
+}
+
+#sparkrebel__logo {
+    background: image-url("sparkrebel-small.png") 0 0 no-repeat;
+    height: 40px;
+    left: 15px;
+    position: absolute;
+    top: 0;
+    width: 70px;
+    
+    span {
+        display: none;
+    }
+}
+
+#sparkrebel__close {
+    font-family: 'MuseoSans900';
+    font-size: 14px;
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    color: #fff;
+    cursor: pointer;
+}
+
+#sparkrebel__main {
+    background-color: #fff;
+    height: $height - 40;
+    padding-top: 10px;
+    position: relative;
+    @include border-bottom-radius($radius);
+}
+
+#sparkrebel__title {
+    color: #4d4d4d;
+    text-transform: uppercase;
+    font-family: 'MuseoSans900';
+    left: 10px;
+    position: absolute;
+    top: 10px;
+}
+
+#sparkrebel__images {
+    height: 380px;
+    margin-top: 20px;
+    overflow-y: scroll;
+
+    .sparkrebel__col {
+        text-align: center;
+        float: left;
+        width: 190px;
+        height: 220px;
+        @include opacity(0.8);
+        
+        .sparkrebel__img {
+            border: 1px solid #eee;
+            width: 174px;
+            height: 150px;
+            margin: 0 auto;
+            position: relative;
+            text-align: center;
+            
+            img {
+                max-height: 150px;
+                max-width: 174px;
+            }
+            
+            .sparkrebel__img_overlay {
+                background-color: #FF0080;
+                width: 174px;
+                height: 150px;
+                position: absolute;
+                left: 0;
+                top: 0;
+                z-index: 10;
+                @include opacity(0);
+            }
+            
+            .sparkrebel__img_size {
+                text-align: center;
+                position: absolute;
+                z-index: 15;
+                top: 55px;
+                left: 5px;
+                text-align: center;
+                width: 164px;
+                color: #fff;
+                font-family: 'MisoRegular';
+                font-size: $baseFontSize + 6;
+                @include text-shadow(#c12267 1px 1px 0);
+                @include opacity(0);
+            }
+            
+            .sparkrebel__img_marker {
+                display: none;
+                width: 174px;
+                position: absolute;
+                left: 0;
+                top: 0;
+                z-index: 20;
+                
+                .sparkrebel__img_marker_icon {
+                    background: image-url("bookmarklet/marker.png") center top no-repeat;
+                    display: block;
+                    margin: 40px auto 0;
+                    width: 74px;
+                    height: 74px;
+                }
+            }
+        }
+        
+        input {
+            display: none;
+        }
+        
+        textarea {
+            margin-top: 5px;
+            height: 36px;
+            min-height: 36px;
+            width: 175px;
+            background-color: #eee;
+            border: 1px solid #ccc;
+            color: #666;
+            resize: none;
+            @include border-radius(3px);
+        }
+    }
+    
+    .sparkrebel__col:hover {
+        cursor: pointer;
+        @include opacity(1);
+        
+        .sparkrebel__img {
+            border-color: #C12267;
+            
+            .sparkrebel__img_overlay {
+                @include opacity(0.5);
+            }
+            
+            .sparkrebel__img_size {
+                @include opacity(1);
+            }
+        }
+    }
+    
+    .sparkrebel__selected {
+        @include opacity(1);
+        
+        .sparkrebel__img {
+            .sparkrebel__img_marker {
+                display: block;
+            }
+        }
+    }
+}
+
+#sparkrebel__frame {
+    display: none;
+}
+
+#sparkrebel__iframe {
+    background-color: #fff;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    width: $width;
+    height: 370px;
+}
+
+#sparkrebel__next,
+#sparkrebel__back {
+    cursor: pointer;
+  	background-color: #fff;
+  	border: 1px solid #bdbdbd;
+  	bottom: 10px;
+  	color: #797979;
+  	display: block;
+  	font-family: 'MisoRegular';
+  	font-size: 14px;
+  	height: 18px;
+  	padding: 4px 10px 4px;
+  	position: absolute;
+  	right: 20px;
+  	text-align: center;
+  	text-transform: uppercase;
+  	@include background-image(linear-gradient(#fff, #f5f5f5, #fff));
+  	@include border-radius(3px, 3px);
+
+  	&:hover {
+      background-color: #f5f5f5;
+      color: #797979;
+      text-decoration: none;
+      @include background-image(linear-gradient(#f5f5f5, #fff, #f5f5f5));
+  	}
+
+  	&:before {
+      content: image-url("icons/repost.png");
+      margin-right: 4px;
+      padding-top: 4px;
+      vertical-align: middle;
+  	}
+}
+
+#sparkrebel__back {
+    left: 20px;
+    right: auto;
+    
+    &:before {
+        content: "";
+        margin: 0;
+        padding: 0;
+    }
+}
+
+#sparkrebel__errors {
+    bottom: 10px;
+    color: $linkColor;
+    font-family: Arial;
+    font-size: 12px;
+    left: 20px;
+    position: absolute;
+}

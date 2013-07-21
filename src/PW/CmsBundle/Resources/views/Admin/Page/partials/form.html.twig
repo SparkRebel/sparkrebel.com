@@ -1,0 +1,50 @@
+
+{% block content %}
+    <form action="{{ form_path }}" method="post" {{ form_enctype(form) }} class="form">
+        {{ form_errors(form) }}
+        <fieldset>
+            <ul>
+                <li>
+                    {{ form_errors(form.page.url) }}
+                    {{ form_label(form.page.url) }}
+                    {{ form_widget(form.page.url) }}
+                    <p class="note">E.g. <code>/about_us</code> or <code>/privacy</code></p>
+                </li>
+                <li>
+                    {{ form_errors(form.page.title) }}
+                    {{ form_label(form.page.title) }}
+                    {{ form_widget(form.page.title) }}
+                </li>
+                <li>
+                    {{ form_errors(form.page.content) }}
+                    {{ form_label(form.page.content) }}
+                    {{ form_widget(form.page.content) }}
+                </li>
+                <li>
+                    {{ form_errors(form.page.isActive) }}
+                    {{ form_label(form.page.isActive) }}
+                    {{ form_widget(form.page.isActive) }}
+                </li>
+                <li>
+                    {{ form_errors(form.page.section) }}
+                    {{ form_label(form.page.section) }}
+                    {{ form_widget(form.page.section) }}
+                </li>
+                <li>
+                    {{ form_errors(form.page.subsection) }}
+                    {{ form_label(form.page.subsection) }}
+                    {{ form_widget(form.page.subsection) }}
+                </li>
+                <li>
+                    {{ form_errors(form.page.subsectionOrder) }}
+                    {{ form_label(form.page.subsectionOrder) }}
+                    {{ form_widget(form.page.subsectionOrder) }}
+                </li>
+            </ul>
+        </fieldset>
+        <input type="submit" value="Save" class="button">
+        {{ form_rest(form) }}
+    </form>
+
+    {{ tinymce_init() }}
+{% endblock %}

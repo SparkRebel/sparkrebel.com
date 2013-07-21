@@ -1,0 +1,77 @@
+
+{% block content %}
+
+    <form action="{{ form_path }}" method="post" {{ form_enctype(form) }} class="form">
+        {{ form_errors(form) }}
+        <fieldset>
+            <ul>
+                <li>
+                    <input type="hidden" name="id" value="{{ object.id }}" />
+                    {{ form_errors(form.promo.description) }}
+                    {{ form_label(form.promo.description) }}
+                    {{ form_widget(form.promo.description) }}
+                </li>
+                <li>
+                    {{ form_errors(form.promo.url) }}
+                    {{ form_label(form.promo.url) }}
+                    {{ form_widget(form.promo.url) }}
+                </li>
+                <li>
+                    {{ form_errors(form.promo.isUrlTargetBlank) }}
+                    {{ form_label(form.promo.isUrlTargetBlank) }}
+                    {{ form_widget(form.promo.isUrlTargetBlank) }}
+                </li>
+                <li>
+                    {{ form_errors(form.promo.bannerFile) }}
+                    {{ form_label(form.promo.bannerFile) }}
+                    {{ form_widget(form.promo.bannerFile) }}
+                    {% if object.image %}<img src="{{ object.image | version('large') }}" alt="Promo Image" />{% endif %}
+                </li>
+                <li>
+                    {{ form_errors(form.promo.startDate) }}
+                    {{ form_label(form.promo.startDate) }}
+                    {{ form_widget(form.promo.startDate) }}
+                </li>
+                <li>
+                    {{ form_errors(form.promo.endDate) }}
+                    {{ form_label(form.promo.endDate) }}
+                    {{ form_widget(form.promo.endDate) }}
+                </li>
+                <li>
+                    {{ form_errors(form.promo.user) }}
+                    {{ form_label(form.promo.user) }}
+                    {{ form_widget(form.promo.user) }}
+                </li>
+                <li>
+                    {{ form_errors(form.promo.inMyBrands) }}
+                    {{ form_label(form.promo.inMyBrands) }}
+                    {{ form_widget(form.promo.inMyBrands) }}
+                </li>
+                <li>
+                    {{ form_errors(form.promo.inShop) }}
+                    {{ form_label(form.promo.inShop) }}
+                    {{ form_widget(form.promo.inShop) }}
+                </li>
+                <li>
+                    {{ form_errors(form.promo.inMyStream) }}
+                    {{ form_label(form.promo.inMyStream) }}
+                    {{ form_widget(form.promo.inMyStream) }}
+                </li>
+                <li>
+                    {{ form_errors(form.promo.inAllCategories) }}
+                    {{ form_label(form.promo.inAllCategories) }}
+                    {{ form_widget(form.promo.inAllCategories) }}
+                </li>
+                <li>
+                    {{ form_errors(form.promo.isActive) }}
+                    {{ form_label(form.promo.isActive) }}
+                    {{ form_widget(form.promo.isActive) }}
+                </li>
+            </ul>
+        </fieldset>
+        <input type="submit" value="Save" class="button">
+        {{ form_rest(form) }}
+    </form>
+
+    {{ tinymce_init() }}
+{% endblock %}

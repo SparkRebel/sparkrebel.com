@@ -1,0 +1,36 @@
+{% set basePath = app.request.getUriForPath('/') | replace({'http:': ''}) %}
+
+{% set bookmarklet %}
+void((function(){
+    var e = document.createElement('scr'+'ipt');
+        e.setAttribute('type', 'text/javascript');
+        e.setAttribute('charset', 'UTF-8');
+        e.setAttribute('src','{{ basePath }}js/compiled/share.js?t=' + (new Date().getTime()));
+    document.body.appendChild(e)
+})());
+{% endset %}
+
+{% set bookmarkletUrl = bookmarklet | replace({'\n': '', '    ': ''}) | url_encode(true) | raw %}
+
+<header>
+    <h2>SparkRebel <span>beta</span></h2>
+</header>
+<h3>Drag this "Spark It!" button to your browser's Bookmarks bar.</h3>
+<div class="registrationModalBookmarklet">
+    <a href="javascript:{{- bookmarkletUrl -}}" class="button">Spark It!</a>
+</div>
+<div class="registrationModalContent">
+    <p>When you browse through the web and see something you like<small>*</small>, just click on the “Spark It!” button and spark it to your own collection!</p>
+    <img src="{{ asset('/images/modals/browsers/win.firefox.jpg') }}" class="registrationModalBrowser">
+    <p class="registrationModalSafari"><strong>In Safari:</strong> Display your Bookmarks by selecting <strong>"View"</strong> > <strong>"Show Bookmarks Bar"</strong> from the menu.</p>
+    <p class="registrationModalChrome"><strong>In Chrome:</strong> Display your Bookmarks by clicking the <strong>Wrench Icon</strong> > <strong>"Bookmarks"</strong> > <strong>"Show Bookmarks Bar"</strong>.</p>
+    <p class="registrationModalFirefox"><strong>In Firefox:</strong> Display your Bookmarks by clicking <strong>"View"</strong> > <strong>"Toolbars"</strong> > <strong>"Bookmarks Toolbar"</strong>.</p>
+    <p class="registrationModalIE"><strong>In Internet Explorer:</strong> Display your Favorites Bar by clicking <strong>"Tools"</strong> > <strong>"Toolbars"</strong> > <strong>"Favorites Bar"</strong>.</p>
+    <a class="registrationModalBack"><span>&lsaquo;</span> Back</a>
+    <a class="registrationModalPaginator">Continue <span>&rsaquo;</span></a>
+    <div class="registrationModalSteps">Step 5 of 5</div>
+    <img src="{{ asset('/images/ajax-black-login.gif') }}" class="loading">
+</div>
+<div class="registrationModalTerms">
+    *Please respect owners copyright. Read our <a href="/terms">terms of service</a> for details.
+</div>

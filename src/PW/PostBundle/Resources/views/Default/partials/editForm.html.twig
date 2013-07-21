@@ -1,0 +1,54 @@
+<form novalidate="novalidate" id="editSparkForm" action="{{ path('pw_post_edit', {id: post.id}) }}" method="post" {{ form_enctype(form) }}>
+  <div class="status">{{ form_errors(form) }}</div>
+  <div class="addImage">
+    {% if post.image %}
+    <ul>
+      <li><img src="{{ post.image | version('medium') | default(asset('/images/items/blank.png'))}}" style="max-width: 100px"></li>
+    </ul>
+    {% endif %}
+    <label>Edit your Spark's description</label>
+    {{ form_errors(form.description) }}
+    {{ form_widget(form.description) }}
+  </div>
+  <ul>
+      <li class="board" >
+        <h2>Spark to&hellip;</h2>
+        <div class="postCollection">
+          <label>Create a new collection</label>
+          {{ form_errors(boardForm.board.name) }}
+          {{ form_widget(boardForm.board.name) }}
+          {{ form_errors(boardForm.board.category) }}
+          {{ form_widget(boardForm.board.category) }}
+        </div>
+      </li>
+
+      <li class="board_existing">
+        <h2>Spark to&hellip;</h2>
+        <div class="postCollection">
+          <label>Collection:</label>
+          {{ form_errors(form.board) }}
+          {{ form_widget(form.board) }}
+          <label>and publish to</label>
+          {{ form_errors(form.category) }}
+          {{ form_widget(form.category) }}
+          <label>category</label>
+        </div>
+      </li>
+
+    </ul>
+
+    <h3 class="show_board_existing">&hellip;OR spark to an <a>existing collection</a></h3>
+    <h3 class="show_board_new">&hellip;OR create a <a>new collection</a></h3>
+
+
+    <input type="submit" name="submit" value="Save" id="submit" class="button primary">
+
+{{ form_rest(form) }}
+{{ form_rest(boardForm) }}
+
+</form>
+
+
+
+
+

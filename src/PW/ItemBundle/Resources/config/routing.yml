@@ -1,0 +1,3 @@
+pw_item:
+    resource: "@PWItemBundle/Controller/"
+    type:     annotation

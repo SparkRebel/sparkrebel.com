@@ -1,0 +1,7 @@
+parameters:
+
+services:
+    pw_getty.cursor:
+        class: PW\CelebBundle\GettyCursor
+        calls:
+              - [ Limit, [%pw_celeb.limit%]]

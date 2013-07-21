@@ -1,0 +1,81 @@
+{% extends '::base.email.twig' %}
+
+{% block subject %}Welcome to SparkRebel!{% endblock %}
+
+{% block content_html %}
+    {% set tag = 'utm_source=welcome_email&utm_medium=email&utm_campaign=transactional_emails' %}
+    <p>
+        Welcome to <a href="{{ url('home') }}?{{ tag }}" style="color: #ed2978;">SparkRebel</a>, a collaborative fashion, shopping and
+        beauty inspiration destination. SparkRebel is made up of sparks. A spark can be anything that
+        represents you and your style: products, photos, articles, blog posts, etc.
+    </p>
+
+    <h3>Share your Style.</h3>
+    <p>
+        Browse sparks from your friends and people you follow in your personalized <strong>stream</strong>.<br>
+        See a spark you love? <strong>Respark</strong> it to one of your collections and share the love.
+    </p>
+
+    <h3>Create Collections for your Style.</h3>
+    <p>
+        Save your sparks to collections. Create a collection for any topic: celebrity styles, DIY hair tips, shoes I love, etc.<br>
+        <a href="{{ url('pw_board_featured_index') }}?{{ tag }}" style="color: #ed2978;">View featured collections</a>
+    </p>
+
+    <h3>Shop Style.</h3>
+    <p>
+        3,000+ stores and brands post items daily.
+        <a href="{{ url('pw_store_default_index') }}?{{ tag }}" style="color: #ed2978;">Start shopping!</a><br>
+        OR stay up-to-date with the latest trends from the hottest brands!
+        <a href="{{ url('brands_list') }}?{{ tag }}" style="color: #ed2978;">Follow your favorite brand</a>
+    </p>
+
+    <h3>Spark Your Style.</h3>
+    <p>
+        Add sparks when you're browsing the web via our
+        <img src="{{ baseImageUri }}email/spark-button.png" alt="Spark It!" width="57" height="18" style="vertical-align: middle;">
+        button or upload your own pictures.<br>
+        <a href="{{ url('add') }}?{{ tag }}" style="color: #ed2978;">Get the Spark It button!</a>
+    </p>
+{% endblock %}
+
+{% block signature_html %}
+    <p style="margin: 0; padding: 20px 0 5px 0">Join the Style Revolution!</p>
+    <h4 style="margin: 0">Team SparkRebel</h4>
+{% endblock %}
+
+{% block content_text %}
+{% autoescape false %}
+Welcome to SparkRebel, a collaborative fashion, shopping and beauty inspiration
+destination. SparkRebel is made up of sparks. A spark can be anything that
+represents you and your style: products, photos, articles, blog posts, etc.
+
+# Share your Style
+
+Browse sparks from your friends and people you follow in your personalized
+stream. See a spark you love? Re-spark it to one of your collections and share
+the love.
+
+# Create Collections for your Style
+
+Save your sparks to collections. Create a collection for any topic: celebrity
+styles, DIY hair tips, shoes I love, etc. View featured collections at
+{{ url('pw_board_featured_index') }}
+
+# Shop Style
+
+3,000+ stores and brands post items daily. Start shopping at {{ url('pw_store_default_index') }} !
+OR stay up-to-date with the latest trends from the
+hottest brands! Follow your favorite brand at {{ url('brands_list') }}
+
+# Spark Your Style
+
+Add sparks when you're browsing the web via our Spark It button or upload your
+own pictures. Get the Spark It button here: {{ url('add') }}
+{% endautoescape %}
+{% endblock %}
+
+{% block signature_text %}
+Join the Style Revolution!
+- Team SparkRebel
+{% endblock %}

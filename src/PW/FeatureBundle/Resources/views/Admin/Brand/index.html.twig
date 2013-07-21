@@ -1,0 +1,66 @@
+{% extends '::admin/base.html.twig' %}
+
+{% block title %}Admin : Featured Brands{% endblock %}
+
+{% block content %}
+    <form action="" method="post">
+
+        <div class="massactions">
+            <label for="massAction">Actions</label>
+            <select id="massAction" name="massaction" disabled="disabled">
+                <option></option>
+            </select>
+            <input id="massSubmit" type="submit" value="Submit" disabled="disabled">
+        </div>
+
+        <table width="100%" class="datagrid">
+            <thead>
+                <tr>
+                    <th width="1"><input id="selectAll" type="checkbox" disabled="disabled"></th>
+                    <th>Brand</th>
+                    <th>{{ data.sortable('Priority', 'priority') | raw }}</th>
+                    <th>{{ data.sortable('From', 'start') | raw }}</th>
+                    <th>{{ data.sortable('To', 'end') | raw }}</th>
+                    <th>{{ data.sortable('Created', 'created') | raw }}</th>
+                    <th width="1">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if data.count %}
+                    {% for row in data %}
+                        <tr {% if loop.index is odd %}class="odd"{% endif %}>
+                            <td><input type="checkbox" name="data[]" value="{{ row.id }}"></td>
+                            <td>{{ row.target.name }}</td>
+                            <td>{{ row.priority }}</td>
+                            <td title="{{ row.start | date('Y-m-d H:i:s') }}">{{ row.start | date('Y-m-d') }}</td>
+                            <td title="{{ row.end | date('Y-m-d H:i:s') }}">{{ row.end | date('Y-m-d') }}</td>
+                            <td>{{ row.created | date('Y-m-d') }}</td>
+                            <td class="actions">
+                                <ul>
+                                    <li><a class="edit" href="#">Edit</a></li>
+                                    <li><a class="delete" href="#">Delete</a></li>
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <td colspan="100" class="no-results">
+                        No Featured brands to display.
+                    </td>
+                {% endif %}
+            </tbody>
+        </table>
+
+        {{ data.render() | raw }}
+
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts filter='?yui_js'
+        'js/admin/backend/feature_brand.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

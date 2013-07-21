@@ -1,0 +1,11 @@
+<ul class="usersList">
+    {% for user in userList %}
+        <li>
+            <a href="{{path('user_profile_view', {'name': user.name}) }}">
+                <div class="userPicture"><img src="{{ user | user_icon('medium') }}"></div>
+                <h4>{{ user.name }}</h4>
+            </a>
+			<a id="follow-{{ user.userType }}-{{ user.id }}" class="button follow" href="{{ path('pw_user_follow_user', {'name': user.name}) }}">Follow</a>
+        </li>
+    {% endfor %}
+</ul>

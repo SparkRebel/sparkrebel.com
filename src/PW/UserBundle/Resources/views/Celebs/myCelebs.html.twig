@@ -1,0 +1,71 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}MyCelebs{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='compass,?yui_css' 'css/celebs.scss' %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block content %}
+    {% if is_granted('ROLE_USER') %}
+        <div class="myCelebsFilters">
+
+            {% if celebs_i_follow.count %}
+            <h3>Filter Your Celebs</h3>
+            <ul>
+                <li{% if celeb_id == null %} class="selected"{% endif %}>
+                    <a href="{{ path('my_celebs') }}">
+                        <div class="brandLogo">
+                            <img src="{{ asset('images/celebs/all.png') }}">
+                        </div>
+                        <p>All celebs</p>
+                    </a>
+                </li>
+
+                {% for celeb in celebs_i_follow %}
+                    <li{% if celeb_id == celeb.id %} class="selected"{% endif %}>
+                        <a href="{{ path('my_celebs', {celeb_id: celeb.id}) }}">
+                            <div class="brandLogo">
+                                <img src="{{ celeb | board_icon('thumb') }}" width="50" height="50">
+                            </div>
+                            <p>{{celeb.name}}</p>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+            <a href="{{ path('celebs_settings') }}">Add/Remove celebs</a>
+
+        </div>
+        {% render 'PWPostBundle:Stream:stream' with {'type': 'userCelebsStream', 'id': app.user.id, 'celeb_id': celeb_id} %}
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts filter='?yui_js' combine=true
+        'js/jquery.sqbricks.js'
+        'js/libs/webfont.js'
+        'js/libs/jquery.jail.js'
+        'js/libs/jquery.infinitescroll.js'
+        'js/libs/jquery.rwdImageMaps.js'
+        'js/libs/jquery.tooltip.js'
+        'js/stream.js'
+    %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+    <script type="text/javascript">
+            $(document).ready(function() {
+                $selectedPosition = $(".myCelebsFilters li.selected").position().top;
+                $(".myCelebsFilters ul").scrollTop($selectedPosition);
+            });
+    </script>
+{% endblock %}

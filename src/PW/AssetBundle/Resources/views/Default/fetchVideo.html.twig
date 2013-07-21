@@ -1,0 +1,30 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Video spark{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='compass,?yui_css' 'css/add.scss' %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block content %}
+    <div class="addProcess">
+      <h1>
+          <span id="imageCount">Video Spark</span>
+      </h1>
+
+      <div class="addVideo">
+        {{ video.videoEmbededCode | raw }}
+      </div>
+      <a href="{{ url('post_add_index', {'url': url, 'type': 'video'}) }}" class="button spark">Spark this video</a>
+
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+{% endblock %}

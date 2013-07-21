@@ -1,0 +1,166 @@
+/*-------------------------------------------------------------------
+    Compass Modules
+-------------------------------------------------------------------*/
+@import "compass/css3/border-radius";
+@import "compass/css3/images";
+@import "compass/utilities/general/clearfix";
+
+/*-------------------------------------------------------------------
+    PW Modules
+-------------------------------------------------------------------*/
+@import "variables.scss";
+@import "mixins.scss";
+
+/*--------------------------------------
+    Login page (not modal)
+----------------------------------------*/
+#content {
+    #login {
+        h1 {
+            color: #d1d3d5;
+            font-family: 'MisoLight';
+            font-size: $baseFontSize + 15;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        
+        header {
+            display: none;
+        }
+        
+        h3 {
+            color: #c7c7c7;
+            font-family: 'MuseoSans900';
+            font-size: $baseFontSize + 14px;
+            margin-bottom: 10px;
+            
+            strong {
+                color: #999;
+                font-weight: normal;
+            }
+        }
+        
+        #loginVideo {
+            font-family: 'MuseoSans900';
+            margin: 20px 0;
+            
+            h4 {
+                color: #c7c7c7;
+                font-size: $baseFontSize + 2px;
+                margin-bottom: 10px;
+            }
+            
+            p {
+                color: #999;
+                font-size: $baseFontSize;
+                line-height: 1.3;
+                width: 300px;
+            }
+        }
+        
+        #inviteRedeem {
+            li {
+                margin-bottom: 10px;
+                @include pie-clearfix;
+            }
+            
+            input[type='text'],
+            .txt {
+                background-color: #fff;
+                border: 1px solid #9c9c9c;
+                color: $baseFontColor;
+                font-family: Arial;
+                margin-bottom: 10px;
+                padding: 6px;
+                width: 290px;
+                @include border-radius(4px);
+            }
+            
+            .button {
+                height: 27px;
+            }
+            
+            a {
+                font-size: $baseFontSize - 2;
+            }
+            
+            .dashed {
+                margin: 15px 0 20px;
+            }
+            
+            #loginFacebook {
+                color: #c7c7c7;
+                margin-bottom: 20px;
+            }
+        }
+        
+        .loading {
+            display: none;
+        }
+        
+        #loginPartner {
+            color: #c7c7c7;
+            font-size: $baseFontSize - 2;
+        }
+        
+        #inviteRequest {
+            padding-top: 20px;
+            
+            h2 {
+                color: #aaa;
+                font-family: 'MuseoSans900';
+                font-size: $baseFontSize + 10;
+                margin-bottom: 10px;
+            }
+            
+            h3 {
+                color: #d1d1d1;
+                font-family: 'MuseoSans900';
+                font-size: $baseFontSize + 6;
+                margin-bottom: 5px;
+                padding: 0;
+            }
+            
+            h4.status {
+                display: none;
+                margin: 10px 0;;
+                font-family: 'MuseoSans900';
+            }
+            
+            h4.success {
+                color: #01b354;
+            }
+            
+            h4.error {
+                color: #d52039;
+            }
+            
+            .form {
+                margin: 10px 0;
+                
+                label {
+                    display: none;
+                }
+                
+                input[type='email'] {
+                    background-color: #fff;
+                    border: 1px solid #9c9c9c;
+                    color: $baseFontColor;
+                    font-family: Arial;
+                    margin-bottom: 10px;
+                    padding: 6px;
+                    width: 290px;
+                    @include border-radius(4px);
+                }
+                
+                .button {
+                    height: 27px;
+                }
+            }
+        }
+        
+        #loginRequestCancel {
+            font-size: $baseFontSize - 2;
+        }
+    }
+}

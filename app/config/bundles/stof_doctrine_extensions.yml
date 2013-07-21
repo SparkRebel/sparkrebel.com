@@ -1,0 +1,6 @@
+stof_doctrine_extensions:
+    default_locale: en_US
+    mongodb:
+        default:
+            timestampable: true
+            sluggable:     true

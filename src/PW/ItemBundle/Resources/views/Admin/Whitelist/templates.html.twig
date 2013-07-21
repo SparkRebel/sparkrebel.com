@@ -1,0 +1,28 @@
+<div id="editWhitelist">
+  <form action="{{ path('admin_whitelist_edit') }}" method="post">
+    <header>
+      <h2>Add/Edit Whitelist item</h2>
+    </header>
+    <div class="modalContent">
+
+    	<fieldset>
+    		<div>
+				<input type="hidden" name="whitelistId"/>
+				<label class="required">Brand/Store name</label>
+				<input type="text" name="whitelistName"/>
+    		</div>
+    	</fieldset>
+    	<fieldset>
+    		<div>
+				<label>Type</label>
+				<select name="whitelistType">
+				    <option value="brand">Brand</option>
+				    <option value="merchant">Merchant (Store)</option>
+				</select>
+    		</div>
+    	</fieldset>
+
+    	<input type="submit" value="Submit" class="button">
+  	</div>
+  </form>
+</div>

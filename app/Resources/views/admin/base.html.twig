@@ -1,0 +1,22 @@
+{% extends '::default.html.twig' %}
+
+{% block navContainer %}
+    <nav id="navContainer">
+        {{ knp_menu_render('PWAdminBundle:Builder:mainMenu') }}
+    </nav>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='compass,?yui_css'
+        'css/forms.scss'
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block container %}
+    <section id="adminContainer">
+        {{ parent() }}
+    </section>
+{% endblock %}

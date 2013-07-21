@@ -1,0 +1,138 @@
+/*-------------------------------------------------------------------
+		Compass Modules
+-------------------------------------------------------------------*/
+@import "compass/css3/border-radius";
+@import "compass/css3/box-shadow";
+/*-------------------------------------------------------------------
+		PW Modules
+-------------------------------------------------------------------*/
+@import "../../../css/variables.scss";
+@import "../../../css/mixins.scss";
+
+/*--------------------------------------
+	Custom
+----------------------------------------*/
+.guider {
+  background-color: $linkColor;
+  border: 1px solid #686968;
+  color: #fff;
+  display: none;
+  font-family: 'MuseoSans500';
+  font-size: $baseFontSize - 1;
+  left: 10px;
+  line-height: 1.3;
+  outline: none;
+  padding: 15px;
+  position: absolute;
+  top: 60px;
+  z-index: 130 !important;
+  @include border-radius(4px);
+  @include box-shadow(rgba(#000, 0.5) 0px 0px 10px);
+  @include size(400px, 35px);
+}
+
+.guider_buttons {
+  position: absolute;
+  right: -10px;
+  top: -10px;
+  @include square(10px);
+}
+
+.guider_content h1 {
+  display: inline;
+  line-height: 1.3;
+}
+
+.guider_content p {
+  display: inline;
+  line-height: 1.3;
+}
+
+.guider_content strong {
+  font-family: 'MuseoSans900';
+  font-weight: normal;
+}
+
+.guider_content p small {
+  font-size: 0.85em;
+}
+
+.guider_content p a {
+  color: #fff;
+}
+
+.guider_button {
+  background: image-url("backgrounds/bg.sprite.global.png") -300px -1598px no-repeat;
+  display: block;
+  text-decoration: none;
+  text-indent: -9999px;
+  @include square(10px);
+}
+
+/*--------------------------------------
+	Original
+----------------------------------------*/
+.guider_content {
+  position: relative;
+}
+
+.guider_close {
+  float: right;
+  padding: 10px 0 0;
+}
+
+#guider_overlay {
+  background-color: #000;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  opacity: 0.5;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+  z-index: 10;
+}
+
+.guider_arrow {
+  background-image: image-url("backgrounds/bg.guider.arrows.png");
+  background-repeat: no-repeat;
+  display: none;
+  position: absolute;
+  z-index: 90 !important;
+  @include size(27px, 25px);
+}
+
+.guider_arrow_right {
+  display: block;
+  background-position: 0px 0px;
+  right: -27px;
+}
+.guider_arrow_down {
+  display: block;
+  background-position: 0px -37px;
+  bottom: -25px;
+}
+.guider_arrow_up {
+  display: block;
+  background-position: 0px -109px;
+  top: -25px;
+}
+.guider_arrow_left {
+  display: block;
+  background-position: 0px -72px;
+  left: -27px;
+}
+
+.guider_highlight {
+  position: relative;
+  z-index: 91;
+}
+/*--------------------------------------
+	Responsive: Mobile
+----------------------------------------*/
+@media only screen and (max-width: 740px) {
+  .guider {
+    @include size(220px, 65px);
+  }
+}

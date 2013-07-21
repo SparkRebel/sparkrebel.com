@@ -1,0 +1,25 @@
+<div id="editAlias">
+  <form action="{{ path('admin_alias_edit') }}" method="post">
+    <header>
+      <h2>Add/Edit alias</h2>
+    </header>
+    <div class="modalContent">
+
+    	<fieldset>
+    		<div>
+				<input type="hidden" name="aliasId"/>
+				<label class="required">Brand/Store name</label>
+				<input type="text" name="aliasName"/>
+    		</div>
+    	</fieldset>
+    	<fieldset>
+    		<div>
+				<label>Aliases for this brand/store</label>
+				<textarea name="aliasAliases"></textarea>
+    		</div>
+    	</fieldset>
+
+    	<input type="submit" value="Submit" class="button">
+  	</div>
+  </form>
+</div>

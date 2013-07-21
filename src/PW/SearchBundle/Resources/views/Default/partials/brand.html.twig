@@ -1,0 +1,11 @@
+{% if res.vip is defined %}
+    <h3 class="vip">VIP Brands</h3>
+    
+    {% include 'PWSearchBundle:Default:partials/userList.html.twig' with {'userList': res.vip} %}
+{% endif %}
+
+{% if res.standard is defined %}
+    <h3>Brands</h3>
+    
+    {% include 'PWSearchBundle:Default:partials/userList.html.twig'  with {'userList': res.standard} %}
+{% endif %}

@@ -1,0 +1,35 @@
+{% extends 'PWActivityBundle:Notification:partials/base.email.twig' %}
+
+{% block icon %}
+    <a href="{{ notification.target.follower | profile_link(true) }}">
+        <img src="{{ notification.target.follower.icon | user_icon('thumb') }}" width="50" height="50" style="border: 1px solid #eee"></a>
+{% endblock %}
+
+{% block notification_text %}
+    <p>
+        {% block name %}
+            <a href="{{ notification.target.follower | profile_link(true) }}?{{ tag }}" style="color: #ed2978; text-decoration: none;">
+                {{ notification.target.follower.name }}</a>
+        {% endblock %}
+        {% block message %}
+            {% if notification.category == "friend" %}
+                is now following <a href="{{ notification.target.user | profile_link(true) }}" style="color: #ed2978; text-decoration: none;">
+                    {{ notification.target.user.name }}</a>.
+            {% else %}
+                is now following you.
+            {% endif %}
+        {% endblock %}
+        {% block date %}
+            <small style="color: gray;font-size: 11px;">{{ notification.created | humane_date }}</small>
+        {% endblock %}
+        {% if count == 1 %}
+            <span style="font-size:13px; color: #666">
+                <br>
+                View <a href="{{ url('user_profile_view', {'name': notification.target.follower.name}) }}?{{ tag }}" style="color: #ed2978; text-decoration: none;">
+                    their collections</a> or
+                <a href="{{ url('pw_user_follow_user', {'name': notification.target.follower.name}) }}?{{ tag }}" style="color: #ed2978; text-decoration: none;">
+                    follow them</a> back.
+            </span>
+        {% endif %}
+    </p>
+{% endblock %}

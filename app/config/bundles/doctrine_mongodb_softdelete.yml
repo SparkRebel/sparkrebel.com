@@ -1,0 +1,2 @@
+doctrine_mongodb_softdelete:
+    deleted_field_name: deleted

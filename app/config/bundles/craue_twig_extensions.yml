@@ -1,0 +1,12 @@
+craue_twig_extensions:
+    enable_only:
+        - ArrayHelperExtension
+        - ChangeLanguageExtension
+        - DecorateEmptyValueExtension
+        - FormatDateTimeExtension
+        - FormatNumberExtension
+        - FormExtension
+        - StringHelperExtension
+
+parameters:
+    craue_twig_extensions.formatNumber.currency: USD

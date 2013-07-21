@@ -1,0 +1,6 @@
+lexik_maintenance:
+    authorized_ips: ['127.0.0.1', '174.96.99.119']
+    driver:
+        class: Lexik\Bundle\MaintenanceBundle\Drivers\FileDriver
+        options:
+            file_path: %kernel.root_dir%/cache/lock

@@ -1,0 +1,173 @@
+{% extends '::base.html.twig' %}
+
+{% block title %} Shop {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='compass,?yui_css' 'css/store.scss' %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts filter='?yui_js' combine=true
+        'js/libs/jquery.jcarousel.js'
+        'js/libs/jquery.fancybox.js'
+        'js/libs/jquery.pagination.js'
+        'js/libs/jquery.history.js'
+    %}
+        <script src="{{ asset_url }}" ></script>
+    {% endjavascripts %}
+
+    {% javascripts filter='?yui_js' combine=true '@PWStoreBundle/Resources/public/js/*' %}
+        <script src="{{ asset_url }}" ></script>
+    {% endjavascripts %}
+
+    <script>
+        var _storeInit = {{storeInit|raw}};
+    </script>
+{% endblock %}
+
+{% block content %}
+<section id="shopCategories" style="display:none">
+  <ul id="shopBigCategories"></ul>
+</section>
+
+<section id="shopSearch" style="display:none">
+<section id="shopSearchBar">
+    <form id="shopForm">
+        <input type="text" id="shopSearchInput" placeholder="Enter a search phrase">
+        <a href="#" class="button" id="shopSearchSubmit">Search</a>
+        <a href="#" class="button" id="shopSearchReset">Reset All</a>
+
+        <div class="shopSearchFilters">
+            <input type="radio" name="shopSearchFilter" class="shopSearchFilterRadio" id="shopSearchFilterAll" value="all" checked="checked"> <label for="shopSearchFilterAll">All items</label>
+            <input type="radio" name="shopSearchFilter" class="shopSearchFilterRadio" id="shopSearchFilterNew" value="new"> <label for="shopSearchFilterNew">New items</label>
+            <input type="radio" name="shopSearchFilter" class="shopSearchFilterRadio" id="shopSearchFilterSale" value="sale"> <label for="shopSearchFilterSale">Sale items</label>
+        </div>
+
+        <ul class="shopSearchCategories" id="shopSearchCategories"></ul>
+    </form>
+</section>
+
+<aside id="shopSidebar">
+  <h3>Refine search:</h3>
+  <h4 id="shopCategoryTitle"></h4>
+  <ul class="shopSubcategories" id="shopSubcategories"></ul>
+
+  <div class="shopSidebarStores">
+      <h3><a class="shopSidebarStoresLink">Stores & Brands</a></h3>
+      <div id="shopPopupBrands">
+        <h2>Stores & Brands</h2>
+        <form>
+            <input type="text" id="shopPopupBrandsInput" placeholder="Start typing">
+        </form>
+        <div id="shopPopupBrandsContent">
+            <h3>Stores & Brands</h3>
+            <ul id="shopOverlay_store"></ul>
+        </div>
+        <div class="shopPopupButtons">
+            <a class="button" id="shopOverlayCancel">Cancel</a>
+            <a class="button primary" id="shopOverlayOK">Ok</a>
+        </div>
+	  </div>
+  </div>
+  <ul class="shopSidebarFilters" id="filtersStores">
+  </ul>
+
+  <h3>Price</h3>
+  <input type="text" id="shopSearchPrice" readonly="readonly">
+  <div id="shopSearchPriceSlider"></div>
+{# comment out sidebar color block
+  <h3 class="shopSidebarColors">
+    <a href="#" class="shopSidebarColorsLink">Select color</a>
+    <div id="shopPopupColors">
+	    <h2>Colors</h2>
+	    <div id="shopPopupColorsContent">
+		    <h3>Colors</h3>
+		    <ul>
+		      <li>
+		        <a href="#"><span class="shopColor red"></span>Red</a>
+		      </li>
+		      <li>
+		        <a href="#"><span class="shopColor black"></span>Black</a>
+		      </li>
+		      <li>
+		        <a href="#"><span class="shopColor orange"></span>Orange</a>
+		      </li>
+		      <li>
+		        <a href="#"><span class="shopColor white"></span>White</a>
+		      </li>
+		      <li>
+		        <a href="#"><span class="shopColor yellow"></span>Yellow</a>
+		      </li>
+		      <li>
+		        <a href="#"><span class="shopColor gray"></span>Gray</a>
+		      </li>
+		      <li>
+		        <a href="#"><span class="shopColor green"></span>Green</a>
+		      </li>
+		      <li>
+		        <a href="#"><span class="shopColor beige"></span>Beige</a>
+		      </li>
+		      <li>
+		        <a href="#"><span class="shopColor blue"></span>Blue</a>
+		      </li>
+		      <li>
+		        <a href="#"><span class="shopColor brown"></span>Brown</a>
+		      </li>
+		      <li>
+		        <a href="#"><span class="shopColor purple"></span>Purple</a>
+		      </li>
+		      <li>
+		        <a href="#"><span class="shopColor gold"></span>Gold</a>
+		      </li>
+		      <li>
+		        <a href="#"><span class="shopColor pink"></span>Pink</a>
+		      </li>
+		      <li>
+		        <a href="#"><span class="shopColor silver"></span>Silver</a>
+		      </li>
+		    </ul>
+	    </div>
+	    <div class="shopPopupButtons">
+	      <a class="button" href="#">Cancel</a>
+	      <a class="button" href="#">Ok</a>
+	    </div>
+	  </div>
+  </h3>
+#}
+</aside>
+
+<section id="shopItems">
+    <div class="paginationContainer" id="pagination_top">
+        <div class="itemsCount">
+          <a href="#" id="count_30" class="current">30</a>
+          <a href="#" id="count_60">60</a>
+          <a href="#" id="count_90">90</a>
+          <span class="totalItems"></span>
+        </div>
+        <div class="pagination"></div>
+    </div>
+
+    <ul id="itemsContainer"></ul>
+
+    <div id="noSearchResults">
+        Your search didn't find any items. You can change your search criteria, or <a href="" id="shopSearchResetLink">start a new search</a>.
+    </div>
+
+    <div class="paginationContainer" id="pagination_bottom">
+        <div class="itemsCount">
+          <a href="#" id="count_30" class="current">30</a>
+          <a href="#" id="count_60">60</a>
+          <a href="#" id="count_90">90</a>
+          <span class="totalItems"></span>
+        </div>
+        <div class="pagination"></div>
+    </div>
+</section>
+</section>
+
+{% endblock %}

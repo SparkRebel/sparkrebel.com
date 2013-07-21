@@ -1,0 +1,11 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}The first 10 Brands{% endblock %}
+
+{% block body %}
+	<ul>
+	{% for brand in brands %}
+		<li data-class="Brand" data-id="{{ data.id }}" ><a href="#">{{ brand.name }}</a></li>
+	{% endfor %}
+	</ul>
+{% endblock %}

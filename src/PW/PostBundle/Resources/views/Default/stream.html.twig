@@ -1,0 +1,30 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    {% if posts.count %}
+        {% set stream_data = posts %}
+        {% use 'PWPostBundle:Default:partials/stream.html.twig' with stylesheets as stream_stylesheets, javascripts as stream_javascripts, content as stream_content %}
+        {{ block('stream_content') }}
+        <div id="nextPosts">
+            <a href="{{ path('home_next') }}">Grab More Sparks</a>
+        </div>
+    {% else %}
+        <h2>No sparks yet.</h2>
+    {% endif %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ block('stream_stylesheets') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ block('stream_javascripts') }}
+    <script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+{% endblock %}
+    {% endif %}
+{% endblock %}

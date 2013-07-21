@@ -1,0 +1,88 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}All Celebs{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets 
+        'css/brands.scss' 
+        'css/celebs.scss' 
+        filter='compass,?yui_css' %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block content %}
+
+    <h2>Celebs</h2>
+
+    {% if is_granted('ROLE_USER') %}
+        <div class="myCelebsFilters">
+            <h3>My Celebs</h3>
+
+            {% if celebs_i_follow.count %}            
+            <ul>                
+                {% for celeb in celebs_i_follow %}
+                    <li>
+                        <a href="{{ path('my_celebs', {celeb_id: celeb.id}) }}">
+                            <div class="brandLogo">
+                                <img src="{{ celeb | board_icon('thumb') }}" width="50" height="50">
+                            </div>
+                            <p>{{celeb.name}}</p>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+            <a href="{{ path('celebs_settings') }}">Add/Remove celebs</a>
+
+        </div>        
+    {% endif %}
+
+
+    <div id="brandsAndStores">
+        <ul id="brandsList">
+            <li class="first">
+                {{ _self.render_celeb_group(celebs, '#') }}
+                {% for letter in 'A'..'F' %}
+                    {{ _self.render_celeb_group(celebs, letter) }}
+                {% endfor %}
+            </li>
+            <li>
+                {% for letter in 'G'..'M' %}
+                    {{ _self.render_celeb_group(celebs, letter) }}
+                {% endfor %}
+            </li>
+            <li>
+                {% for letter in 'N'..'T' %}
+                    {{ _self.render_celeb_group(celebs, letter) }}
+                {% endfor %}
+            </li>
+            <li class="last">
+                {% for letter in 'U'..'Z' %}
+                    {{ _self.render_celeb_group(celebs, letter) }}
+                {% endfor %}
+            </li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% macro render_celeb_group(celebs, letter) %}
+    {% if celebs[letter] is defined %}
+    <span class="brandLetter">{{ letter }}</span>
+    <ul class="brandsList{{ letter }}">
+
+            {% for celeb in celebs[letter] %}
+                {{ _self.render_celeb(celeb) }}
+            {% endfor %}
+
+    </ul>
+    {% endif %}
+{% endmacro %}
+
+{% macro render_celeb(celeb) %}
+    <li data-id="{{ celeb.id }}">
+        <h3 data-id="{{ celeb.id }}" ><a href="{{ path('pw_board_default_view', {'id': celeb.id, 'slug': celeb.slug} ) }}">{{ celeb.name }}</a></h3>
+    </li>
+{% endmacro %}

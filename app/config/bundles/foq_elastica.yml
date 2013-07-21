@@ -1,0 +1,72 @@
+#
+# ElasticSearch
+foq_elastica:
+    clients:
+        default:
+            host: %elastica.default.host%
+            port: %elastica.default.port%
+    indexes:
+        website:
+            client: default
+            types:
+                board:
+                    mappings:
+                        name: { analyzer: snowball }
+                        isActive: { type: boolean }
+                    persistence:
+                        driver: mongodb
+                        model: PW\BoardBundle\Document\Board
+                        provider:
+                        listener:
+                category:
+                    mappings:
+                        name:
+                        slug:
+                    persistence:
+                        driver: mongodb
+                        model: PW\CategoryBundle\Document\Category
+                        provider:
+                        listener:
+                item:
+                    mappings:
+                        name: { type: string, analyzer: snowball, boost: 5 }
+                        description: { type: string, analyzer: snowball, boost: 3 }
+                        created: { type: integer }
+                        price: { type: float }
+                        isActive: { type: boolean }
+                        isOnSale: { type: boolean }
+                        categories: { type: string, analyzer: keyword}
+                        brandName: { type: string, analyzer: snowball}
+                        merchantName: { type: string }
+                        brandUser: { type: string, analyzer: keyword }
+                        merchantUser: { type: string, analyzer: keyword }
+                        bmcat: { type: string, analyzer: keyword }
+                        bmNames: { type: string, analyzer: keyword }
+                    persistence:
+                        driver: mongodb
+                        model: PW\ItemBundle\Document\Item
+                        provider:
+                        listener:
+                        model_to_elastica_transformer:
+                            service: pw.elastica_model_transformer.item
+                post:
+                    mappings:
+                        description: { type: string, analyzer: snowball }
+                        userType: { type: string, analyzer: keyword }
+                        isActive: { type: boolean }
+                    persistence:
+                        driver: mongodb
+                        model: PW\PostBundle\Document\Post
+                        provider:
+                        listener:
+                user:
+                    mappings:
+                        name: { type: string }
+                        username: { type: string }
+                        type: { type: string, analyzer: keyword }
+                        isActive: { type: boolean }
+                    persistence:
+                        driver: mongodb
+                        model: PW\UserBundle\Document\User
+                        provider:
+                        listener:

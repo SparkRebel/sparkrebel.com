@@ -1,0 +1,40 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}
+    {% if user is defined %}
+        {{ user.name }}'s Collections
+    {% else %}
+        My Collections
+    {% endif %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='compass,?yui_css' 'css/boards.scss' %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block content %}
+  <div id="myCollections">
+    {% if boards.count %}
+        <ul class="boardsList">
+            {% for board in boards %}
+                <li data-class="Board" data-id="{{ board.id }}" >
+					{% include 'PWBoardBundle:Default:partials/thumb.html.twig' with {'data': board} %}
+				</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h2>No collections exist.</h2>
+    {% endif %}
+  </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts filter='?yui_js' 'js/boards.js' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

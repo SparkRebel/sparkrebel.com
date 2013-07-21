@@ -1,0 +1,103 @@
+
+<div class="userFollows">
+    <a id="showFollowers"><span><strong id="followerCount">{{ followers.count }}</strong> followers</span></a>
+    <a id="showFollowing"><span><strong id="followsCount">{{ followingCount }}</strong> following</span></a>
+</div>
+<div id="followingList" style="display:none">
+    <header>
+        <h2>Following</h2>
+    </header>
+
+    <div class="modalContent">
+        <div class="followingContainer">
+            {% if followingBrands %}
+                <h3>Brands & Stores</h3>
+                <ul>
+                    {% for item in followingBrands %}
+                        <li class="user">
+                            <a href="{{ path('user_profile_view', {'name' : item.name}) }}" class="userPicture"><img src="{{ item | user_icon('thumb') }}" alt="" width="50" height="50"></a>        
+                            <a data-class="User" data-id="{{ item.id }}" href="{{ path('user_profile_view', {'name' : item.name}) }}" class="userName">{{item.name}}</a>
+                            <a id="follow-{{ item.type }}-{{ item.id }}" class="button follow" href="{{ path('user_profile_view', {'name' : item.name}) }}">Follow</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            
+            {% if followingVips %}
+                <h3>VIP Members</h3>
+                <ul>
+                    {% for item in followingVips %}
+                        <li class="user">
+                            <a href="{{ path('user_profile_view', {'name' : item.name}) }}" class="userPicture"><img src="{{ item | user_icon('thumb') }}" alt="" width="50" height="50"></a>        
+                            <a data-class="User" data-id="{{ item.id }}" href="{{ path('user_profile_view', {'name' : item.name}) }}" class="userName">{{item.name}}</a>
+                            <a id="follow-user-{{ item.id }}" class="button follow" href="{{ path('user_profile_view', {'name' : item.name}) }}">Follow</a>
+                        </li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+            
+            {% if followingUsers %}
+            <h3>Members</h3>
+            <ul>
+                {% for item in followingUsers %}
+                    <li class="user">
+                        <a href="{{ path('user_profile_view', {'name' : item.name}) }}" class="userPicture"><img src="{{ item | user_icon('thumb') }}" alt="" width="50" height="50"></a>        
+                        <a data-class="User" data-id="{{ item.id }}" href="{{ path('user_profile_view', {'name' : item.name}) }}" class="userName">{{item.name}}</a>
+                        <a id="follow-user-{{ item.id }}" class="button follow" href="{{ path('user_profile_view', {'name' : item.name}) }}">Follow</a>
+                    </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div id="followersList" style="display:none">
+    <header>
+        <h2>Followers</h2>
+    </header>
+
+    <div class="modalContent">
+        <div class="followersContainer">
+            {% if brandsThatFollow %}
+                <h3>Brands & Stores</h3>
+                <ul>
+                    {% for item in brandsThatFollow %}
+                        <li class="user">
+                        <a href="{{ path('user_profile_view', {'name' : item.name}) }}" class="userPicture"><img src="{{ item | user_icon('thumb') }}" alt="" width="50" height="50"></a>        
+        
+                        <a data-class="User" data-id="{{ item.id }}" href="{{ path('user_profile_view', {'name' : item.name}) }}" class="userName">{{item.name}}</a>
+                        <a id="follow-{{ item.type }}-{{ item.id }}" class="button follow" href="{{ path('user_profile_view', {'name' : item.name}) }}">Follow</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            
+            {% if vipsThatFollow %}
+                <h3>VIP Members</h3>
+                <ul>
+                    {% for item in vipsThatFollow %}
+                        <li class="user">
+                            <a href="{{ path('user_profile_view', {'name' : item.name}) }}" class="userPicture"><img src="{{ item | user_icon('thumb') }}" alt="" width="50" height="50"></a>        
+                            <a data-class="User" data-id="{{ item.id }}" href="{{ path('user_profile_view', {'name' : item.name}) }}" class="userName">{{item.name}}</a>
+                            <a id="follow-user-{{ item.id }}" class="button follow" href="{{ path('user_profile_view', {'name' : item.name}) }}">Follow</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            
+            {% if usersThatFollow %}
+                <h3>Members</h3>
+                <ul>
+                    {% for item in usersThatFollow %}
+                        <li class="user">
+                            <a href="{{ path('user_profile_view', {'name' : item.name}) }}" class="userPicture"><img src="{{ item | user_icon('thumb') }}" alt="" width="50" height="50"></a>        
+                            <a data-class="User" data-id="{{ item.id }}" href="{{ path('user_profile_view', {'name' : item.name}) }}" class="userName">{{item.name}}</a>
+                            <a id="follow-user-{{ item.id }}" class="button follow" href="{{ path('user_profile_view', {'name' : item.name}) }}">Follow</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+</div>

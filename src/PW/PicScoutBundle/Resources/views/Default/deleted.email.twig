@@ -1,0 +1,29 @@
+{% extends '::base.email.twig' %}
+
+{% block subject %}Welcome to SparkRebel!{% endblock %}
+
+{% block content_html %}
+Hi {{user.name}},
+<br/><br/>
+We recently removed a spark because it contains copyrighted material, and we were unable to obtain a license for this spark. Sparkrebel is committed to protecting the creative work (and sparks!) of our members and the public by following copyright laws.
+
+{% endblock %}
+
+{% block signature_html %}
+    <p style="margin: 0; padding: 20px 0 5px 0">Join the Style Revolution!</p>
+    <h4 style="margin: 0">Team SparkRebel</h4>
+{% endblock %}
+
+{% block content_text %}
+{% autoescape false %}
+Hi {{user.name}},
+
+We recently removed a spark because it contains copyrighted material, and we were unable to obtain a license for this spark. Sparkrebel is committed to protecting the creative work (and sparks!) of our members and the public by following copyright laws.
+
+{% endautoescape %}
+{% endblock %}
+
+{% block signature_text %}
+Join the Style Revolution!
+- Team SparkRebel
+{% endblock %}

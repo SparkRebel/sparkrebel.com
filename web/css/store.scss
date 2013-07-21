@@ -1,0 +1,1108 @@
+/*-------------------------------------------------------------------
+    Compass Modules
+-------------------------------------------------------------------*/
+@import "compass/css3/border-radius";
+@import "compass/css3/box-shadow";
+@import "compass/css3/inline-block";
+@import "compass/css3/transition";
+@import "compass/utilities/general/clearfix";
+
+/*-------------------------------------------------------------------
+    PW Modules
+-------------------------------------------------------------------*/
+@import "variables.scss";
+@import "mixins.scss";
+
+/*--------------------------------------
+    Search Bar
+----------------------------------------*/
+#shopSearchBar {
+    background-color: #e1e1de;
+    font-family: 'MisoRegular';
+    margin-bottom: 10px;
+    padding: 10px;
+    text-transform: uppercase;
+    @include border-radius(4px);
+    @include pie-clearfix;
+    
+    #shopSearchInput {
+        background: #fff image-url("icons/search.png") 302px 5px no-repeat;
+        border: 1px solid #999;
+        display: block;
+        float: left;
+        margin-right: 10px;
+        padding: 0 5px;
+        @include border-radius(4px);
+        @include box-shadow(#fff 1px 1px 0);
+        @include size(312px, 26px);
+    }
+    
+    .button {
+        float: left;
+        margin-right: 10px;
+    }
+    
+    .button#shopSearchReset {
+        margin-right: 40px;
+        padding-left: 30px;
+        
+        &:before {
+            background-position: -300px -858px;
+        }
+        
+        &:hover:before {
+            background-position: -300px -894px;
+        }
+    }
+    
+    .shopSearchFilterRadio {
+        margin-top: 7px;
+    }
+    
+    label {
+        margin-right: 10px;
+    }
+    
+    .shopSearchCategories {
+        clear: both;
+        font-family: 'MuseoSans900';
+        font-size: $baseFontSize - 2;
+        padding-top: 10px;
+        
+        li {
+            float: left;
+            margin-right: 11px;
+            
+            a {
+                color: $baseFontColor;
+                cursor: pointer;
+                text-decoration: none;
+                
+                &:hover {
+                    color: $linkColor;
+                }
+            }
+            
+            &.current {
+                a {
+                    color: $linkColor;
+                }
+            }
+            
+            &.last {
+                margin-right: 0;
+            }
+            
+            &.selected {
+                a {
+                   color: $linkColor;
+                }
+            }
+        }
+    }
+}
+
+/*--------------------------------------
+    Shop Categories
+----------------------------------------*/
+#shopCategories {
+    ul {
+        padding-left: 6px;
+        @include border-radius(4px);
+        @include pie-clearfix;
+        
+        li {
+            float: left;
+            margin: 26px;
+            
+            a {
+                display: block;
+                overflow: hidden;
+                position: relative;
+                @include border-radius(4px);
+                @include box-shadow(#000 0 1px 4px);
+                @include square(185px);
+                
+                &:hover {
+                    h3 {
+                        color: $linkColor;
+                    }
+                }
+                
+                img {
+                    display: block;
+                    height: 100%;
+                    position: absolute;
+                    width: 100%;
+                }
+                
+                h3 {
+                    background-color: #d3d3ce;
+                    color: #fff;
+                    font-family: 'MisoLight';
+                    font-size: $baseFontSize + 10;
+                    padding-top: 15px;
+                    position: absolute;
+                    text-align: center;
+                    text-transform: uppercase;
+                    top: 0;
+                    @include size(100%, 35px);
+                }
+            }
+        }
+    }
+}
+
+/*--------------------------------------
+    Shop Sidebar
+----------------------------------------*/
+#shopSidebar {
+    background-color: #e1e1de;
+    float: left;
+    padding: 10px 10px 40px;
+    position: relative;
+    width: 200px;
+    @include border-radius(4px);
+    
+    h3,
+    h4 {
+        border-bottom: 2px dotted #c5c5c3;
+        color: #606060;
+        font-family: 'MuseoSans900';
+        font-size: $baseFontSize + 1;
+        margin-bottom: 5px;
+        padding-bottom: 4px;
+        text-transform: uppercase;
+        
+        a {
+            text-decoration: none;
+        }
+    }
+    
+    h4 {
+        border-bottom: none;
+        font-size: $baseFontSize - 1;
+        padding-bottom: 0;
+    }
+    
+    ul {
+        font-family: 'MisoRegular';
+        margin-bottom: 20px;
+        padding-left: 10px;
+        text-transform: uppercase;
+        
+        li {
+            margin-bottom: 10px;
+            
+            a {
+                color: $baseFontColor;
+                cursor: pointer;
+                
+                &:hover {
+                    color: $linkColor;
+                    text-decoration: none;
+                }
+            }
+            
+            &.current {
+                a {
+                    color: $linkColor;
+                }
+            }
+            
+            span {
+                color: #999;
+                font-style: italic;
+            }
+        }
+    }
+    
+    .shopSidebarFilters {
+        font-family: Arial;
+        font-size: $baseFontSize - 3;
+        text-transform: none;
+        
+        li {
+            background: image-url("shop/backgrounds/bg.shopSidebar.tag.png") right top no-repeat;
+            height: 15px;
+            padding: 5px 10px 0 20px;
+            position: relative;
+            
+            a {
+                border: 1px solid #8f8f8f;
+                color: #8f8f8f;
+                display: block;
+                font-size: $baseFontSize - 7;
+                font-weight: bold;
+                padding: 1px 0 0 1px;
+                position: absolute;
+                left: 5px;
+                text-align: center;
+                top: 5px;
+                @include border-radius(8px);
+                @include square(8px);
+            }
+            
+            .shopColor {
+                background-image: image-url("shop/backgrounds/bg.shop.colors.png");
+                background-repeat: no-repeat;
+                margin-right: 5px;
+                @include inline-block;
+                @include size(33px, 7px);
+                
+                &.red {
+                    background-position: -33px -14px;
+                }
+                
+                &.yellow {
+                    background-position: 0 -7px;
+                }
+            }
+        }
+    }
+    
+    #shopSearchPrice {
+        background: none;
+        border: none;
+        margin: 0 0 5px 10px;
+    }
+    
+    #shopSearchPriceSlider {
+        background: #8c8e90;
+        height: 5px;
+        margin: 0 0 20px 10px;
+        position: relative;
+        
+        .ui-slider-handle {
+            background-color: #eaebe7;
+            cursor: pointer;
+            margin-left: -.6em;
+            position: absolute;
+            top: -.3em;
+            z-index: 2;
+            @include box-shadow(#999 0 0px 2px);
+            @include size(9px, 12px);
+        }
+        
+        .ui-slider-range {
+            background: $linkColor;
+            display: block;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            z-index: 1;
+        }
+        
+        .ui-slider-range-min {
+            left: 0;
+        }
+        
+        .ui-slider-range-max {
+            right: 0;
+        }
+    }
+    
+    .shopSidebarStores {
+        position: relative;
+        
+        #shopPopupBrands {
+            background: #fff;
+            display: none;
+            left: 230px;
+            padding: 20px;
+            position: absolute;
+            top: -150px;
+            z-index: 10;
+            @include border-radius(4px);
+            @include box-shadow(#222 0 1px 10px);
+            @include size(500px, 410px);
+            
+            h2 {
+                background-color: #fff;
+                color: $linkColor;
+                font-family: 'MuseoSans900';
+                font-size: $baseFontSize + 1;
+                left: -236px;
+                padding: 6px;
+                position: absolute;
+                text-transform: uppercase;
+                top: 144px;
+                width: 230px;
+                @include border-radius(4px);
+            }
+            
+            h3 {
+                font-family: 'MuseoSans900';
+                font-size: $baseFontSize;
+                margin-bottom: 10px;
+                text-transform: uppercase;
+            }
+            
+            form {
+                margin-bottom: 20px;
+                
+                #shopPopupBrandsInput {
+                    background: #fff image-url("icons/search.png") 200px 5px no-repeat;
+                    border: 1px solid #999;
+                    display: block;
+                    padding: 0 5px;
+                    @include border-radius(4px);
+                    @include size(212px, 26px);
+                }
+            }
+            
+            #shopPopupBrandsContent {
+                height: 330px;
+                overflow: auto;
+                
+                ul {
+                    font-family: 'MuseoSans500';
+                    font-size: $baseFontSize - 3;
+                    margin-bottom: 20px;
+                    padding: 0;
+                    text-transform: none;
+                    @include pie-clearfix;
+                    
+                    li {
+                        float: left;
+                        height: 27px;
+                        margin: 0 6px 0 0;
+                        width: 155px;
+                        
+                        a {
+                            color: #797979;
+                            display: block;
+                            padding: 3px;
+                            text-decoration: none;
+                            
+                            &:hover {
+                                background-color: $linkColor;
+                                color: #fff;
+                                
+                                span {
+                                color: #fff;
+                                }
+                            }
+                        
+                            span {
+                                color: #bfbfbf;
+                            }
+                        }
+                        
+                        &.selected {
+                            a {
+                                background-color: $linkColor;
+                                color: #fff;
+                                
+                                span {
+                                    color: #fff;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            .shopPopupButtons {
+                background-color: #efefef;
+                bottom: 0;
+                left: 0;
+                padding: 10px;
+                position: absolute;
+                width: 520px;
+                @include border-bottom-left-radius(4px);
+                @include border-bottom-right-radius(4px);
+                @include pie-clearfix;
+            }
+            
+            .button {
+                float: right;
+                margin-left: 10px;
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+        }
+    }
+    
+    .shopSidebarColors {
+        border: none;
+        padding: 0;
+        position: relative;
+        
+        .shopSidebarColorsLink {
+            background: image-url("backgrounds/bg.sprite.global.png") -300px -143px no-repeat;
+            display: block;
+            margin-bottom: 10px;
+            text-indent: -9999px;
+            @include size(23px, 17px);
+        }
+        
+        #shopPopupColors {
+            background: #fff;
+            display: none;
+            left: 220px;
+            padding: 20px;
+            position: absolute;
+            top: -110px;
+            z-index: 1;
+            @include border-radius(4px);
+            @include box-shadow(#222 0 1px 10px);
+            @include size(320px, 210px);
+            
+            h2 {
+                background-color: #fff;
+                left: -190px;
+                position: absolute;
+                text-indent: -9999px;
+                top: 106px;
+                @include border-radius(4px);
+                @include size(195px, 24px);
+            }
+            
+            h3 {
+                font-family: 'MuseoSans900';
+                font-size: $baseFontSize;
+                margin-bottom: 10px;
+                text-transform: uppercase;
+            }
+            
+            #shopPopupColorsContent {
+                height: 170px;
+                overflow: auto;
+                
+                ul {
+                    font-family: Arial;
+                    font-size: $baseFontSize - 3;
+                    margin-bottom: 20px;
+                    padding: 0;
+                    text-transform: none;
+                    @include pie-clearfix;
+                    
+                    li {
+                        float: left;
+                        margin: 0;
+                        width: 155px;
+                        
+                        a {
+                            color: #797979;
+                            display: block;
+                            padding: 3px;
+                            text-decoration: none;
+                            
+                            &:hover {
+                                background-color: $linkColor;
+                                color: #fff;
+                                
+                                span {
+                                    color: #fff;
+                                }
+                            }
+                            
+                            .shopColor {
+                                background-image: image-url("shop/backgrounds/bg.shop.colors.png");
+                                background-repeat: no-repeat;
+                                margin-right: 5px;
+                                @include inline-block;
+                                @include size(33px, 7px);
+                                
+                                &.red {
+                                    background-position: -33px -14px;
+                                }
+                                
+                                &.black {
+                                    background-position: 0 0;
+                                }
+                                
+                                &.orange {
+                                    background-position: 0 -14px;
+                                }
+                                
+                                &.white {
+                                    background-position: -33px 0;
+                                }
+                                
+                                &.yellow {
+                                    background-position: 0 -7px;
+                                }
+                                
+                                &.grey {
+                                    background-position: -66px 0;
+                                }
+                                
+                                &.green {
+                                    background-position: -33px -7px;
+                                }
+                                
+                                &.beige {
+                                    background-position: -99px 0;
+                                }
+                                
+                                &.blue {
+                                    background-position: -66px -7px;
+                                }
+                                
+                                &.brown {
+                                    background-position: -132 0;
+                                }
+                                
+                                &.purple {
+                                    background-position: -99px -7px;
+                                }
+                                
+                                &.gold {
+                                    background-position: -165px 0;
+                                }
+                                
+                                &.pink {
+                                    background-position: -132px 0;
+                                }
+                                
+                                &.silver {
+                                    background-position: -165px -7px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            .shopPopupButtons {
+                background-color: #efefef;
+                bottom: 0;
+                left: 0;
+                padding: 10px;
+                position: absolute;
+                width: 340px;
+                @include border-bottom-left-radius(4px);
+                @include border-bottom-right-radius(4px);
+                @include pie-clearfix;
+            }
+            
+            .button {
+                float: right;
+                margin-left: 10px;
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+        }
+    }
+}
+
+/*--------------------------------------
+    Shop Items
+----------------------------------------*/
+#shopItems {
+    background-color: #fff;
+    float: right;
+    padding: 40px 10px;
+    position: relative;
+    width: 710px;
+    @include border-radius(4px);
+    
+    #pagination_top,
+    #pagination_bottom {
+        color: #808080;
+        font-size: $baseFontSize - 2;
+        height: 20px;
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        width: 710px;
+        
+        .itemsCount {
+            color: #808080;
+            font-size: $baseFontSize - 2;
+            left: 0;
+            position: absolute;
+            top: 3px;
+            
+            a {
+                color: #808080;
+                margin: 0 1px;
+                text-decoration: none;
+                @include inline-block;
+                
+                &:hover {
+                    color: $linkColor;
+                }
+                
+                &.current {
+                    color: $linkColor;
+                }
+            }
+        }
+        
+        .pagination {
+            right: 0;
+            position: absolute;
+            text-align: right;
+            width: 550px;
+            
+            .first,
+            .prev,
+            .next {
+                background-color: transparent;
+                background-image: image-url("backgrounds/bg.sprite.global.png");
+                background-repeat: no-repeat;
+                margin: 0 1px;
+                padding: 0;
+                text-indent: -9999px;
+                @include border-radius(0);
+                @include square(16px);
+            }
+            
+            .first {
+                background-position: 0 -158px;
+            }
+            
+            .prev {
+                background-position: 0 -30px;
+            }
+            
+            .next {
+                background-position: 0 2px;
+            }
+            
+            span {
+                margin: 0 6px;
+                text-align: left;
+                @include inline-block;
+            }
+            
+            a {
+                background-color: #eeefef;
+                margin: 0 2px;
+                padding: 4px 8px;
+                text-align: left;
+                text-decoration: none;
+                @include border-radius(4px);
+                @include inline-block;
+                
+                &:hover {
+                    background-color: $linkColor;
+                    color: #fff;
+                }
+                
+                &.first {
+                    &:hover {
+                        background-color: transparent;
+                        background-position: 0 -222px;
+                    }
+                }
+                
+                &.prev {
+                    &:hover {
+                        background-color: transparent;
+                        background-position: 0 -94px;
+                    }
+                }
+                
+                &.next {
+                    &:hover {
+                        background-color: transparent;
+                        background-position: 0 -62px;
+                    }
+                }
+            }
+        }
+    }
+    
+    #pagination_bottom {
+        bottom: 10px;
+        top: auto;
+    }
+    
+    ul {
+        border-left: 1px solid #eee;
+        border-top: 1px solid #eee;
+        max-width: 708px;
+        width: auto;
+        @include inline-block;
+        @include pie-clearfix;
+        
+        li {
+            border-bottom: 1px solid #eee;
+            border-right: 1px solid #eee;
+            float: left;
+            padding: 6px;
+            @include pie-clearfix;
+            @include size(164px, 210px);
+            
+            .product {
+                height: 180px;
+                margin-bottom: 2px;
+                position: relative;
+                text-align: center;
+                
+                &:hover {
+                    .productOverlay {
+                        display: block;
+                    }
+                }
+                
+                img {
+                    max-height: 100%;
+                    max-width: 100%;
+                }
+                
+                .productOverlay {
+                    display: none;
+                    left: 0;
+                    position: absolute;
+                    top: -20px;
+                    @include square(100%);
+                    
+                    .button {
+                        margin: 0 auto 10px;
+                        padding-left: 10px;
+                        padding-right: 10px;
+                        width: 60px;
+                        
+                        &.buy {
+                            margin-top: 60px;
+                            padding-left: 30px;
+                            width: 30px;
+                            
+                            &:before {
+                                background-position: -300px -391px;
+                            }
+                            
+                            &:hover:before {
+                                background-position: -300px -423px;
+                            }
+                        }
+                        
+                        &.repost {
+                            padding-left: 30px;
+                            width: 50px;
+                            
+                            &:before {
+                                background-position: -300px -180px;
+                            }
+                            
+                            &:hover:before {
+                                background-position: -300px -214px;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            .itemInformation {
+                color: #808080;
+                font-family: 'MuseoSans500';
+                font-size: $baseFontSize - 4;
+                text-align: left;
+                @include pie-clearfix;
+                
+                a {
+                    color: #808080;
+                }
+                
+                .itemBrand {
+                    float: left;
+                    width: 109px;
+                }
+                
+                .itemPrice {
+                    float: right;
+                    text-align: right;
+                    width: 50px;
+                }
+            }
+        }
+    }
+    
+    .paginationContainer {
+        display: none;
+    }
+    
+    #noSearchResults {
+        display: none;
+    }
+}
+
+/*--------------------------------------
+    Responsive: Tablet and Facebook
+----------------------------------------*/
+@media only screen and (max-width: 810px) {
+    #shopSearchBar {
+        padding-bottom: 2px;
+        
+        #shopSearchInput {
+                background-position: 210px 5px;
+                width: 220px;
+        }
+            
+        .shopSearchCategories {
+            font-size: $baseFontSize - 3;
+            
+            li {
+                margin: 0 10px 8px 0;
+            }
+        }
+    }
+    
+    #shopCategories {
+        ul {
+            padding-left: 4px;
+            
+            li {
+                float: left;
+                margin: 26px;
+            }
+        }
+    }
+	
+	#shopSidebar {
+        width: 150px;
+        
+        .shopSidebarStores {
+            #shopPopupBrands {
+                left: 160px;
+                top: -150px;
+                @include size(500px, 410px);
+                
+                h2 {
+                    left: -166px;
+                    width: 160px;
+                }
+                
+                #shopPopupBrandsContent {
+                    height: 330px;
+                    
+                    ul {
+                        li {
+                            width: 155px;
+                        }
+                    }
+                }
+                
+                .shopPopupButtons {
+                    width: 520px;
+                }
+            }
+        }
+	}
+    
+    #shopItems {
+        width: 520px;
+        
+        #pagination_top,
+        #pagination_bottom {
+            width: 520px;
+            
+            .itemsCount {
+                font-size: $baseFontSize - 4;
+            }
+            
+            .pagination {
+                font-size: $baseFontSize - 3;
+                width: 400px;
+                
+                a {
+                    padding: 2px 3px;
+                    @include border-radius(2px);
+                }
+            }
+        }
+        
+        ul {
+            max-width: none;
+            
+            li {
+                width: 160px;
+                
+                .itemInformation {
+                    .itemBrand {
+                        width: 105px;
+                    }
+                    
+                    .itemPrice {
+                        width: 50px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*--------------------------------------
+    Responsive: Mobile
+----------------------------------------*/
+@media only screen and (max-device-width: 480px) {
+    #shopSearchBar {
+        padding-bottom: 5px;
+        
+        #shopSearchInput {
+            margin-bottom: 10px;
+        }
+        
+        .button {
+            margin-bottom: 10px;
+        }
+        
+        .shopSearchFilters {
+            clear: both;
+            font-size: $baseFontSize - 2;
+        }
+        
+        .shopSearchCategories {
+            li {
+                float: none;
+                font-size: $baseFontSize - 2;
+                margin: 0 0 5px;
+            }
+        }
+    }
+    
+    #shopCategories {
+        ul {
+            padding-left: 0;
+            
+            li {
+                margin: 5px;
+                
+                a {
+                    @include square(140px);
+                    
+                    h3 {
+                        font-size: $baseFontSize + 4;
+                        height: 32px;
+                        padding-top: 18px;
+                    }
+                }
+            }
+        }
+    }
+    
+    #shopSidebar {
+        float: none;
+        margin-bottom: 10px;
+        width: 280px;
+        
+        .shopSidebarStores {
+            #shopPopupBrands {
+                left: -10px;
+                padding-left: 10px;
+                padding-right: 10px;
+                top: -150px;
+                @include size(280px, 410px);
+                
+                h2 {
+                    display: none;
+                }
+                
+                #shopPopupBrandsContent {
+                    height: 330px;
+                    
+                    ul {
+                        li {
+                            float: none;
+                            height: auto;
+                            margin-bottom: 5px;
+                            width: 260px;
+                        }
+                    }
+                }
+                
+                .shopPopupButtons {
+                    width: 280px;
+                }
+            }
+        }
+    }
+    
+    #shopItems {
+        float: none;
+        width: 280px;
+        
+        #pagination_top,
+        #pagination_bottom {
+            width: 280px;
+            
+            .itemsCount {
+                display: none;
+            }
+            
+            .pagination {
+                width: 280px;
+                
+                span {
+                    margin: 0 2px;
+                }
+            }
+        }
+        
+        ul {
+            max-width: 278px;
+            
+            li {
+                @include size(126px, 180px);
+                
+                .product {
+                    height: 130px;
+                    
+                    .productOverlay {
+                        top: -30px;
+                    }
+                }
+                
+                .itemInformation {
+                    .itemBrand {
+                        width: 71px;
+                    }
+                    
+                    .itemPrice {
+                        width: 50px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*--------------------------------------
+    Responsive: Wide
+----------------------------------------*/
+@media only screen and (min-width : 1220px) {
+    #shopSearchBar {
+        .shopSearchCategories {
+            li {
+                margin-right: 30px;
+            }
+        }
+    }
+    
+    #shopItems {
+        width: 950px;
+        
+        #pagination_top,
+        #pagination_bottom {
+            width: 950px;
+            
+            .pagination {
+                width: 790px;
+            }
+        }
+        
+        ul {
+            margin-left: 2px;
+            max-width: 945px;
+            
+            li {
+                width: 176px;
+                
+                .itemInformation {
+                    .itemBrand {
+                        width: 121px;
+                    }
+                    
+                    .itemPrice {
+                        width: 50px;
+                    }
+                }
+            }
+        }
+    }
+}

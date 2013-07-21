@@ -1,0 +1,163 @@
+{% extends '::base.html.twig' %}
+
+{% set canonicalUrl = url('pw_board_default_view', {'id': board.id, 'slug': board.slug}) %}
+
+{% block title %}{{ board.name }} - {{ board.createdBy.name }}{% endblock %}
+
+{% block opengraph %}
+    {{ parent() }}
+    <meta property="og:type"  content="{{ facebook.namespace }}:collection">
+    <meta property="og:url"   content="{{ canonicalUrl | clean_env }}">
+    <meta property="og:title" content="{{ board.name }}">
+    {% if latestPosts is defined %}
+    
+        {% for latestPost in latestPosts %}
+        <meta property="og:image" content="{{ latestPost.image | version('large',true) }}">
+        {% endfor %}
+    {% else %}
+    <meta property="og:image" content="{{ app.request.getUriForPath('/') | clean_env }}images/facebook/collection.png">
+    {% endif %}
+    {% if board.category %}
+        <meta property="{{ facebook.namespace }}:channel" content="{{ url('board_category_view', {'slug': board.category.slug}) | clean_env }}">
+    {% endif %}
+    
+{% endblock %}
+
+{% block canonical %}{{ canonicalUrl }}{% endblock %}
+
+{% block content %}
+    {% set boardType = board.createdBy.userType %}
+
+    <div id="boardInformation">
+        <h2>
+            "{{ board.name }}"
+            {% if board.category and board.category.type == 'user' %}
+                <small>Category <a href="{{ path('board_category_view', {'slug': board.category.slug}) }}">{{ board.category }}</a></small>
+            {% endif %}
+        </h2>
+        <div class="boardFollows"><strong>{{ followersCount }}</strong> following</div>
+        <div class="boardOwner">
+            <a href="{{ board.createdBy | profile_link }}" class="userPicture"><img src="{{ board.createdBy | user_icon('thumb') }}" alt="{{ board.createdBy.name }}"></a>
+            <div class="userName">by <a href="{{ board.createdBy | profile_link }}">{{ board.createdBy.name }}</a></div>
+        </div>
+        <ul class="boardToolbar">
+        {% if ownedByMe %}
+            <li class="boardDelete">
+                <a data-confirm="Are you sure you want to delete this Collection and <strong>ALL</strong> of its Sparks?" data-method="delete" href="{{ path('pw_board_delete', {'id': board.id}) }}" class="button">Delete</a>
+            </li>
+            <li class="boardEdit last">
+                <a href="{{ path('pw_board_default_edit', {'id': board.id}) }}" class="button">Edit</a>
+            </li>
+        {% else %}
+            <li class="boardFollow last">
+                <a id="follow-board-{{ board.id }}" class="button follow" href="{{ path('pw_user_follow_board', {'id': board.id}) }}">Follow Collection</a>
+            </li>
+        {% endif %}
+        </ul>
+        <div class="boardLike">
+            <div class="fb-like" data-send="false" data-layout="button_count" data-width="100" data-show-faces="false"></div>
+        </div>
+        {% if board.description %}
+            <p class="boardDescription">{{ board.description }}</p>
+        {% endif %}
+    </div>
+
+    {% render 'PWPostBundle:Stream:stream' with {'type': 'board', 'id' : board.id} %}
+
+    {% if ownedByMe %}
+        <div id="boardEditModal" style="display: none">
+            <header>
+                <h2>Edit your collection</h2>
+            </header>
+            <div class="modalContent">
+              {% render "PWBoardBundle:Default:edit" with {id: board.id, render: true} %}
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts filter='?yui_js' combine=true
+        'js/jquery.sqbricks.js'
+        'js/libs/webfont.js'
+        'js/libs/jquery.jail.js'
+        'js/libs/jquery.infinitescroll.js'
+        'js/libs/jquery.rwdImageMaps.js'
+        'js/libs/jquery.tooltip.js'
+        'js/stream.js'
+    %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and not board.wasCreatedBy(app.user) and howManyCollectionsIsFollow == 0 %}
+        <script type="text/javascript" charset="utf-8">
+            $(document).ready(function() {
+                APP.posts.showCollectionGuider();
+            });
+
+        </script>
+    {% endif %}
+
+    {% if board.createdBy() == 'celebs@sparkrebel.com' %}
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_trackEvent', 'Celebs', 'Stream', '{{ board.name }}']);
+    </script>
+    {% endif %}
+    <script>
+    $(function() {
+        function _getModalWidth(width) {
+            var modalWidth = 300;
+            if ($('#content').width() > 300) {
+                modalWidth = width;
+            }
+            return modalWidth;
+        }
+
+        $(".boardEdit").click(function(e){
+            e.preventDefault();
+            $("#boardEditModal").dialog({
+                closeOnEscape: true,
+                autoOpen: true,
+                modal: true,
+                dialogClass: "modalWindow boardEditModal",
+                closeText: "X",
+                draggable: false,
+                resizable: false,
+                width: _getModalWidth(680),
+            });
+        });
+
+        $("#boardEditModal").find('form').submit(function(e){
+            e.preventDefault();
+            var $form  = $(this),
+                $error = $form.children(".error"),
+                serialized = $form.serialize();
+            $error.slideUp("fast");
+            $form.find('input, select').attr("disabled", true);
+            $.post($form.attr("action"), serialized, function(json) {
+                if (json.success) {
+                    window.location.reload();
+                } else {
+                    if (json.error) {
+                        $error.text(json.error);
+                    } else {
+                        $error.text('An error occurred. Please try again...');
+                    }
+                    $error.removeClass("success").addClass("error").slideDown("fast");
+                    $form.find('input, select').attr("disabled", false);
+                }
+            }).error(function() {
+                $error.text('An error occurred. Please try again...');
+                $error.removeClass("success").addClass("error").slideDown("fast");
+                $form.find('input, select').attr("disabled", false);
+            });
+            return false;
+        });
+    });
+    </script>
+{% endblock %}

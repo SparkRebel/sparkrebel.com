@@ -1,0 +1,85 @@
+{% extends '::admin/base.html.twig' %}
+
+{% block title %}Admin : Invite Requests{% endblock %}
+
+{% block content %}
+    <form action="{{ path('admin_invite_request_mass') }}" method="post">
+
+        <header class="adminNav">
+            <ul>
+                <li><h2><a href="{{ path('admin_dashboard_index') }}">Admin</a> : </h2></li>
+                <li><h3>Invite Requests</h3></li>
+            </ul>
+        </header>
+
+        {{ knp_menu_render('PWInviteBundle:Admin\\Builder:requestsMenu') }}
+
+        <div class="massactions">
+            <label for="massAction">Actions</label>
+            <select id="massAction" name="massaction" disabled="disabled">
+                <option></option>
+                {% if status == 'pending' %}
+                    <option value="assign_new_random">Assign New Random Code to Selected</option>
+                    <option value="assign_new_custom">Assign New Custom Code to Selected</option>
+                    <option value="delete">Delete Selected</option>
+                {% endif %}
+            </select>
+            <input id="massSubmit" type="submit" value="Submit" disabled="disabled">
+        </div>
+
+        <table width="100%" class="datagrid">
+            <thead>
+                <tr>
+                    <th width="1"><input id="selectAll" type="checkbox" disabled="disabled"></th>
+                    <th>{{ requests.sortable('E-mail', 'email') | raw }}</th>
+                    <th>{{ requests.sortable('Requested Date', 'requestedCodeAt') | raw }}</th>
+                    {% if status != 'pending' %}
+                        <th>{{ requests.sortable('Assigned Date', 'assignedCodeAt') | raw }}</th>
+                        <th>Code</th>
+                    {% endif %}
+                    <th width="1">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if requests.count %}
+                    {% for inviteRequest in requests %}
+                        <tr {% if loop.index is odd %}class="odd"{% endif %}>
+                            <td><input type="checkbox" name="requests[]" value="{{ inviteRequest.id }}"></td>
+                            <td>{{ inviteRequest.email }}</td>
+                            <td>{{ inviteRequest.requestedCodeAt | date('Y-m-d') }}</td>
+                            {% if status != 'pending' %}
+                                <td>
+                                    {% if inviteRequest.assignedCodeAt is not empty %}
+                                        {{ inviteRequest.assignedCodeAt | date('Y-m-d') }}
+                                    {% else %}
+                                        N/A
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if inviteRequest.code is not empty %}
+                                        {{ inviteRequest.code.value }}
+                                    {% else %}
+                                        N/A
+                                    {% endif %}
+                                </td>
+                            {% endif %}
+                            <td class="actions">
+                                <ul>
+                                    {% if inviteRequest.code is empty %}
+                                        <li><a href="{{ path('admin_invite_request_assign', {'id': inviteRequest.id}) }}">Assign Code</a></li>
+                                        <li><a href="{{ path('admin_invite_request_delete', {'id': inviteRequest.id}) }}" class="delete">Delete</a></li>
+                                    {% endif %}
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <td colspan="100" class="no-results">No invite requests to display with status <strong>{{ status }}</strong></td>
+                {% endif %}
+            </tbody>
+        </table>
+
+        {{ requests.render() | raw }}
+
+    </form>
+{% endblock %}

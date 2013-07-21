@@ -1,0 +1,3 @@
+pw_board_api:
+    resource: PW\BoardBundle\Controller\Api\BoardController
+    type:     rest

@@ -1,0 +1,77 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='compass,?yui_css' 'css/brands.scss' %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block content %}
+    <!-- <h2>{{ title }}</h2> -->
+    {% if is_granted('ROLE_USER') %}
+
+        <div class="myBrandsFilters">
+            <h3>Filter Your Brands</h3>
+            <ul>
+                {# <!--<li{% if brand_id == null %} class="selected"{% endif %}>
+                    <a href="{{ path('brands_stream') }}">
+                        <div class="brandLogo">
+                            <img src="{{ asset('images/brands/all.png') }}">
+                        </div>
+                        <p>All brands</p>
+                    </a>
+                </li>--> #}
+
+                {% for brand in brands_i_follow %}
+                    <li{% if brand_id == brand.id %} class="selected"{% endif %}>
+                        <a href="{{ path('brands_stream', {brand_id: brand.id, slug: brand.name}) }}">
+                            <div class="brandLogo">
+                                <img src="{{ brand | user_icon('thumb') }}" width="50" height="50">
+                            </div>
+                            <p>{{brand.name}}</p>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <a href="{{ path('brands_settings') }}">Add/Remove brands</a>
+
+        </div>
+
+
+        {% render 'PWPostBundle:Stream:stream' with {'type': 'brandStream', 'id': app.user.id, 'brand_id': brand_id} %}
+    {% else %}
+        {% render 'PWPostBundle:Stream:stream' with {'type': 'brandAnon'} %}
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts filter='?yui_js' combine=true
+        'js/jquery.sqbricks.js'
+        'js/libs/webfont.js'
+        'js/libs/jquery.jail.js'
+        'js/libs/jquery.infinitescroll.js'
+        'js/libs/jquery.rwdImageMaps.js'
+        'js/libs/jquery.tooltip.js'
+        'js/stream.js'
+    %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+    <script type="text/javascript">
+            $(document).ready(function() {
+                $li_selected = $(".myBrandsFilters li.selected");
+                if (typeof($li_selected.position()) != 'undefined') {
+                    $selectedPosition = $li_selected.position().top;
+                    $(".myBrandsFilters ul").scrollTop($selectedPosition);
+                }
+            });
+    </script>
+{% endblock %}

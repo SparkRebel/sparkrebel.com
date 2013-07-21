@@ -1,0 +1,28 @@
+{% block content %}
+{% set ts = null %}
+<ul id="footerNotificacionsList">
+    {% if notifications.count > 0 %}
+        {% for notification in notifications %}
+            {% if ts is null %}
+                {% set ts = notification.created|date('U') %}
+            {% endif %}
+    		<li class="{{ notification.type }}" data-class="Notification" data-id="{{ notification.id }}">
+                {% set template = 'PWActivityBundle:Notification:partials/' ~ notification.type ~ '.html.twig' %}
+                {% include [ template, 'PWActivityBundle:Notification:partials/unknown.html.twig'] %}
+            </li>
+        {% endfor %}
+    {% else %}
+        <li>You have no <strong>notifications</strong>.</li>
+    {% endif %}
+    <li class="seeAll">
+      <a href="{{ path('activity_notification_list', {'id': app.user.id}) }}">See All</a> {{ newCount }} Unread
+    </li>
+</ul>
+
+<script>
+    APP.notifications.notificationsTs = '{{ ts }}';
+{% if newCount > 0 %}
+    APP.notifications.inc({{ newCount }});
+{% endif %}    
+</script>
+{% endblock %}

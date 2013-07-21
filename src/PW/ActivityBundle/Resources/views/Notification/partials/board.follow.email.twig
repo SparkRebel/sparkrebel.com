@@ -1,0 +1,23 @@
+{% extends 'PWActivityBundle:Notification:partials/base.email.twig' %}
+
+{% block icon %}
+    <a href="{{ notification.target.follower | profile_link(true) }}?{{ tag }}">
+        <img src="{{ notification.target.follower.icon | user_icon('thumb') }}" width="50" height="50" style="border: 1px solid #eee"></a>
+{% endblock %}
+
+{% block name %}
+    <a href="{{ notification.target.follower | profile_link(true) }}" style="color: #ed2978; text-decoration: none;">
+        {{ notification.target.follower.name }}</a>
+{% endblock %}
+
+{% block message %}
+    {% if notification.category == "friend" %}
+        is now following
+        <a href="{{ url('pw_board_default_view', {'id': notification.target.target.id, 'slug': notification.target.target.slug} ) }}?{{ tag }}" style="color: #ed2978; text-decoration: none;">
+            {{ notification.target.target.name }}</a>.
+    {% else %}
+        is now following your
+        <a href="{{ url('pw_board_default_view', {'id': notification.target.target.id, 'slug': notification.target.target.slug} ) }}?{{ tag }}" style="color: #ed2978; text-decoration: none;">
+            {{ notification.target.target.name }}</a> collection.
+    {% endif %}
+{% endblock %}

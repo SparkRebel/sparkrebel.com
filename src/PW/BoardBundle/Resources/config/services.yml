@@ -1,0 +1,38 @@
+parameters:
+    pw_board.board.class: PW\BoardBundle\Document\Board
+
+services:
+    pw_board.board_manager:
+        class: PW\BoardBundle\Model\BoardManager
+        parent: pw.model_manager
+        calls:
+            - [ setClass, ["%pw_board.board.class%"] ]
+            - [ setUserManager, ["@pw_user.user_manager"] ]
+            - [ setContainer, ["@service_container"] ]
+
+    pw_board.board_listener:
+        class: PW\BoardBundle\EventListener\BoardListener
+        parent: pw.event_listener
+        public: false
+        tags:
+            - { name: doctrine_mongodb.odm.event_listener, event: postPersist }
+            - { name: doctrine.odm.mongodb.soft_delete.event_listener, event: preSoftDelete }
+            - { name: doctrine.odm.mongodb.soft_delete.event_listener, event: postSoftDelete }
+
+    twig.extension.boardposts:
+        class: PW\BoardBundle\Extension\BoardPosts
+        calls:
+            - [ setPostManager, ["@pw_post.post_manager"] ]
+        tags:
+            - { name: twig.extension }
+
+    validator.unique.board:
+        class: PW\BoardBundle\Validator\UniqueBoardValidator
+        calls:
+            - [ setContainer, ["@service_container"] ]
+        tags:
+            - { name: validator.constraint_validator, alias: validator.unique.board }
+    pw.twig.board.icon:
+        class: PW\BoardBundle\Extension\BoardIcon
+        tags:
+            - { name: twig.extension }

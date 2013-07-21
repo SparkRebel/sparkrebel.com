@@ -1,0 +1,89 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Select Image{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='compass,?yui_css' 'css/add.scss' %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block content %}
+    <div class="addProcess">
+      <h1>
+          <span id="imageCount">0</span> relevant images were found on the url you provided:
+      </h1>
+      <ul class="fetchImages">
+      {% for id,image in images %}
+          <li id="li_{{ id }}"><a  id="image_{{ id }}" href="{{ url('post_add_index', {'type': 'asset', 'image': image, 'url': url}) }}"></a></li>
+      {% endfor %}
+      </ul>
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+<script>
+var images = {{images|json_encode|raw}},
+    i;
+
+var isIE = /msie/i.test(navigator.userAgent) && !/opera/i.test(navigator.userAgent);
+function bind(element, type, callback) {
+    if (isIE) {
+        element.attachEvent('on'+type, callback);
+    } else {
+        element.addEventListener(type, callback, false);
+    }
+}
+
+/**
+ *  Return the image size (width and height)
+ */
+function getImageSize(src, next) {
+    var img = document.createElement('img');
+    bind(img, 'load', function() {
+        next(img.width, img.height, img);
+    });
+    bind(img, 'error', function() {
+        next(-1, -1);
+    });
+    img.setAttribute('src', src);
+}
+
+var min_width  = 100,
+    min_height = 100,
+    filter = /(ads|advertisers)/i,
+    total = 0;
+
+function checkImgSize(id) {
+    getImageSize(images[id], function(w, h, img) {
+        if (w > min_width && h > min_height && !filter.exec(images[id])) {
+            document.getElementById("image_" + id).appendChild(img);
+            total = total + 1;
+            updateTotal(total);
+        } else {
+            var r = document.getElementById("li_" + id);
+            r.parentNode.removeChild(r);
+            console.log('removed ' + r);
+        }
+    });
+}
+
+function updateTotal(num) {
+    document.getElementById("imageCount").innerHTML = num;
+}
+
+function processImages() {
+	var i;
+    for (i = 0; i < images.length; i += 1) {
+        checkImgSize(i);
+    }
+}
+
+$(function() {
+    processImages();
+});
+</script>
+{% endblock %}

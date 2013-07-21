@@ -1,0 +1,14 @@
+
+{% block content %}
+    <form action="{{ path('api_client_request') }}" method="post" {{ form_enctype(form) }}>
+        {{ form_errors(form) }}
+        <fieldset>
+            <ul>
+                <li>
+                    <input type="submit" value="Submit Request" class="button primary">
+                </li>
+            </ul>
+        </fieldset>
+        {{ form_rest(form) }}
+    </form>
+{% endblock %}

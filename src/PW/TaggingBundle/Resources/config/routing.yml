@@ -1,0 +1,7 @@
+pw_tagging:
+    resource: "@PWTaggingBundle/Controller/"
+    type:     annotation
+
+pw_admin_tagging:
+    resource: "@PWTaggingBundle/Controller/Admin/"
+    type:     annotation

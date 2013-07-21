@@ -1,0 +1,8 @@
+pw_email_view:
+    pattern:  /email/view/{type}/{output}
+    defaults:
+        _controller: PWApplicationBundle:Default:emailView
+        type: welcome
+        output: both
+    requirements:
+        _method:  GET

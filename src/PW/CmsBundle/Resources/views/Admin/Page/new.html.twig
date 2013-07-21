@@ -1,0 +1,15 @@
+{% extends '::admin/base.html.twig' %}
+
+{% block title %}Admin : CMS Pages : Create New Page{% endblock %}
+
+{% block content %}
+    <header class="adminNav">
+        <ul>
+            <li><h2><a href="{{ path('admin_dashboard_index') }}">Admin</a> : </h2></li>
+            <li><h3><a href="{{ path('admin_cms_page_index') }}">CMS Pages</a> : </h3></li>
+            <li><h3>Create New Page</h3></li>
+        </ul>
+    </header>
+
+    {% include 'PWCmsBundle:Admin\\Page:partials/form.html.twig' %}
+{% endblock %}

@@ -1,0 +1,10 @@
+parameters:
+    pw_job.job.class: PW\JobBundle\Document\Job
+
+services:
+    pw_job.job_manager:
+        class: PW\JobBundle\Model\JobManager
+        parent: pw.model_manager
+        calls:
+            - [ setClass, ["%pw_job.job.class%"] ]
+            - [ setBoardManager, ["@pw_board.board_manager"] ]

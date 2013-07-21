@@ -1,0 +1,52 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='compass,?yui_css' 'css/activity.scss' %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block content %}
+    <div id="notifications">
+        <h2>{{ title }}</h2>
+        {% set currentDay = null %}
+        {% set nextTs = null %}
+        {% for notification in notifications %}
+            {% set daysAgo = notification.created | humane_date({'min': 'day', 'max': 'week', 'min_display': 'today', 'class': null, 'prefix': null}) | striptags %}
+            {% if currentDay != daysAgo %}
+                {% set currentDay = daysAgo %}
+                {% if not loop.first %}
+                    </ul>
+                {% endif %}
+                <h3>{{ daysAgo }}</h3>
+                <ul class="activities">
+            {% endif %}
+            <li>
+                {% set template = 'PWActivityBundle:Notification:partials/' ~ notification.type ~ '.html.twig' %}
+                {% include [ template, 'PWActivityBundle:Notification:partials/unknown.html.twig'] %}
+            </li>
+            {% if loop.last %}
+                </ul>
+                {% set nextTs = notification.created | date("U") %}
+            {% endif %}
+        {% else %}
+            {% set currentDay = date() %}
+            <h3>{{ currentDay | humane_date({'min': 'day', 'max': 'week', 'min_display': 'today', 'prefix' : null} ) | striptags }}</h3>
+            <ul class="activities">
+                <li>We have no {{ title | lower }} to show you</li>
+            </ul>
+        {% endfor %}
+
+        <ul id="notificationsPaginate">
+            {% if startTs is not empty %}
+                <li class="first"><a href="{{ path(path, {'id': id}) }}"><span></span>First</a></li>
+            {% endif %}
+            {% if more %}
+                <li class="next"><a href="{{ path(path, {'id': id, 'startTs': nextTs}) }}">Next<span></span></a></li>
+            {% endif %}
+        </ul>
+    </div>
+{% endblock %}

@@ -1,0 +1,133 @@
+{% if data.board.name is defined %}
+    {% set twitterText = data.board.name ~ ': ' ~ data.description|slice(0, 50) ~ (data.description|length > 50 ? '…' : '') %}
+{% endif %}
+
+{% block content %}
+
+    {% set globalRepostCount = data.repostCount %}
+    <div class="post" data-class="Post" data-id="{{ data.id }}" data-number-of-comments="{{data.activity.count}}">
+        {% if not is_granted("IS_AUTHENTICATED_REMEMBERED") and data.isSalesAndPromos %}
+            <div class="postPromo">
+                <div class="postPromoContent">
+                    <div class="postPromoIcon"></div>
+                    <p>Promos available for members only</p>
+                    <a class="requireAuth" data-url="{{ path('fos_user_security_login') }}">Click here to login/sign-up</a>
+                </div>
+            </div>
+        {% endif %}
+        <div class="postAttribution">
+            {% if data.original %}
+                {% set globalRepostCount = data.original.aggregateRepostCount + 1 %}
+                Sparked first by <a href="{{ data.original.createdBy | profile_link }}" class="aLink">{{ data.original.createdBy.name }}</a>
+                <small>{{ globalRepostCount }} {% if globalRepostCount != 1 %} Collections {% else %} Collection {% endif %}</small>
+            {% elseif data.isReposted %}
+                Sparked first by <a href="{{ data.createdBy | profile_link }}" class="aLink">{{ data.createdBy.name }}</a>
+                <small>{{ data.aggregateRepostCount + 1 }}  {% if data.aggregateRepostCount != 0 %} Collections {% else %} Collection {% endif %}</small>
+            {% endif %}
+
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and data.wasCreatedBy(app.user) or is_granted("ROLE_ADMIN") or (is_granted("ROLE_OPERATOR") and data.createdBy.isCeleb) %}
+              <div class="postOptions">
+                  <ul>
+                    <li><a data-dialog-class="postModal existingBoard" data-dialog-width="780" href="{{ path('pw_post_edit', {id: data.id}) }}" title="Edit spark" class="dialog edit">Edit</a></li>
+                    {% if is_granted("ROLE_ADMIN") and data.image %}
+                    <li><a href="{{ path('asset_fix', {id: data.image.id}) }}" title="Fix image" target="_blank"  class="dialog edit">Fix image</a></li>
+                    {% endif %}
+                    <li><a data-confirm="Are you sure you want to delete this Spark?" data-method="delete" href="{{ path('pw_post_delete', {id: data.id}) }}" class="delete">Delete</a></li>
+                  </ul>
+              </div>
+            {% endif %}
+        </div>
+
+        {% if data.image.meta.copyright is defined %}
+            <div class="postCopyright">
+                {{ data.image.meta.copyright }}
+            </div>
+        {% endif %}
+
+        <div class="postImage {% if data.isCeleb or (data.original and data.original.isCeleb) %} celebImage {% endif %}">
+            <div class="postActions">
+                <div class="postActionsButtons">
+                    <a class="button loveit" data-id="{{ data.id }}" title="Love it!">Love it!</a>
+                    <a data-description="{{ data.description }}" data-href="{{ path('post_add_index', {'type': 'repost', 'id': data.id}) }}" class="button respark" data-id="{{ data.id }}" title="Respark">Respark</a>
+                    <!-- <a class="button comment" title="Comment">Comment</a> -->
+                    <a href="{{ path('pw_post_default_view', {'id': data.id, 'slug': data.description | sluggify} ) }}" class="button moreinfo" title="More info">More info</a>
+                </div>
+                <!--
+                <div class="postActionsShare">
+                    <div class="addthis_toolbox addthis_default_style">
+                        <div class="fb-like" data-href="{{ url('pw_post_default_view', {'id': data.id, 'slug': data.description | sluggify} ) }}" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false" data-font="lucida grande"></div>
+                        <div class="fb-send" data-href="{{ url('pw_post_default_view', {'id': data.id, 'slug': data.description | sluggify} ) }}" data-font="lucida grande"></div>
+                        <a href="https://twitter.com/share" class="twitter-share-button" data-url="{{ url('pw_post_default_view', {'id': data.id, 'slug': data.description | sluggify} ) }}" data-text="{{ twitterText }}" data-via="SparkRebel">Tweet</a>
+                    </div>
+                </div>
+                -->
+            </div>
+            <a href="{{ path('pw_post_default_view', {'id': data.id, 'slug': data.description | sluggify} ) }}" class="aLink">
+                <img class="lazy" src="{{ asset('/images/items/blank.png') }}" data-src="{{ data.image | version('large') }}" alt="{{ data.description }}" data-ratio="{{ data.image.aspectRatio | default('') }}" data-class="Asset" data-id="{{ data.image.id }}" data-width="{{ data.image.originalDimensions['width'] }}">
+                <noscript><img src="{{ data.image | version('large') }}" alt="{{ data.description }}"></noscript>
+                {% if data.isVideoPost %}
+                    <img src="{{ asset('images/icons/video.png') }}" class="postImagePlay">
+                {% endif %}
+            </a>
+        </div>
+
+        {% if data.targetType == 'items' %}
+            <div class="postItemInformation">
+                <p class="itemBrand">
+                    <a href="{{ data.target.createdBy | profile_link }}" class="aLink">{{ data.target.createdBy.name }}</a>
+                </p>
+                <p class="itemPrice">
+                    {% if data.target.isOnSale %}
+                        <span class="itemPriceOld">{{ data.target.pricePrevious | craue_currency }}</span>
+                        <br>
+                        {{ data.target.price | craue_currency }}
+                    {% else %}
+                        {{ data.target.price | craue_currency }}
+                    {% endif %}
+                </p>
+                <a href="{{ data.link }}" target="_blank" class="button buy">Buy it</a>
+            </div>
+        {% endif %}
+
+        <p class="postDescription">{{ data.description|strip_entities }}</p>
+        <p class="repostTo">
+            <a href="{{ data.createdBy | profile_link }}" data-class="{{ data.createdBy.type | capitalize }}" data-id="{{ data.createdBy.id }}" class="aLink userPicture"><img src="{{ data.createdBy | user_icon('thumb') }}" alt=""></a>
+            <a href="{{ data.createdBy | profile_link }}" data-class="{{ data.createdBy.type | capitalize }}" data-id="{{ data.createdBy.id }}" class="aLink">{{ data.createdBy.name }}</a>
+            to
+            {% if data.board %}
+                <a data-class="Board" data-id="{{ data.board.id }}" href="{{ path('pw_board_default_view', {'id': data.board.id, 'slug': data.board.slug} ) }}">{{ data.board.name }}</a>
+            {% endif %}
+            <small>{{ data.created | humane_date | raw }}</small>
+        </p>
+        <p class="postCount">
+            {{ data.repostCount }} {% if data.repostCount == 1 %} respark {% else %} resparks {% endif %}
+            <span>{{ data.activity.count }}</span>
+        </p>
+
+        <div class="postComments {% if data.activity.count == 0 %} noComments {% endif %} {% if data.activity.count > 0 or friends.contains(data.createdBy.id) %} open {% endif %}">
+            <ul class="postActivity">
+                {% for row in data.recentActivity %}
+                    {% include 'PWPostBundle:Activity:partials/activity.html.twig' with {'post': data, 'activity': row, 'showReplyForm': false} %}
+                {% endfor %}
+                {% if data.activity.count > 5 %}
+                    <li class="postCommentsMore">
+                        <a href="{{ path('pw_post_default_view', {'id': data.id, 'slug': data.description | sluggify} ) }}#comments">
+                            See all <span>{{ data.activity.count }}</span> comments</a>
+                    </li>
+                {% endif %}
+            </ul>
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and formInstance | default(false) %}
+                <div class="postComment">
+                    {% set commentForm = craue_cloneForm(formInstance) %}
+                    <form class="postCommentForm" action="{{ path('pw_post_activity_comment', {'id': data.id}) }}" method="post" {{ form_enctype(commentForm) }}>
+                        {{ form_errors(commentForm) }}
+                        {{ form_errors(commentForm.content) }}
+                        {{ form_widget(commentForm.content) }}
+                        {{ form_rest(commentForm) }}
+                        <a class="button">Comment</a>
+                    </form>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

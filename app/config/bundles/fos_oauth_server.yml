@@ -1,0 +1,8 @@
+fos_oauth_server:
+    db_driver:           mongodb
+    client_class:        PW\ApiBundle\Document\Client
+    access_token_class:  PW\ApiBundle\Document\AccessToken
+    refresh_token_class: PW\ApiBundle\Document\RefreshToken
+    auth_code_class:     PW\ApiBundle\Document\AuthCode
+    # service:
+    #     user_provider: pw_facebook_provider

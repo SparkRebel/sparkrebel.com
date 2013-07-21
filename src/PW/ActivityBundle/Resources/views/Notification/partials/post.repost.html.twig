@@ -1,0 +1,19 @@
+{% extends 'PWActivityBundle:Notification:partials/base.html.twig' %}
+
+{% block icon %}
+    <a href="{{ path('pw_post_default_view', {id: notification.target.id}) }}" class="notificationLink"></a>
+    <a class="notificationPicture" href="{{ path('pw_post_default_view', {id: notification.target.id}) }}">
+        <img src="{{ notification.target.image | version('medium') }}" alt="{{ notification.target.description }}"></a>
+{% endblock %}
+
+{% block message %}
+    resparked
+    <a href="{{ path('pw_post_default_view', {id: notification.target.id}) }}">
+    {% if notification.category == "friend" %}
+        a spark</a> to
+    {% else %}
+        your spark</a> to
+    {% endif %}
+    <a href="{{ path('pw_board_default_view', {'id': notification.target.board.id, 'slug': notification.target.board.slug} ) }}">
+        {{ notification.target.board.name }}</a>
+{% endblock %}

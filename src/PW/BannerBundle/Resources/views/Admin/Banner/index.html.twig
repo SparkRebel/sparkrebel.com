@@ -1,0 +1,84 @@
+{% extends '::admin/base.html.twig' %}
+
+{% block title %}Admin : Banners{% endblock %}
+
+{% block content %}
+    <form action="" method="post">
+    
+        <header class="adminNav">
+            <ul>
+                <li><h2><a href="{{ path('admin_dashboard_index') }}">Admin</a> : </h2></li>
+                <li><h3>Banners</h3></li>
+            </ul>
+        </header>
+        
+        {% set runningStatusColors = {'expired': '#444444', 'active': '#004400', 'future': '#000044', 'inactive': 'black'} %}
+        
+        <div class="massactions">
+            <span style="color: {{ runningStatusColors['expired'] }};">*expired (is past EndDate)</span>, <span style="color: {{ runningStatusColors['active'] }};">*active (running now)</span>, <span style="color: {{ runningStatusColors['future'] }};">*future (StartData is in future)</span>, <span style="color: {{ runningStatusColors['inactive'] }}">*inactive (turned off manually - IsActive was set to "no")</span>
+        </div>
+        
+        <div class="tools">
+            <a href="{{ path('admin_banner_new') }}" class="button">New Banner</a>
+        </div>
+
+        <table width="100%" class="datagrid">
+            <thead>
+                <tr>
+                    <th width="1"><input id="selectAll" type="checkbox" disabled="disabled"></th>
+                    <th>{{ data.sortable('Id', 'id') | raw }}</th>
+                    <th>{{ data.sortable('Description', 'description') | raw }}</th>
+                    <th>{{ data.sortable('Url', 'url') | raw }}</th>
+                    <th>Image</th>
+                    <th>{{ data.sortable('StartDate', 'startDate') | raw }}</th>
+                    <th>{{ data.sortable('EndDate', 'endDate') | raw }}</th>
+                    <th>Status</th>
+                    <th>Show In</th>
+                    <th>{{ data.sortable('IsActive', 'isActive') | raw }}</th>
+                    <th>{{ data.sortable('Created', 'created') | raw }}</th>
+                    <th width="1">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if data.count %}
+                    {% for row in data %}
+                        {% set td_background = 'background-color: ' ~ runningStatusColors[row.runningStatus] ~ ';' %}
+
+                        <tr {% if loop.index is odd %}class="odd"{% endif %}>
+                            <td style="{{ td_background }}"><input type="checkbox" name="data[]" value="{{ row.id }}"></td>
+                            <td style="{{ td_background }}"><a href="{{ path('admin_banner_edit', {'id' : row.id}) }}" class="edit">{{ row.id }}</a></td>
+                            <td style="{{ td_background }}">{{ row.description }}</td>
+                            <td style="{{ td_background }}">{{ row.url }}</td>
+                            <td style="{{ td_background }}"><img width="100" height="100" src="{{ row.image | version('large') }}" alt="Banner Image" /></td>
+                            <td style="{{ td_background }}" title="{{ row.startDate | date('Y-m-d H:i:s') }}">{{ row.startDate | date('Y-m-d H:i:s') }}</td>
+                            <td style="{{ td_background }}" title="{{ row.endDate | date('Y-m-d H:i:s') }}">{{ row.endDate | date('Y-m-d H:i:s') }}</td>
+                            <td style="{{ td_background }}">{{ row.runningStatus }}</td>
+                            <td style="{{ td_background }}">
+                                {% if row.inMyStream %}MyStream, {% endif %}
+                                {% if row.inMyBrands %}<br />MyBrands, {% endif %}
+                                {% if row.inMyCelebs %}<br />MyCelebs, {% endif %}
+                                {% if row.inAllCategories %}<br />AllCategories, {% endif %}
+                                {% if row.category %}<br />Category: {{ row.category.name }}{% else %}{% endif %}
+                            </td>
+                            <td style="{{ td_background }}">{% if row.isActive %}yes{% else %}no{% endif %}</td>
+                            <td style="{{ td_background }}">{{ row.created | date('Y-m-d') }}</td>
+                            <td style="{{ td_background }}" class="actions">
+                                <ul>
+                                    <li><a href="{{ path('admin_banner_edit', {'id' : row.id}) }}" class="edit">Edit</a></li>
+                                    <li><a href="{{ path('admin_banner_delete', {'id' : row.id}) }}" class="delete" onclick="return confirm('Are you sure that you want to delete this Banner?');">Delete</a></li>
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <td colspan="100" class="no-results">
+                        No Banners to display.
+                    </td>
+                {% endif %}
+            </tbody>
+        </table>
+
+
+
+    </form>
+{% endblock %}

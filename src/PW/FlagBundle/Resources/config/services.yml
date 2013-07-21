@@ -1,0 +1,17 @@
+parameters:
+    pw_flag.flag.class: PW\FlagBundle\Document\Flag
+
+services:
+    pw_flag.flag_manager:
+        class: PW\FlagBundle\Model\FlagManager
+        parent: pw.model_manager
+        calls:
+            - [ setClass, ["%pw_flag.flag.class%"] ]
+            - [ setEventManager, ["@pw.event"] ]
+            - [ setPostManager, ["@pw_post.post_manager"] ]
+
+    pw_flag.twig.ratio:
+        class: PW\FlagBundle\Extension\FlagRatio
+        tags:
+            - { name: twig.extension }
+

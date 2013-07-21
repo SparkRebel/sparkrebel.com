@@ -1,0 +1,16 @@
+
+genemu_form:
+    captcha: false
+    recaptcha: false
+    tinymce:
+        enabled: true
+        theme:   advanced
+    date: ~
+    autocompleter:
+        doctrine: false
+        mongodb: true
+    tokeninput:
+        doctrine: false
+        mongodb: true
+    file: false
+    image: ~

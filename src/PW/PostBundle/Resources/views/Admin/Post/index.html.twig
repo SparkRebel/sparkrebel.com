@@ -1,0 +1,44 @@
+{% extends '::admin/base.html.twig' %}
+
+{% block title %}Admin : Posts{% endblock %}
+
+{% block content %}
+    <form action="" method="post">
+
+        <header class="adminNav">
+            <ul>
+                <li><h2><a href="{{ path('admin_dashboard_index') }}">Admin</a> : </h2></li>
+                <li><h3>Posts</h3></li>
+            </ul>
+        </header>
+
+        {{ knp_menu_render('PWPostBundle:Admin\\Builder:statusMenu') }}
+
+        <div class="massactions">
+            <label for="massAction">Actions</label>
+            <select id="massAction" name="massaction" disabled="disabled">
+                <option></option>
+            </select>
+            <input id="massSubmit" type="submit" value="Submit" disabled="disabled">
+        </div>
+
+        {% include 'PWPostBundle:Admin\\Post:partials/datagrid.html.twig' %}
+
+        {{ posts.render() | raw }}
+
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+<script>
+$(function() {
+    $(".actions .delete").click(function(e){
+        return confirm("Are you sure you want to delete this Post?\n" +
+            "This action will also delete the following:\n" +
+            "    - Post's Activity"
+        );
+    });
+});
+</script>
+{% endblock %}

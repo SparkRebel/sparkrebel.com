@@ -1,0 +1,15 @@
+pw_banner:
+    resource: "@PWBannerBundle/Controller/"
+    type:     annotation
+
+pw_admin_banner:
+    resource: "@PWUserBundle/Controller/Admin/"
+    type:     annotation
+
+pw_promo:
+    resource: "@PWBannerBundle/Controller/"
+    type:     annotation
+
+pw_admin_promo:
+    resource: "@PWUserBundle/Controller/Admin/"
+    type:     annotation

@@ -1,0 +1,3 @@
+pw_asset_api:
+    resource: PW\AssetBundle\Controller\Api\AssetController
+    type:     rest

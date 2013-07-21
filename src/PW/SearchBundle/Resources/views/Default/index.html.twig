@@ -1,0 +1,49 @@
+{% extends '::base.html.twig' %}
+
+{% block title %} Search Results For "{{searchQuery}}" {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='compass,?yui_css' combine=true
+        'css/search.scss'
+        'css/boards.scss'
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block content %}
+
+{% if results|length == 0 %}
+    <h2 class="searchTitle">No results were found for <span>"{{searchQuery}}"</span>.</h2>
+{% else %}
+    <h2 class="searchTitle">Search results for <span>"{{searchQuery}}"</span>:</h2>
+{% endif %}
+
+{% for type,res in results %}
+    {% if type == 'board' %}
+        {% set tpl = 'PWSearchBundle:Default:partials/board.html.twig' %}
+        {% set class = 'boards' %}
+    {% elseif type == 'item' %}
+        {% set tpl = 'PWSearchBundle:Default:partials/item.html.twig' %}
+        {% set class = 'sparks' %}
+    {% elseif type == 'post' %}
+        {% set tpl = 'PWSearchBundle:Default:partials/post.html.twig' %}
+        {% set class = 'sparks' %}
+    {% elseif type == 'user' %}
+        {% set tpl = 'PWSearchBundle:Default:partials/user.html.twig' %}
+        {% set class = 'members' %}
+    {% elseif type == 'brand' %}
+        {% set tpl = 'PWSearchBundle:Default:partials/brand.html.twig' %}
+        {% set class = 'members' %}
+    {% elseif type == 'merchant' %}
+        {% set tpl = 'PWSearchBundle:Default:partials/merchant.html.twig' %}
+        {% set class = 'members' %}
+    {% endif %}
+
+    <div id="search-results" class="{{ class }}">
+        {% include tpl %}
+    </div>
+
+{% endfor %}
+{% endblock %}

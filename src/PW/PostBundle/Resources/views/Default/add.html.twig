@@ -1,0 +1,11 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Create a new Spark{% endblock %}
+
+{% block content %}
+	<form action="{{ path('pw_post_default_add', {'boardId': boardId} ) }}" method="post" {{ form_enctype(form) }}>
+		{{ form_widget(form) }}
+
+		<input type="submit">
+	</form>
+{% endblock %}

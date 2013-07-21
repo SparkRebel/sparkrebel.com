@@ -1,0 +1,19 @@
+jms_serializer:
+    handlers:
+        object_based: false
+        array_collection: true
+        form_error: true
+        constraint_violation: true
+    property_naming:
+        separator:  _
+        lower_case: true
+    metadata:
+        cache: file
+        debug: %kernel.debug%
+        file_cache:
+            dir: %kernel.cache_dir%/serializer
+        auto_detection: true
+        directories:
+            FOSUserBundle:
+                namespace_prefix: FOS\UserBundle
+                path: %kernel.root_dir%/Resources/FOSUserBundle/config/serializer

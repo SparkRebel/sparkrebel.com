@@ -1,0 +1,42 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Partners{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='compass,?yui_css' combine=true
+        'css/partners.scss'
+        'css/forms.scss'
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block content %}
+    <div id="partners">
+        {% include 'PWUserBundle:Partner:partials/learn.html.twig' %}
+        {% include 'PWUserBundle:Partner:partials/registerForm.html.twig' %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+<script>
+$(function() {
+  // Change the input['file'] for a button
+
+  $('#user_partner_registration_icon').css({'position' : 'absolute', 'top' : '0', 'left' : '0', 'opacity' : '0'});
+  $('#user_partner_registration_icon').parent().append('<a id="select_image" class="button" href="#">Choose file</a>');
+  $('#user_partner_registration_icon').parent().append('<span id="file_name"></span>');
+  $('#user_partner_registration_icon').bind('change', function() {
+      var str = "";
+      str = $(this).val();
+      $("#user_partner_registration_icon").text(str);
+  }).change();
+  $('#select_image').click(function(e) {
+    e.preventDefault();
+    $('#user_partner_registration_icon').trigger('click');
+  });
+});
+</script>
+{% endblock %}

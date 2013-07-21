@@ -1,0 +1,11 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Comment on a {{ post.description }}{% endblock %}
+
+{% block content %}
+	<form action="{{ path('pw_post_default_comment', {'boardId': boardId, 'id': post.id, 'replyTo': replyTo } ) }}" method="post" {{ form_enctype(form) }}>
+		{{ form_widget(form) }}
+
+		<input type="submit">
+	</form>
+{% endblock %}

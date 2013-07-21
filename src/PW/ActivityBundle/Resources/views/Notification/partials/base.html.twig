@@ -1,0 +1,20 @@
+{% block notification %}
+    {% block icon %}
+        <a class="notificationPicture userPicture" href="{{ notification.createdBy | profile_link }}">
+            <img src="{{ notification.createdBy | user_icon('thumb') }}" alt="{{ notification.createdBy.name }}" width="50" height="50"></a>
+    {% endblock %}
+    {% block notification_text %}
+        <p>
+            {% block name %}
+                <a href="{{ notification.createdBy | profile_link }}">{{ notification.createdBy.name }}</a>
+            {% endblock %}
+            {% block message %}
+                triggered a <span style="font-family: monospace">{{ notification.type }}</span> event.
+            {% endblock %}
+            {% block date %}
+                <small>{{ notification.created | humane_date }}</small>
+            {% endblock %}
+            <div class="notificationIcon"></div>
+        </p>
+    {% endblock %}
+{% endblock %}

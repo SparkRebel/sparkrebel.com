@@ -1,0 +1,285 @@
+/*-------------------------------------------------------------------
+    Compass Modules
+-------------------------------------------------------------------*/
+@import "compass/css3/border-radius";
+@import "compass/css3/inline-block";
+@import "compass/utilities/general/clearfix";
+
+/*-------------------------------------------------------------------
+    PW Modules
+-------------------------------------------------------------------*/
+@import "variables.scss";
+@import "mixins.scss";
+
+/*--------------------------------------
+    Boards thumb
+----------------------------------------*/
+.boardThumb {
+    h3 {
+        color: #fff;
+        font-family: 'MuseoSans900';
+        font-size: $baseFontSize - 3;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        
+        span {
+            color: #999;
+        }
+    }
+    
+    ul {
+        width: 210px;
+        @include pie-clearfix;
+        
+        li {
+            background-color: #fff;
+            float: left;
+            margin: 6px 6px 0 0;
+            overflow: hidden;
+            text-align: center;
+            @include border-radius(4px);
+            @include square(66px);
+            
+            &.big {
+                display: table-cell;
+                float: none;
+                vertical-align: middle;
+                @include square(210px);
+                
+                img {
+                    display: block;
+                    height: auto;
+                    margin: 0 auto;
+                    max-height: 100%;
+                    max-width: 210px;
+                }
+            }
+            
+            &.last {
+                margin-right: 0;
+            }
+            
+            img {
+                height: 100%;
+                max-width: 100%;
+            }
+        }
+    }
+  
+    .boardThumbDetails {
+        color: #adadad;
+        font-family: 'MuseoSans900';
+        font-size: $baseFontSize - 3;
+        margin-top: 6px;
+        
+        .boardAuthor {
+            strong {
+                color: $linkColor;
+                font-weight: normal;
+            }
+        }
+    }
+  
+    .boardActions {
+        .button {
+            margin: 8px 2px 0 0;
+            padding-left: 30px;
+            @include inline-block;
+            
+            &.edit {
+                &:before {
+                    background-position: -300px -526px;
+                }
+                
+                &:hover:before {
+                    background-position: -300px -562px;
+                }
+            }
+            
+            &.delete {
+                margin-right: 0;
+                
+                &:before {
+                    background-position: -300px -598px;
+                }
+                
+                &:hover:before {
+                    background-position: -300px -634px;
+                }
+            }
+        }
+    }
+  
+    &:hover {
+        h3 {
+            color: $linkColor;
+        }
+    }
+}
+
+/*--------------------------------------
+	Boards List
+----------------------------------------*/
+.boardsList {
+    @include pie-clearfix;
+    
+    li {
+        float: left;
+        margin: 15px;
+        width: 210px;
+        
+        .boardThumb {
+            h3 {
+                height: 22px;
+            }
+            
+            .boardThumbDetails {
+                strong {
+                    font-weight: normal;
+                }
+            }
+        }
+    }
+}
+
+#myCollections {
+    .boardsList {
+        .boardThumb {
+            .boardThumbDetails {
+                .boardAuthor {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+.createCollection {
+    float: left;
+    margin-bottom: 10px;
+}
+
+/*--------------------------------------
+    Responsive: Tablet and Facebook
+----------------------------------------*/
+@media only screen and (max-width: 810px) {
+    .boardThumb {
+        ul {
+            width: 210px;
+            
+            li {
+                @include square(66px);
+                
+                &.big {
+                    @include square(210px);
+                }
+            }
+        }
+    }
+    
+    .boardsList {
+        li {
+            width: 150px;
+            
+            .boardThumb {
+                h3 {
+                    font-size: $baseFontSize - 4;
+                }
+                
+                ul {
+                    width: 150px;
+                    
+                    li {
+                        @include square(46px);
+                        
+                        &.big {
+                            @include square(150px);
+                            
+                            img {
+                                max-width: 150px;
+                            }
+                        }
+                        
+                        img {
+                            max-width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*--------------------------------------
+	Responsive: Mobile
+----------------------------------------*/
+@media only screen and (max-device-width: 480px) {
+    .boardsList {
+        li {
+            float: none;
+            margin: 15px 0;
+            width: 300px;
+            
+            .boardThumb {
+                h3 {
+                    font-size: $baseFontSize - 3;
+                }
+                
+                ul {
+                    width: 300px;
+                    
+                    li {
+                        float: left;
+                        @include square(96px);
+                        
+                        &.big {
+                            float: none;
+                            @include square(300px);
+                            
+                            img {
+                                max-width: 300px;
+                            }
+                        }
+                        
+                        img {
+                            max-width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*--------------------------------------
+	Responsive: Wide
+----------------------------------------*/
+@media only screen and (min-width : 1220px) {
+    .boardsList {
+        li {
+            width: 270px;
+            
+            .boardThumb {
+                ul {
+                    width: 270px;
+                    
+                    li {
+                        @include square(86px);
+                        
+                        &.big {
+                            @include square(270px);
+                            
+                            img {
+                                max-width: 270px;
+                            }
+                        }
+                        
+                        img {
+                            max-width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

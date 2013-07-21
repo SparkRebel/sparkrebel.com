@@ -1,0 +1,98 @@
+{% extends '::admin/base.html.twig' %}
+
+{% block title %}Admin : Flagged Posts{% endblock %}
+
+{% block content %}
+    <header class="adminNav">
+        <ul>
+            <li><h2><a href="{{ path('admin_dashboard_index') }}">Admin</a> : </h2></li>
+            <li><h3><a href="{{ path('admin_flag_index', {type: type}) }}">Flagged {{ type | capitalize }}</a></h3></li>
+        </ul>
+    </header>
+
+    {% if type == 'posts' %}
+        {% set post = flag.target %}
+    {% elseif type == 'comments' %}
+        {% set post = flag.target.post %}
+    {% endif %}
+
+    <h4>Post Details</h4>
+    <ul>
+        <li>
+            <a href="{{ post.image.url }}" target="_blank">
+                <img src="{{ post.image | version('small') }}" data-class="Asset" data-id="{{ post.image.id }}">
+            </a>
+        </li>
+        <li>
+            <label>Description:</label>
+            {{ post.description }}
+        </li>
+        <li>
+            <label>Created On:</label>
+            {{ post.created | date('Y-m-d') }}
+        </li>
+        <li>
+            <label>Created By:</label>
+            {% if post.createdBy is not empty %}
+                <a href="{{ path('user_profile_view', {name: post.createdBy.name}) }}" target="_blank">
+                    {{ post.createdBy.name }}
+                </a>
+            {% else %}
+                N/A
+            {% endif %}
+        </li>
+    </ul>
+
+    <hr>
+
+    <h4>Report Details</h4>
+    <ul>
+        <li>
+            <label>Reported On:</label>
+            {{ flag.created | date('Y-m-d') }}
+        </li>
+        <li>
+            <label>Reported By:</label>
+            {% if flag.createdBy is not empty %}
+                <a href="{{ path('user_profile_view', {name: flag.createdBy.name}) }}" target="_blank">
+                    {{ flag.createdBy.name }}
+                </a>
+            {% else %}
+                N/A
+            {% endif %}
+        </li>
+        {% if flag.client is not empty %}
+            <li>
+                <label>Client:</label>
+                {{ flag.client }}
+            </li>
+        {% endif %}
+        <li>
+            <label>IP:</label>
+            {{ flag.ip | long_to_ip() }}
+        </li>
+        <li>
+            <label>Status:</label>
+            {{ flag.status }}
+        </li>
+        <li>
+            <label>Reason Type:</label>
+            {{ flag.type }}
+        </li>
+        <li>
+            <label>Reason:</label>
+            {{ flag.reason }}
+        </li>
+        <li>
+            <label>Details:</label>
+            <ul>
+                {% for item, detail in flag.details %}
+                    <li>
+                        <label>{{ item | capitalize }}:</label>
+                        {{ detail }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </li>
+    </ul>
+{% endblock %}

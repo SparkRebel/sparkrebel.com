@@ -1,0 +1,17 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Registration Confirmed{% endblock %}
+
+{% block content %}
+    <header>
+        <h1>Registration Confirmation</h1>
+    </header>
+    <p>Congratulations {{ user.email }}</p>
+
+    {% if app.session is not empty %}
+        {% set targetUrl = app.session.get('_security.target_path') %}
+        {% if targetUrl is not empty %}
+            <p><a href="{{ targetUrl }}">Back</a></p>
+        {% endif %}
+    {% endif %}
+{% endblock %}

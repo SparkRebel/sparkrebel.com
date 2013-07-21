@@ -1,0 +1,24 @@
+{% block notification %}
+    <td align="left" valign="middle" width="70" style="padding: 10px 0 10px 20px;">
+        {% block icon %}
+            <a href="{{ notification.createdBy | profile_link(true) }}?{{ tag }}">
+                <img src="{{ notification.createdBy | user_icon('thumb') }}" width="50" height="50" style="border: 1px solid #eee"></a>
+        {% endblock %}
+    </td>
+    <td align="left" valign="top" style="padding: 10px 0; color: #494949;">
+        {% block notification_text %}
+            <p>
+                {% block name %}
+                    <a href="{{ notification.createdBy | profile_link(true) }}?{{ tag }}" style="color: #ed2978; text-decoration: none;">
+                        {{ notification.createdBy.name }}</a>
+                {% endblock %}
+                {% block message %}
+                    triggered a <span style="font-family: monospace">{{ notification.type }}</span> event.
+                {% endblock %}
+                {% block date %}
+                    <small style="color: gray;font-size: 11px;">{{ notification.created | humane_date }}</small>
+                {% endblock %}
+            </p>
+        {% endblock %}
+    </td>
+{% endblock %}

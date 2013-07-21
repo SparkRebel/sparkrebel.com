@@ -1,0 +1,87 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Settings{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='compass,?yui_css' 'css/forms.scss' %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block content %}
+    <h2>Settings</h2>
+
+    <form action="{{ path('pw_user_settings_index') }}" method="post" {{ form_enctype(form) }} class="form" id="userSettings">
+        {{ form_errors(form) }}
+        <fieldset>
+            <ul>
+                <li>
+					{{ form_errors(form.email.notificationFrequency) }}
+                    {{ form_label(form.email.notificationFrequency) }}
+					{{ form_widget(form.email.notificationFrequency) }}
+                </li>
+                <li>
+                    <table class="settingsNotifications">
+                      <thead>
+                        <tr>
+                          <th></th>
+                          <th>via Notification Bar</th>
+                          <th>via Email</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for typeField in form.email.notificationTypes %}
+                            {% if typeField.vars.name == 'user_follow' %}
+                                <tr>
+                                  <td>{{ form_label(typeField, 'Someone started following you') }}</td>
+                                  <td><input type="checkbox" checked="checked"></td>
+                                  <td>{{ form_widget(typeField) }}</td>
+                                </tr>
+                            {% elseif typeField.vars.name == 'board_follow' %}
+                                <tr>
+                                  <td>{{ form_label(typeField, 'Someone started following your Collection') }}</td>
+                                  <td><input type="checkbox" checked="checked"></td>
+                                  <td>{{ form_widget(typeField) }}</td>
+                                </tr>
+                            {% elseif typeField.vars.name == 'post_repost' %}
+                                <tr>
+                                  <td>{{ form_label(typeField, 'Someone ReSparked your Spark') }}</td>
+                                  <td><input type="checkbox" checked="checked"></td>
+                                  <td>{{ form_widget(typeField) }}</td>
+                                </tr>
+                            {% elseif typeField.vars.name == 'comment_create' %}
+                                <tr>
+                                  <td>{{ form_label(typeField, 'Someone commented on your Spark') }}</td>
+                                  <td></td>
+                                  <td>{{ form_widget(typeField) }}</td>
+                                </tr>
+                            {% elseif typeField.vars.name == 'comment_reply' %}
+                                <tr>
+                                  <td>{{ form_label(typeField, 'Someone replied to your comment') }}</td>
+                                  <td></td>
+                                  <td>{{ form_widget(typeField) }}</td>
+                                </tr>
+                            {% elseif typeField.vars.name == 'comment_tag' %}
+                                <tr>
+                                  <td>{{ form_label(typeField, 'Someone tag to your comment') }}</td>
+                                  <td></td>
+                                  <td>{{ form_widget(typeField) }}</td>
+                                </tr>
+                            {% elseif typeField.vars.name == 'newsletter' %}
+                                <tr>
+                                    <td>{{ form_label(typeField, 'Newsletter') }}</td>
+                                    <td></td>
+                                    <td>{{ form_widget(typeField) }}</td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                </li>
+            </ul>
+        </fieldset>
+        {{ form_rest(form) }}
+        <input type="submit" value="Save" class="button">
+    </form>
+{% endblock %}

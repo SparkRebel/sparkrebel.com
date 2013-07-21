@@ -1,0 +1,72 @@
+
+{% block content %}
+
+    <form action="{{ form_path }}" method="post" {{ form_enctype(form) }} class="form">
+        {{ form_errors(form) }}
+        <fieldset>
+            <ul>
+                <li>
+                    <input type="hidden" name="id" value="{{ object.id }}" />
+                    {{ form_errors(form.banner.description) }}
+                    {{ form_label(form.banner.description) }}
+                    {{ form_widget(form.banner.description) }}
+                </li>
+                <li>
+                    {{ form_errors(form.banner.url) }}
+                    {{ form_label(form.banner.url) }}
+                    {{ form_widget(form.banner.url) }}
+                </li>
+                <li>
+                    {{ form_errors(form.banner.bannerFile) }}
+                    {{ form_label(form.banner.bannerFile) }}
+                    {{ form_widget(form.banner.bannerFile) }}
+                    {% if object.image %}<img src="{{ object.image | version('large') }}" alt="Banner Image" />{% endif %}
+                </li>
+                <li>
+                    {{ form_errors(form.banner.startDate) }}
+                    {{ form_label(form.banner.startDate) }}
+                    {{ form_widget(form.banner.startDate) }}
+                </li>
+                <li>
+                    {{ form_errors(form.banner.endDate) }}
+                    {{ form_label(form.banner.endDate) }}
+                    {{ form_widget(form.banner.endDate) }}
+                </li>
+                <li>
+                    {{ form_errors(form.banner.inMyStream) }}
+                    {{ form_label(form.banner.inMyStream) }}
+                    {{ form_widget(form.banner.inMyStream) }}
+                </li>
+                <li>
+                    {{ form_errors(form.banner.inMyBrands) }}
+                    {{ form_label(form.banner.inMyBrands) }}
+                    {{ form_widget(form.banner.inMyBrands) }}
+                </li>
+                <li>
+                    {{ form_errors(form.banner.inMyCelebs) }}
+                    {{ form_label(form.banner.inMyCelebs) }}
+                    {{ form_widget(form.banner.inMyCelebs) }}
+                </li>
+                <li>
+                    {{ form_errors(form.banner.inAllCategories) }}
+                    {{ form_label(form.banner.inAllCategories) }}
+                    {{ form_widget(form.banner.inAllCategories) }}
+                </li>
+                <li>
+                    {{ form_errors(form.banner.category) }}
+                    {{ form_label(form.banner.category) }}
+                    {{ form_widget(form.banner.category) }}
+                </li>
+                <li>
+                    {{ form_errors(form.banner.isActive) }}
+                    {{ form_label(form.banner.isActive) }}
+                    {{ form_widget(form.banner.isActive) }}
+                </li>
+            </ul>
+        </fieldset>
+        <input type="submit" value="Save" class="button">
+        {{ form_rest(form) }}
+    </form>
+
+    {{ tinymce_init() }}
+{% endblock %}

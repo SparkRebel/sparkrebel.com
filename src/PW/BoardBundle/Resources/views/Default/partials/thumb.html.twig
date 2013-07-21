@@ -1,0 +1,19 @@
+{% block content %}
+	{% set images = data.imagesReversed %}
+	<div class="boardThumb">
+		<a href="{{ path('pw_board_default_view', {'id': data.id, 'slug': data.slug} ) }}" title="{{ data.name }}">
+		<h3 data-class="Board" data-id="{{ data.id }}" >{{ data.name }}</h3>
+		<ul>
+			<li class="big"><img src="{{ images.first | version('large') }}"></li>
+			<li class=""><img src="{{ images.next | version('small') }}"></li>
+			<li class=""><img src="{{ images.next | version('small') }}"></li>
+			<li class="last"><img src="{{ images.next | version('small') }}"></li>
+		</ul>
+		</a>
+
+		<div class="boardThumbDetails">
+			<span class="boardAuthor">By: <a href="{{ data.createdBy | profile_link }}" title="{{ data.createdBy.name }}"><strong>{{ data.createdBy.name|truncate(18) }}</strong></a></span>
+			<span class="boardCount">({{ data.postCount }} {% if data.postCount == 1 %}spark{% else %}sparks{% endif %})</span>
+		</div>
+	</div>
+{% endblock %}

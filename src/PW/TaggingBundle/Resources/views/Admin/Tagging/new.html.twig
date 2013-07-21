@@ -1,0 +1,31 @@
+{% extends '::admin/base.html.twig' %}
+
+{% block title %}Admin : Taggings : Create Tagging{% endblock %}
+
+{% block content %}
+    <header class="adminNav">
+        <ul>
+            <li><h2><a href="{{ path('admin_dashboard_index') }}">Admin</a> : </h2></li>
+            <li><h3><a href="{{ path('admin_taggings') }}">Taggings</a> : </h3></li>
+            <li><h3>Create Tagging</h3></li>
+        </ul>
+    </header>
+
+
+<form action="{{ form_path }}" method="post" {{ form_enctype(form) }} class="form">
+    <div class="error">
+        {{ form_errors(form) }}
+    </div>
+    <ul>
+        <li>
+            {{ form_errors(form.name) }}
+            {{ form_label(form.name) }}
+            {{ form_widget(form.name) }}
+        </li>
+                               
+    </ul>
+    <button class="button">Save</button>
+    {{ form_rest(form) }}
+</form>
+    
+{% endblock %}

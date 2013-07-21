@@ -1,0 +1,25 @@
+
+<form action="{{ form_path }}" method="post" {{ form_enctype(form) }} class="form">
+    <div class="error">
+        {{ form_errors(form) }}
+    </div>
+    <ul>
+
+    	<li>
+            <label>Icon</label>            
+            <div class="userPictureNew">
+                {{ form_label(form.new_icon) }}
+                {{ form_widget(form.new_icon) }}
+            </div>
+        </li>
+
+        <li>
+            {{ form_errors(form.board.name) }}
+            {{ form_label(form.board.name) }}
+            {{ form_widget(form.board.name) }}
+        </li>
+       
+    </ul>
+    <button class="button">{% if celeb.id is defined %}Save{% else %}Create{% endif %}</button>
+    {{ form_rest(form) }}
+</form>

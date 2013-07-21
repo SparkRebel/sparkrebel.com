@@ -1,0 +1,32 @@
+
+{% block content %}
+    <form action="{{ path('admin_invite_code_new') }}" method="post" {{ form_enctype(form) }} class="form">
+        {{ form_errors(form) }}
+        <fieldset>
+            <ul>
+                <li>
+                    {{ form_errors(form.code.value) }}
+                    <label>Code</label>
+                    {{ form_widget(form.code.value) }}
+                </li>
+                <li>
+                    {{ form_errors(form.code.maxUses) }}
+                    <label>Maximum Uses (Enter '0' for no maximum)</label>
+                    {{ form_widget(form.code.maxUses) }}
+                </li>
+                <li>
+                    {{ form_errors(form.code.assignedUser) }}
+                    <label>Assigned to User (optional)</label>
+                    {{ form_widget(form.code.assignedUser) }}
+                </li>
+                <li>
+                    {{ form_errors(form.code.comment) }}
+                    <label>Comment</label>
+                    {{ form_widget(form.code.comment) }}
+                </li>
+            </ul>
+        </fieldset>
+        {{ form_rest(form) }}
+        <input type="submit" value="Create Code">
+    </form>
+{% endblock %}

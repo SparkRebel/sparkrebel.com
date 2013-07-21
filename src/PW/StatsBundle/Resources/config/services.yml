@@ -1,0 +1,9 @@
+parameters:
+
+services:
+    pw.stats:
+        class: PW\StatsBundle\Provider\StatsProvider
+        calls:
+            - [ setDocumentManager, ["@doctrine_mongodb.odm.document_manager"] ]
+            - [ setEventManager, ["@pw.event"] ]
+

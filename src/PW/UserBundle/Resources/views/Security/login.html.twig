@@ -1,0 +1,25 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='compass,?yui_css' 'css/login.scss' %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {{ block('stream_stylesheets') }}
+    {% endstylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+    $(function() {
+        APP.login.start();
+        {% if partner is defined %}
+            $("#loginPartnerLink").click();
+        {% endif %}
+    });
+    </script>
+{% endblock %}

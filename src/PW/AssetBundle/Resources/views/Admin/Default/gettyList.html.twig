@@ -1,0 +1,82 @@
+{% extends '::admin/base.html.twig' %}
+
+{% block title %}Assets : Getty Images{% endblock %}
+
+{% block content %}
+    <form action="" method="post">
+
+        <header class="adminNav">
+            <ul>
+                <li><h2><a href="{{ path('admin_dashboard_index') }}">Admin</a> : </h2></li>
+                <li><h3>Assets</h3></li>
+            </ul>
+        </header>
+
+
+        <table width="100%" class="datagrid">
+            <thead>
+                <tr>
+                    <th width="1"><input id="selectAll" type="checkbox" disabled="disabled"></th>
+                    <th width="1">Thumb</th>
+                    <th>Created</th>
+                    <th>Created By</th>
+                    <th width="1">Deleted</th>
+                    <th>Getty image id</th>
+
+
+
+                    <th width="1">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if assets.count %}
+                    {% for asset in assets %}
+                        <tr {% if loop.index is odd %}class="odd"{% endif %}>
+                            <td><input type="checkbox" name="assets[]" value="{{ asset.id }}"></td>
+                            <td>
+                                <a href="{{ asset.url }}" target="_blank">
+                                    <img src="{{ asset | version('full') }}" width="50" height="50" data-class="Asset" data-id="{{ asset.id }}">
+                                </a>
+                            </td>
+                            <td>{{ asset.created | date('Y-m-d') }}</td>
+                            <td>
+                                {% if asset.createdBy is not empty %}
+                                    <a href="{{ path('user_profile_view', {name: asset.createdBy.name}) }}" target="_blank">
+                                        {{ asset.createdBy.name }}</a>
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if asset.deleted %}Yes{% else %}No{% endif %}                                
+                            </td>
+                            <td>
+                                {% if asset.gettyData is not empty %}
+                                    {{ asset.gettyData.imageId }}
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            </td>
+                            <td class="actions">
+                                <ul>
+                                    
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <td colspan="100" class="no-results">
+                        No Assets to display.
+                    </td>
+                {% endif %}
+            </tbody>
+        </table>
+
+        {{ assets.render() | raw }}
+
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

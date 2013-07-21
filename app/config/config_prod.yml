@@ -1,0 +1,47 @@
+imports:
+    - { resource: config.yml }
+
+framework:
+    router:
+        resource: "%kernel.root_dir%/config/routing_prod.yml"
+        strict_requirements: null
+    # templating:
+    #     assets_base_urls:
+    #         http:
+    #             - "http://%cdn.base_host.1%/"
+    #             - "http://%cdn.base_host.2%/"
+    #             - "http://%cdn.base_host.3%/"
+    #             - "http://%cdn.base_host.4%/"
+    #             - "http://%cdn.base_host.5%/"
+    #         ssl:
+    #             - "https://%cdn.base_host.1%/"
+    #             - "https://%cdn.base_host.2%/"
+    #             - "https://%cdn.base_host.3%/"
+    #             - "https://%cdn.base_host.4%/"
+    #             - "https://%cdn.base_host.5%/"
+
+#
+# Assetic
+# assetic:
+#     read_from: %kernel.root_dir%/../web
+#     write_to:  %aws_s3_asset_bucket%
+
+#
+# MongoDB
+doctrine_mongodb:
+    document_managers:
+        default:
+            metadata_cache_driver: apc
+
+#
+# Mongolog
+monolog:
+    handlers:
+        main:
+            type:         fingers_crossed
+            action_level: error
+            handler:      nested
+        nested:
+            type:  stream
+            path:  %kernel.logs_dir%/%kernel.environment%.log
+            level: error

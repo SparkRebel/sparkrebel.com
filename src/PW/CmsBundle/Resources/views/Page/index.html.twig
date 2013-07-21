@@ -1,0 +1,5 @@
+{% if section != '' %}
+{% include 'PWCmsBundle:Page:partials/' ~ section ~ '.html.twig' %}
+{% else %}
+{% include 'PWCmsBundle:Page:partials/default.html.twig' %}
+{% endif %}

@@ -1,0 +1,20 @@
+<header>
+    <h2>SparkRebel <span>beta</span></h2>
+</header>
+<h3>Select up to 5 of your favorite celebs…</h3>
+<div class="registrationModalContent">
+    <div class="registrationModalCelebs">
+        <form>
+            <ul class="celebs">
+                {% for celeb in celebs %}
+                    <li><input type="checkbox" id="celeb-{{ celeb.id }}"> <label for="celeb-{{ celeb.id }}">{{ celeb.name }}</label></li>
+                {% endfor %}
+            </ul>
+        </form>
+    </div>
+    <div class="registrationModalError">Please select at least one of the options.</div>
+    <a class="registrationModalBack"><span>&lsaquo;</span> Back</a>
+    <a class="registrationModalPaginator">Continue <span>&rsaquo;</span></a>
+    <div class="registrationModalSteps">Step 4 of 5</div>
+    <img src="{{ asset('/images/ajax-black-login.gif') }}" class="loading">
+</div>

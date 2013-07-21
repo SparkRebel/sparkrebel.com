@@ -1,0 +1,150 @@
+{% extends '::admin/base.html.twig' %}
+
+{% block title %}Admin : Flagged {{ type | capitalize }}{% endblock %}
+
+{% block content %}
+    <form action="" method="post">
+
+        <header class="adminNav">
+            <ul>
+                <li><h2><a href="{{ path('admin_dashboard_index') }}">Admin</a> : </h2></li>
+                <li><h3>Flagged {{ type | capitalize }}</h3></li>
+            </ul>
+        </header>
+
+        {{ knp_menu_render('PWFlagBundle:Admin\\Builder:reasonTypeMenu') }}
+        {{ knp_menu_render('PWFlagBundle:Admin\\Builder:statusMenu') }}
+
+        <div class="massactions">
+            <label for="massAction">Actions</label>
+            <select id="massAction" name="massaction" disabled="disabled">
+                <option></option>
+            </select>
+            <input id="massSubmit" type="submit" value="Submit" disabled="disabled">
+        </div>
+
+        <table width="100%" class="datagrid">
+            <thead>
+                <tr>
+                    <th width="1"><input id="selectAll" type="checkbox" disabled="disabled"></th>
+                    {% if reasonType == 'all' %}
+                        <th width="1">Type</th>
+                    {% endif %}
+                    {% if type == 'posts' and status != 'approved' %}
+                        <th width="1">Thumb</th>
+                    {% endif %}
+                    <th>{{ flagItems.sortable('Reported Date', 'created') | raw }}</th>
+                    <th>{{ flagItems.sortable('Reported By', 'createdBy') | raw }}</th>
+                    {% if type == 'posts' %}
+                        <th>{{ flagItems.sortable('Post', 'target') | raw }}</th>
+                        <th>{{ flagItems.sortable('Post Author', 'target.createdBy') | raw }}</th>
+                    {% elseif type == 'comments' %}
+                        <th>{{ flagItems.sortable('Comment Post', 'target') | raw }}</th>
+                        <th>{{ flagItems.sortable('Comment Author', 'target.createdBy') | raw }}</th>
+                    {% endif %}
+                    <th>Reason</th>
+                    <th width="1">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if flagItems.count %}
+                    {% for flagItem in flagItems %}
+                        <tr {% if loop.index is odd %}class="odd"{% endif %}>
+                            <td><input type="checkbox" name="flagItems[]" value="{{ flagItem.id }}"></td>
+                            {% if reasonType == 'all' %}
+                                <td>
+                                    {% if flagItem.type is defined %}
+                                        {{ flagItem.type }}
+                                    {% endif %}
+                                </td>
+                            {% endif %}
+                            {% if type == 'posts' and status != 'approved' %}
+                                <td>
+                                    <a href="{{ flagItem.target.image.url }}" target="_blank">
+                                        <img src="{{ flagItem.target.image | version('thumb') }}" data-class="Asset" data-id="{{ flagItem.target.image.id }}">
+                                    </a>
+                                </td>
+                            {% endif %}
+                            <td>{{ flagItem.created | date('Y-m-d') }}</td>
+                            <td>
+                                {% if flagItem.createdBy is not empty %}
+                                    <a href="{{ path('user_profile_view', {name: flagItem.createdBy.name}) }}" target="_blank">
+                                        {{ flagItem.createdBy.name }}</a>
+                                    {{ flagItem.createdBy.flagSummary | flag_by_ratio() | raw }}
+                                {% else %}
+                                    {% if flagItem.details.name is defined %}
+                                        {{ flagItem.details.name }}
+                                    {% else %}
+                                        N/A
+                                    {% endif %}
+                                    {% if flagItem.details.email is defined %}
+                                        (<a href="mailto:{{ flagItem.details.email }}" target="_blank">{{ flagItem.details.email }}</a>)
+                                    {% endif %}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if type == 'posts' %}
+                                    <a href="{{ path('pw_post_default_view', {id: flagItem.target.id}) }}" target="_blank">
+                                        {{ flagItem.target.description | truncate() }}
+                                    </a>
+                                {% elseif type == 'comments' %}
+                                    <a href="{{ path('pw_post_default_view', {id: flagItem.target.post.id}) }}" target="_blank">
+                                        {{ flagItem.target.post.description | truncate() }}
+                                    </a>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if flagItem.target.createdBy is not empty %}
+                                    <a href="{{ path('user_profile_view', {name: flagItem.target.createdBy.name}) }}" target="_blank">
+                                        {{ flagItem.target.createdBy.name }}</a>
+                                    {{ flagItem.target.createdBy.flagSummary | flag_against_ratio() | raw }}
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            </td>
+                            <td>
+                                <span title="{{ flagItem.reason }}">{{ flagItem.reason | truncate() }}</span>
+                            </td>
+                            <td class="actions">
+                                <ul>
+                                    <li><a href="{{ path('admin_flag_details', {type: type, id: flagItem.id}) }}">Details</a></li>
+                                    <li><a class="approve" href="{{ path('admin_flag_approve', {type: type, id: flagItem.id}) }}">Approve</a></li>
+                                    <li><a class="reject" href="{{ path('admin_flag_reject', {type: type, id: flagItem.id}) }}">Reject</a></li>
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <td colspan="100" class="no-results">
+                        No {% if reasonType != 'all' %}<strong>{{ reasonType }}</strong>{% endif %} Flagged {{ type | capitalize }} to display.
+                    </td>
+                {% endif %}
+            </tbody>
+        </table>
+
+        {{ flagItems.render() | raw }}
+
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+<script>
+$(function () {
+    $(".actions .reject").click(function(e){
+        return confirm("Are you sure you want to reject this flagged {{ type | capitalize }} report?");
+    });
+
+    $(".actions .approve").click(function(e){
+        return confirm(
+            "Are you sure you want to approve this flagged {{ type | capitalize }} report?" +
+            {% if type == 'posts' %}
+                "\nThis action will replace its image with a placeholder."
+            {% elseif type == 'comments' %}
+                "\nThis action will delete the Comment from the Post."
+            {% endif %}
+        );
+    });
+});
+</script>
+{% endblock %}

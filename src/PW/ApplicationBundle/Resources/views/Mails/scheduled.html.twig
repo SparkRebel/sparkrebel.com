@@ -1,0 +1,14 @@
+<p>Hello {{ mail.to.name }}!</p>
+
+<p>
+Your {{ mail.schedule }} summary:
+</p>
+
+{% for type, chunks in sections %}
+    {% set template = 'PWApplicationBundle:Mails:partials/' ~ type ~ '.html.twig' %}
+    {% include [ template, 'PWApplicationBundle:Mails:partials/base.html.twig'] %}
+{% endfor %}
+
+<p>
+- Team SparkRebel
+</p>

@@ -1,0 +1,704 @@
+/*-------------------------------------------------------------------
+    Compass Modules
+-------------------------------------------------------------------*/
+@import "compass/css3/border-radius";
+@import "compass/css3/box-shadow";
+@import "compass/css3/inline-block";
+@import "compass/utilities/general/clearfix";
+
+/*-------------------------------------------------------------------
+    PW Modules
+-------------------------------------------------------------------*/
+@import "variables.scss";
+@import "mixins.scss";
+
+/*--------------------------------------
+    Press
+----------------------------------------*/
+#aboutUs {
+    background-color: #DCDCD8;
+    padding: 20px;
+    @include border-radius(4px);
+    @include pie-clearfix;
+    
+    #aboutUsTabs {
+        font-family: 'MuseoSans900';
+        font-size: $baseFontSize - 1;
+        text-transform: uppercase;
+        @include pie-clearfix;
+        
+        li {
+            float: left;
+            margin-right: 10px;
+            
+            a {
+                color: #4d4d4d;
+                display: block;
+                padding: 8px 40px 6px;
+                text-decoration: none;
+                @include border-top-left-radius(4px);
+                @include border-top-right-radius(4px);
+                
+                &:hover {
+                    color: $linkColor;
+                }
+            }
+            
+            &.current {
+                a {
+                    background-color: #fff;
+                    color: $linkColor;
+                    @include box-shadow(rgba(#000, 0.2) 0 -2px 2px);
+                }
+            }
+            
+            &.last {
+                margin-right: 0;
+            }
+        }
+    }
+  
+    #aboutUsContent {
+        background-color: #fff;
+        padding: 20px;
+        width: 880px;
+        @include border-radius(4px);
+        @include box-shadow(rgba(#000, 0.2) 0 0 4px);
+        
+        h2 {
+            background-repeat: no-repeat;
+            border-bottom: 1px dotted #808080;
+            color: #000;
+            font-family: 'MuseoSans900';
+            font-size: $baseFontSize + 6;
+            margin-bottom: 10px;
+            padding: 4px 0 20px 40px;
+            text-transform: uppercase;
+        }
+    
+        &.about {
+            @include border-top-left-radius(0);
+            @include pie-clearfix;
+            
+            h2 {
+                padding-left: 0;
+            }
+            
+            #aboutContent {
+                float: left;
+                margin-right: 30px;
+                width: 600px;
+                
+                p {
+                    font-family: 'MuseoSans500';
+                    font-size: $baseFontSize + 3;
+                    line-height: 1.5;
+                    margin-bottom: 20px;
+                }
+                
+                iframe {
+                    height: 315px;
+                    width: 560px;
+                }
+            }
+            
+            #aboutSide {
+                float: left;
+                padding-top: 44px;
+                width: 250px;
+                
+                h3 {
+                    border-top: 1px dotted #808080;
+                    color: #4d4d4d;
+                    font-family: 'MuseoSans900';
+                    font-size: $baseFontSize - 2;
+                    margin-bottom: 10px;
+                    padding-top: 10px;
+                    text-transform: uppercase;
+                }
+                
+                ul {
+                    font-size: $baseFontSize - 3;
+                    margin-bottom: 40px;
+                    
+                    li {
+                        margin-bottom: 20px;
+                        
+                        a {
+                            color: #a0a0a0;
+                            display: block;
+                            height: 24px;
+                            padding: 12px 0 0 38px;
+                            
+                            &:hover {
+                                color: $linkColor;
+                                text-decoration: none;
+                            }
+                        }
+                        
+                        &.facebook a {
+                            background: image-url("icons/facebook.grey.png") left 7px no-repeat;
+                        }
+                        
+                        &.twitter a {
+                            background: image-url("icons/twitter.grey.png") left 7px no-repeat;
+                        }
+                        
+                        &.youtube a {
+                            background: image-url("icons/youtube.grey.png") left top no-repeat;
+                        }
+                        
+                        &.email a {
+                            background: image-url("icons/email.grey.png") left 9px no-repeat;
+                        }
+                        
+                        &.google a {
+                            background: image-url("icons/google.grey.png") left 6px no-repeat;
+                        }
+                    }
+                }
+            }
+        }
+    
+        &.team {
+            h2 {
+                background-image: image-url("icons/team.png");
+                padding-top: 2px;
+            }
+            
+            p {
+                font-family: 'MuseoSans500';
+                font-size: $baseFontSize - 1;
+                line-height: 1.5;
+                margin-bottom: 20px;
+                width: 500px;
+                
+                strong {
+                    color: $linkColor;
+                    display: inline;
+                    font-family: 'MuseoSans900';
+                    font-size: $baseFontSize - 2;
+                    font-weight: normal;
+                    text-transform: uppercase;
+                    
+                    span {
+                        color: #4d4d4d;
+                    }
+                }
+            }
+        }
+    
+        &.press {
+            h2 {
+                background-image: image-url("icons/press.png");
+                border-bottom: none;
+            }
+            
+            #pressContacts {
+                margin-bottom: 30px;
+                @include pie-clearfix;
+                
+                img {
+                    float: left;
+                    margin-right: 30px;
+                }
+                
+                #pressContactsInfo {
+                    border-bottom: 1px dotted #808080;
+                    border-top: 1px dotted #808080;
+                    float: left;
+                    padding: 10px 0;
+                    width: 250px;
+                    
+                    h3 {
+                        color: #4d4d4d;
+                        font-family: 'MuseoSans900';
+                        font-size: $baseFontSize - 2;
+                        margin-bottom: 10px;
+                        text-transform: uppercase;
+                    }
+                    
+                    p {
+                        font-family: 'MuseoSans500';
+                        font-size: $baseFontSize - 1;
+                        line-height: 1.5;
+                    }
+                }
+            }
+            
+            ul {
+                border-left: 1px dotted #808080;
+                border-top: 1px dotted #808080;
+                margin-bottom: 20px;
+                @include pie-clearfix;
+                
+                li {
+                    background-color: #fff;
+                    border-bottom: 1px dotted #808080;
+                    border-right: 1px dotted #808080;
+                    float: left;
+                    padding: 20px;
+                    text-align: center;
+                    @include box-shadow(rgba(#999, 0.2) 0 0 40px inset);
+                    @include size(252px, 350px);
+                    
+                    p {
+                        color: #96999c;
+                        font-family: Georgia;
+                        font-size: $baseFontSize - 1;
+                        font-style: italic;
+                        line-height: 1.5;
+                    }
+                }
+            }
+        }
+    
+        &.downloads {
+            h2 {
+                background-image: image-url("icons/downloads.png");
+                border-bottom: none;
+                margin-bottom: 0;
+                padding-left: 30px;
+            }
+            
+            h3 {
+                border-top: 1px dotted #808080;
+                color: #4d4d4d;
+                font-family: 'MuseoSans900';
+                font-size: $baseFontSize - 2;
+                margin-bottom: 10px;
+                padding-top: 10px;
+                text-transform: uppercase;
+            }
+            
+            #downloadsLogo {
+                float: left;
+                margin: 0 10px 30px 0;
+                width: 620px;
+                @include pie-clearfix;
+                
+                img {
+                    display: block;
+                    margin-bottom: 10px;
+                }
+                
+                .button {
+                    float: left;
+                    padding-left: 30px;
+                    
+                    &:before {
+                        background-position: -300px -1809px;
+                    }
+                    
+                    &:hover:before {
+                        background-position: -300px -1842px;
+                    }
+                }
+            }
+            
+            #downloadsContacts {
+                float: left;
+                margin-bottom: 30px;
+                width: 250px;
+                
+                p {
+                    font-family: 'MuseoSans500';
+                    font-size: $baseFontSize - 1;
+                    line-height: 1.5;
+                }
+            }
+            
+            #downloadsPress {
+                clear: both;
+                
+                ul {
+                    margin-bottom: 30px;
+                    
+                    li {
+                        background: #eeeeec image-url("icons/pdf.png") 10px 5px no-repeat;
+                        border-top: 1px dotted #bfbfbf;
+                        height: 65px;
+                        margin-bottom: 10px;
+                        padding: 10px 10px 10px 70px;
+                        @include pie-clearfix;
+                        
+                        p {
+                            color: $linkColor;
+                            float: left;
+                            font-family: 'MuseoSans500';
+                            font-size: $baseFontSize - 1;
+                            line-height: 1.3;
+                            padding-right: 100px;
+                        }
+                        
+                        .button {
+                            float: right;
+                            padding-left: 30px;
+                            
+                            &:before {
+                                background-position: -300px -1809px;
+                            }
+                            
+                            &:hover:before {
+                                background-position: -300px -1842px;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            #downloadsScreenshots {
+                ul {
+                    border-bottom: 1px dotted #808080;
+                    padding-bottom: 20px;
+                    @include pie-clearfix;
+                    
+                    li {
+                        float: left;
+                        margin-right: 10px;
+                        
+                        img {
+                            display: block;
+                            margin-bottom: 5px;
+                            width: 150px;
+                        }
+                        
+                        a {
+                            font-family: 'MuseoSans500';
+                            font-size: $baseFontSize - 2;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*--------------------------------------
+    Responsive: Tablet and Facebook
+----------------------------------------*/
+@media only screen and (max-width: 810px) {
+    #aboutUs {
+        #aboutUsTabs {
+            font-size: $baseFontSize - 1;
+            
+            li {
+                margin-right: 10px;
+                
+                a {
+                    padding: 8px 30px 6px;
+                }
+            }
+        }
+        
+        #aboutUsContent {
+            padding: 20px;
+            width: 640px;
+            
+            h2 {
+                font-size: $baseFontSize + 6;
+                margin-bottom: 10px;
+                padding: 4px 0 20px 40px;
+            }
+            
+            &.about {
+                #aboutContent {
+                    margin-right: 20px;
+                    width: 420px;
+                    
+                    p {
+                        font-size: $baseFontSize + 3;
+                        margin-bottom: 20px;
+                    }
+                    
+                    iframe {
+                        height: 225px;
+                        width: 400px;
+                    }
+                }
+                
+                #aboutSide {
+                    padding-top: 44px;
+                    width: 200px;
+                    
+                    h3 {
+                        font-size: $baseFontSize - 2;
+                        margin-bottom: 10px;
+                        padding-top: 10px;
+                    }
+                    
+                    ul {
+                        font-size: $baseFontSize - 3;
+                        margin-bottom: 40px;
+                    
+                        li {
+                            margin-bottom: 20px;
+                        }
+                    }
+                }
+            }
+            
+            &.team {
+                p {
+                    font-size: $baseFontSize - 1;
+                    margin-bottom: 20px;
+                    width: 500px;
+                    
+                    strong {
+                        font-size: $baseFontSize - 2;
+                    }
+                }
+            }
+            
+            &.press {
+                #pressContacts {
+                    margin-bottom: 30px;
+                    
+                    img {
+                        float: left;
+                        margin-right: 30px;
+                    }
+                    
+                    #pressContactsInfo {
+                        float: left;
+                        padding: 10px 0;
+                        width: 250px;
+                        
+                        h3 {
+                            font-size: $baseFontSize - 2;
+                            margin-bottom: 10px;
+                        }
+                        
+                        p {
+                            font-size: $baseFontSize - 1;
+                        }
+                    }
+                }
+                
+                ul {
+                    margin-bottom: 20px;
+                    
+                    li {
+                        float: left;
+                        padding: 20px;
+                        @include size(278px, 310px);
+                        
+                        p {
+                            font-size: $baseFontSize - 1;
+                        }
+                    }
+                }
+            }
+            
+            &.downloads {
+                h3 {
+                    font-size: $baseFontSize - 2;
+                    margin-bottom: 10px;
+                    padding-top: 10px;
+                }
+                
+                #downloadsLogo {
+                    float: left;
+                    margin: 0 10px 30px 0;
+                    width: 380px;
+                    
+                    img {
+                        margin-bottom: 10px;
+                    }
+                }
+                
+                #downloadsContacts {
+                    float: left;
+                    margin-bottom: 30px;
+                    width: 250px;
+                    
+                    p {
+                        font-size: $baseFontSize - 1;
+                    }
+                }
+                
+                #downloadsPress {
+                    ul {
+                        margin-bottom: 30px;
+                        
+                        li {
+                            p {
+                                font-size: $baseFontSize - 1;
+                            }
+                        }
+                    }
+                }
+                
+                #downloadsScreenshots {
+                    ul {
+                        padding-bottom: 20px;
+                        
+                        li {
+                            float: left;
+                            margin-right: 10px;
+                            
+                            img {
+                                margin-bottom: 5px;
+                                width: 115px;
+                            }
+                            
+                            a {
+                                font-size: $baseFontSize - 3;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*--------------------------------------
+	Responsive: Mobile
+----------------------------------------*/
+@media only screen and (max-device-width: 480px) {
+    #aboutUs {
+        padding: 10px;
+        
+        #aboutUsTabs {
+            font-size: $baseFontSize - 3;
+            
+            li {
+                margin-right: 8px;
+                
+                a {
+                    padding: 6px 0 4px;
+                }
+                
+                &.current {
+                    a {
+                        padding-left: 8px;
+                        padding-right: 8px;
+                    }
+                }
+            }
+        }
+        
+        #aboutUsContent {
+            padding: 10px;
+            width: 260px;
+            
+            h2 {
+                font-size: $baseFontSize + 2;
+                margin-bottom: 10px;
+                padding: 4px 0 16px 40px;
+            }
+            
+            &.about {
+                #aboutContent {
+                    float: none;
+                    margin-right: 0;
+                    width: 260px;
+                    
+                    p {
+                        font-size: $baseFontSize;
+                        margin-bottom: 20px;
+                    }
+                    
+                    iframe {
+                        height: 135px;
+                        width: 240px;
+                    }
+                }
+                
+                #aboutSide {
+                    float: none;
+                    padding-top: 20px;
+                    width: 260px;
+                }
+            }
+            
+            &.team {
+                p {
+                    width: 260px;
+                }
+            }
+            
+            &.press {
+                #pressContacts {
+                    margin-bottom: 20px;
+                    
+                    img {
+                        float: none;
+                        margin: 0 0 12px;
+                    }
+                    
+                    #pressContactsInfo {
+                        float: none;
+                        width: 260px;
+                    }
+                }
+                
+                ul {
+                    margin-bottom: 10px;
+                    
+                    li {
+                        float: none;
+                        @include size(218px, auto);
+                    }
+                }
+            }
+      
+            &.downloads {
+                #downloadsLogo {
+                    float: none;
+                    margin: 0 0 30px;
+                    width: 260px;
+                }
+                
+                #downloadsContacts {
+                    float: none;
+                    margin-bottom: 20px;
+                    width: 260px;
+                }
+                
+                #downloadsPress {
+                    ul {
+                        margin-bottom: 30px;
+                        
+                        li {
+                            height: auto;
+
+                            p {
+                                margin-bottom: 5px;
+                                padding-right: 0;
+                            }
+                        }
+                    }
+                }
+                
+                #downloadsScreenshots {
+                    ul {
+                        border-bottom: 0;
+                        padding-bottom: 0;
+                        
+                        li {
+                            margin-bottom: 10px;
+                            
+                            img {
+                                margin-bottom: 5px;
+                                width: 150px;
+                            }
+                            
+                            a {
+                                font-size: $baseFontSize - 3;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*--------------------------------------
+	Responsive: Wide
+----------------------------------------*/
+@media only screen and (min-width : 1220px) {
+    
+}

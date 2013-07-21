@@ -1,0 +1,110 @@
+{
+    "name": "spark-rebel/sparkrebel.com",
+    "description": "Codebase for SparkRebel.com",
+    "homepage": "http://sparkrebel.com",
+    "authors": [
+        {
+            "name": "Chris Jones",
+            "email": "leeked@gmail.com",
+            "homepage": "https://github.com/leek"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "": "src/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "tpyo/amazon-s3-php-class",
+                "version": "dev-master",
+                "source": {
+                    "url": "git://github.com/tpyo/amazon-s3-php-class.git",
+                    "type": "git",
+                    "reference": "origin/master"
+                },
+                "autoload": {
+                    "classmap": [
+                        "S3.php"
+                    ]
+                }
+            }
+        }
+    ],
+    "require": {
+        "php"                                   : ">=5.3.3",
+        "ext-apc"                               : "*",
+        "ext-mongo"                             : "*",
+        "symfony/symfony"                       : "2.1.*",
+        "doctrine/doctrine-bundle"              : "1.0.*",
+        "twig/extensions"                       : "1.0.*",
+        "symfony/assetic-bundle"                : "2.1.*",
+        "symfony/swiftmailer-bundle"            : "2.1.*",
+        "symfony/monolog-bundle"                : "2.1.*",
+        "sensio/distribution-bundle"            : "2.1.*",
+        "sensio/framework-extra-bundle"         : "2.1.*",
+        "sensio/generator-bundle"               : "2.1.*",
+        "jms/security-extra-bundle"             : "1.2.*",
+        "jms/di-extra-bundle"                   : "1.1.*",
+        "jms/serializer-bundle"                 : "0.9.*",
+        "doctrine/mongodb-odm-bundle"           : "3.0.*",
+        "doctrine/mongodb-odm-softdelete-bundle": "dev-master",
+        "stof/doctrine-extensions-bundle"       : "dev-master",
+        "friendsofsymfony/rest-bundle"          : "dev-master",
+        "friendsofsymfony/user-bundle"          : "dev-master",
+        "friendsofsymfony/oauth-server-bundle"  : "dev-master",
+        "friendsofsymfony/facebook-bundle"      : "dev-master",
+        "knplabs/knp-menu-bundle"               : "1.1.*",
+        "knplabs/knp-paginator-bundle"          : "dev-master",
+        "predis/predis"                         : "0.7.*",
+        "snc/redis-bundle"                      : "dev-master",
+        "nelmio/api-doc-bundle"                 : "2.0.*",
+        "genemu/form-bundle"                    : "dev-master",
+        "stfalcon/tinymce-bundle"               : "dev-master",
+        "exercise/elastica-bundle"              : "dev-master",
+        "avalanche123/imagine-bundle"           : "*",
+        "craue/twigextensions-bundle"           : "dev-master",
+        "newism/nsm-emoji-bundle"               : "dev-master",
+        "tpyo/amazon-s3-php-class"              : "*",
+        "sensio/buzz-bundle"                    : "dev-master",
+        "cybernox/amazon-webservices-bundle"    : "dev-master",
+        "defrag/pheanstalk-bundle"              : "dev-master",
+        "leezy/pheanstalk-bundle"               : "1.*",
+        "doctrine/doctrine-fixtures-bundle"     : "dev-master",
+        "leek/git-debug-bundle"                 : "2.0.*",
+        "liip/functional-test-bundle"           : "dev-master",
+        "raulfraile/LadybugBundle"              : "dev-master"
+    },
+    "suggest": {
+        "ext-redis"     : "*",
+        "ext-gearman"   : "*",
+        "ext-igbinary"  : "*",
+        "ext-twig"      : "*"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+        ],
+        "post-update-cmd": [
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+        ]
+    },
+    "config": {
+        "vendor-dir": "vendor",
+        "bin-dir": "bin",
+        "notify-on-install": false
+    },
+    "minimum-stability": "dev",
+    "extra": {
+        "symfony-app-dir": "app",
+        "symfony-web-dir": "web"
+    }
+}

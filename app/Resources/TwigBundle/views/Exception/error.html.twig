@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>An Error Occurred: {{ status_text }}</title>
+        {% block stylesheets %}
+            {% stylesheets filter='compass,?yui_css' combine=true 'css/typography.scss' 'css/errors.scss' %}
+                <link rel="stylesheet" href="{{ asset_url }}">
+            {% endstylesheets %}
+		{% endblock %}
+    </head>
+    <body>
+        <div id="error500">
+            <div id="errorImage"></div>
+            <h1>Oh No!</h1>
+            <h2>We have an internal server error (#500)</h2>
+            <p>(The server returned a "{{ status_code }} {{ status_text }}")</p>
+        </div>
+    </body>
+</html>
+

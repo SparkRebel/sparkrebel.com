@@ -1,0 +1,92 @@
+{% if leftPosts and rightPosts %}
+    {% set baseUri = url('home') | replace({'app_dev.php/': ''}) %}
+    {% set baseImageUri = baseUri ~ 'images/' %}
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+            <td width="274" valign="top">
+                {% for post in leftPosts %}
+                    <table bgcolor="#ffffff" border="0" cellpadding="4" cellspacing="0" width="274" style="background: #fff url({{ baseImageUri }}email/newsletter/bg.item.png) center bottom no-repeat; border-radius: 4px;">
+                        <tr>
+                            <td>
+                                {% if post.original %}
+                                    <p style="color: #434343; font-family: Arial; font-size: 12px; font-weight: bold; margin: 0; padding: 0;">Sparked first by <a href="{{ post.original.createdBy | profile_link(true) }}?{{ tracking }}" style="color: #ed2978; text-decoration: none;">{{ post.original.createdBy.name }}</a></p>
+                                {% elseif post.isReposted %}
+                                    <p style="color: #434343; font-family: Arial; font-size: 12px; font-weight: bold; margin: 0; padding: 0;">Sparked first by <a href="{{ post.createdBy | profile_link(true) }}?{{ tracking }}" style="color: #ed2978; text-decoration: none;">{{ post.createdBy.name }}</a></p>
+                                {% endif %}
+                                <small style="color: #acacac; display: block; font-family: Arial; font-size: 11px; margin-bottom: 4px;">{{ post.globalRepostCount }} {% if post.globalRepostCount > 1 %} Collections {% else %} Collection {% endif %}</small>
+
+                                <a href="{{ url('pw_post_default_view', {'id': post.id, 'slug': post.description | sluggify} ) }}?{{ tracking }}" class="aLink">
+                                    <img src="{{ post.image | version('large', true) }}" width="100%">
+                                </a>
+                                <p style="color: #434343; font-family: Arial; font-size: 12px;">{{ post.description }}</p>
+                                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                    <tr>
+                                        <td width="20%">
+                                            <img src="{{ post.createdBy | user_icon('thumb', true) }}" width="100%">
+                                        </td>
+                                        <td width="2%">
+                                            &nbsp;
+                                        </td>
+                                        <td width="78%" style="color: #434343; font-family: Arial; font-size: 12px;" valign="top">
+                                            <a href="{{ post.createdBy | profile_link (true) }}?{{ tracking }}" style="color: #ed2978; text-decoration: none;">{{ post.createdBy.name }}</a> to <a href="{{ url('pw_board_default_view', {'id':post.board.id, 'slug': post.board.slug} ) }}?{{ tracking }}" style="color: #ed2978; text-decoration: none;">{{ post.board.name }}</a>
+                                            <small style="color: #acacac; display: block; font-family: Arial; font-size: 11px; margin-bottom: 4px;">{{ post.created | humane_date | raw }}</small>
+                                            <small style="color: #acacac; display: block; font-family: Arial; font-size: 11px; text-align: right;">{{ post.repostCount }} respark{% if post.repostCount > 1 %}s{% endif %} {{ post.activity.count }} comment{% if post.activity.count > 1 %}s{% endif %}</small>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                        </tr>
+                    </table>
+                    <br>
+                {% endfor %}
+            </td>
+            <td width="2%">
+                &nbsp;
+            </td>
+            <td width="274" valign="top">
+                {% for post in rightPosts %}
+                    <table bgcolor="#ffffff" border="0" cellpadding="4" cellspacing="0" width="274" style="background: #fff url({{ baseImageUri }}email/newsletter/bg.item.png) center bottom no-repeat; border-radius: 4px;">
+                        <tr>
+                            <td>
+                                {% if post.original %}
+                                <p style="color: #434343; font-family: Arial; font-size: 12px; font-weight: bold; margin: 0; padding: 0;">Sparked first by <a href="{{ post.original.createdBy | profile_link(true) }}?{{ tracking }}" style="color: #ed2978; text-decoration: none;">{{ post.original.createdBy.name }}</a></p>
+                                {% elseif post.isReposted %}
+                                    <p style="color: #434343; font-family: Arial; font-size: 12px; font-weight: bold; margin: 0; padding: 0;">Sparked first by <a href="{{ post.createdBy | profile_link(true) }}?{{ tracking }}" style="color: #ed2978; text-decoration: none;">{{ post.createdBy.name }}</a></p>
+                                {% endif %}
+                                <small style="color: #acacac; display: block; font-family: Arial; font-size: 11px; margin-bottom: 4px;">{{ post.globalRepostCount }} {% if post.globalRepostCount > 1 %} Collections {% else %} Collection {% endif %}</small>
+
+                                <a href="{{ url('pw_post_default_view', {'id': post.id, 'slug': post.description | sluggify} ) }}?{{ tracking }}" class="aLink">
+                                    <img src="{{ post.image | version('large', true) }}" width="100%">
+                                </a>
+                                <p style="color: #434343; font-family: Arial; font-size: 12px;">{{ post.description }}</p>
+                                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                    <tr>
+                                        <td width="20%">
+                                            <img src="{{ post.createdBy | user_icon('thumb', true) }}" width="100%">
+                                        </td>
+                                        <td width="2%">
+                                            &nbsp;
+                                        </td>
+                                        <td width="78%" style="color: #434343; font-family: Arial; font-size: 12px;" valign="top">
+                                            <a href="{{ post.createdBy | profile_link (true) }}?{{ tracking }}" style="color: #ed2978; font-family: Arial; text-decoration: none;">{{ post.createdBy.name }}</a> to <a href="{{ url('pw_board_default_view', {'id':post.board.id, 'slug': post.board.slug} ) }}?{{ tracking }}" style="color: #ed2978; text-decoration: none;">{{ post.board.name }}</a>
+                                            <small style="color: #acacac; display: block; font-family: Arial; font-size: 11px; margin-bottom: 4px;">{{ post.created | humane_date | raw }}</small>
+                                            <small style="color: #acacac; display: block; font-family: Arial; font-size: 11px; text-align: right;">{{ post.repostCount }} respark{% if post.repostCount > 1 %}s{% endif %} {{ post.activity.count }} comment{% if post.activity.count > 1 %}s{% endif %}</small>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                        </tr>
+                    </table>
+                    <br>
+                {% endfor %}
+            </td>
+        </tr>
+    </table>
+
+{% endif %}

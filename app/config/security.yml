@@ -1,0 +1,78 @@
+jms_security_extra:
+    secure_all_services: false
+    expressions: true
+
+security:
+    encoders:
+        FOS\UserBundle\Model\UserInterface:
+            algorithm: sha512
+            encode_as_base64: false
+            iterations: 1
+
+    providers:
+        pw_user_provider:
+            id: pw_user.user_manager
+        pw_facebook_provider:
+            id: pw.facebook.user
+
+    role_hierarchy:
+        ROLE_INTERN:  ROLE_USER
+        ROLE_CURATOR: [ROLE_USER, ROLE_INTERN]
+        ROLE_PARTNER: ROLE_USER
+        ROLE_ADMIN:   [ROLE_USER, ROLE_CURATOR, ROLE_INTERN]
+
+    firewalls:
+        # Assets (no security)
+        dev:
+            pattern: ^/(_(profiler|wdt)|assets|css|fonts|images|js)/
+            security: false
+
+        # OAuth2 token (no security)
+        oauth_token:
+            pattern: ^/oauth/v2/token
+            security: false
+
+        # OAuth2 authorize (use Facebook authentication)
+        oauth_authorize:
+            pattern: ^/oauth/v2/auth
+            anonymous: true
+            fos_facebook:
+                provider: pw_facebook_provider
+                check_path:  /oauth/v2/auth_login_check
+                login_path:  /oauth/v2/auth_login
+
+        # API Routes (requires OAuth2 authentication)
+        api:
+            pattern: ^/1.0
+            fos_oauth: true
+            stateless: true
+
+        # Frontend Routes (use user/pass or Facebook authentication)
+        main:
+            pattern: ^/.*
+            anonymous: true
+            fos_facebook:
+                provider: pw_facebook_provider
+                check_path: fb_login_check
+                success_handler: pw_user.listener.ajax_authentication
+                failure_handler: pw_user.listener.ajax_authentication
+                remember_me: true
+            form_login:
+                provider: pw_user_provider
+                login_path: /login
+                remember_me: true
+            remember_me:
+                key: %secret%
+                lifetime: 31536000
+                always_remember_me: true
+            logout:
+                handlers: ["fos_facebook.logout_handler"]
+            switch_user: { role: ROLE_ADMIN, parameter: _morph }
+
+    access_control:
+        - { path: ^/oauth/v2/auth_login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login$,               role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register,             role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting,            role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/1.0,                  role: IS_AUTHENTICATED_FULLY }
+        - { path: ^/admin/,               role: ROLE_ADMIN }

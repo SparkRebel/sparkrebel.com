@@ -1,0 +1,64 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Celebs settings{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='compass,?yui_css' 'css/celebs.scss' %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block content %}
+
+	<h2>Celebs settings</h2>
+
+	<h3>Below you can change the celebs you follow.</h3>
+	<h3>New sparks from the celebs you follow will be added daily to your "My Celebs" stream.</h3>
+
+	<form action="{{ path('celebs_settings') }}" method="post" class="celebsSettings">
+    	<p>1. Currenly following celebs:</p>
+
+        <ul class="celebsCurrent">
+        {% if celebs_i_follow.count %}
+            {% for celeb in celebs_i_follow %}
+                <li><input checked="checked" name="celebs[]" type="checkbox" value="{{ celeb.id }}" id="celeb-{{ celeb.id }}"> <label for="celeb-{{ celeb.id }}">{{ celeb.name }}</label></li>
+            {% endfor %}
+        {% else %}
+            <li class="empty">Not following any celeb yet.</li>
+        {% endif %}
+        </ul>
+
+        <p>2. More celebs</p>
+
+        <ul class="celebsAll">
+        {% if celebs.count %}
+            {% for celeb in celebs %}
+                <li><input name="celebs[]" type="checkbox" value="{{ celeb.id }}" id="celeb-{{ celeb.id }}"> <label for="celeb-{{ celeb.id }}">{{ celeb.name }}</label></li>
+            {% endfor %}
+        {% else %}
+            <li class="empty">You're following all the celebs.</li>
+        {% endif %}
+        </ul>
+
+        <input type="submit" value="Update My Celebs" class="button primary">
+    </form>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts filter='?yui_js' combine=true
+        'js/libs/listSorting.js'
+    %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+        srSort($('.celebsCurrent'));
+        srSort($('.celebsAll'));
+    });
+    </script>
+{% endblock %}

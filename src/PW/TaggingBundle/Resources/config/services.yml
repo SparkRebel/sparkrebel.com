@@ -1,0 +1,7 @@
+services:
+    pw.twig.taggings:
+        class: PW\TaggingBundle\Extension\Taggings
+        tags:
+            - { name: twig.extension }
+        arguments: ["@doctrine_mongodb.odm.document_manager"]            
+

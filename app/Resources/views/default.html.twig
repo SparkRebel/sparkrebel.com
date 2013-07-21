@@ -1,0 +1,301 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# {{ facebook.namespace }}: http://ogp.me/ns/fb/{{ facebook.namespace }}#">
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %} - SparkRebel</title>
+    {% block meta %}{% endblock %}
+    {% block opengraph %}
+        <meta property="fb:app_id" content="{{ facebook.appId }}">
+        <meta property="og:site_name" content="SparkRebel.com">
+    {% endblock %}
+    <link rel="canonical" href="{% block canonical %}{% endblock %}">
+    {% block stylesheets %}
+        {% stylesheets filter='compass,?yui_css' combine=true
+            'js/libs/jquery-ui/jquery-ui-1.8.17.scss'
+            'js/libs/guiders/guiders-1.2.3.scss'
+            'css/typography.scss'
+            'css/structure.scss'
+            'css/buttons.scss'
+            'css/modals.scss'
+            'css/stream.scss'
+        %}
+            <link rel="stylesheet" href="{{ asset_url }}">
+		{% endstylesheets %}
+        <style>#stream { opacity: 0; } .lazy { display: none; }</style>
+		{% if is_granted("ROLE_ADMIN") %}
+            {% stylesheets filter='compass,?yui_css' 'css/admin.scss' 'css/curator.scss' %}
+                <link rel="stylesheet" href="{{ asset_url }}">
+            {% endstylesheets %}
+		{% endif %}
+
+
+    {% endblock %}
+    {% block headJavascripts %}
+        <script src="{{ asset('js/libs/modernizr-2.5.3.min.js') }}"></script>
+        {%
+        set APP = {
+            config: {
+                base_url: app.request.baseurl,
+                query: app.request.query.all,
+                request_time: date().timestamp,
+                max_sparks_for_non_logged:  settings.max_sparks_for_non_logged_users | default(3),
+            },
+            session: {
+                guiders: app.session.get('guiders') | default(false),
+                sub_id: app.session.get('sub_id') | default(false)
+            },
+            me: app.user.safeToArray | default(false)
+        }
+        %}
+        <script>
+        var APP = {{ APP | json_encode | raw }};
+        var _gaq = _gaq || [];
+        {% if google_analytics.account is defined %}
+            _gaq.push(['_setAccount', '{{ google_analytics.account }}']);
+            _gaq.push(['_setDomainName', '{{ app.request.host }}']);
+        {% endif %}
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            {% if is_granted("ROLE_ADMIN") or is_granted('ROLE_PREVIOUS_ADMIN') %}
+                _gaq.push(['_setCustomVar', 1, 'User Type', 'Admin', 3]);
+            {% else %}
+                _gaq.push(['_setCustomVar', 1, 'User Type', '{{ app.user.type | capitalize }}', 3]);
+            {% endif %}
+        {% else %}
+            _gaq.push(['_setCustomVar', 1, 'User Type', 'Guest', 3]);
+        {% endif %}
+        _gaq.push(['_trackPageview']);
+        </script>
+        {% block googleAnalytics %}{% endblock %}
+    {% endblock %}
+</head>
+<body>
+    {{ facebook_initialize({'xfbml': true, 'status': true, 'logging': false}) }}
+
+    <img src="{{ asset('images/backgrounds/bg.body.texture.png') }}" style="display: none;">
+
+    {% block header %}
+        <header id="headerContainer">
+            <div id="header">
+                <h2><a href="{{ path('home') }}">SR</a></h2>
+                <h1><a href="{{ path('home') }}">SparkRebel</a></h1>
+                <div id="headerRight">
+                    <div class="headerLike">
+                        <div class="fb-like" data-href="http://www.facebook.com/SparkRebel" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false" data-colorscheme="dark" data-font="lucida grande"></div>
+                    </div>
+                    <ul>
+                        {% set basePath = app.request.getUriForPath('/') | replace({'http:': ''}) %}
+
+                        {% set bookmarklet %}
+                        void((function(){
+                            var e = document.createElement('scr'+'ipt');
+                                e.setAttribute('type', 'text/javascript');
+                                e.setAttribute('charset', 'UTF-8');
+                                e.setAttribute('src','{{ basePath }}js/compiled/share.js?t=' + (new Date().getTime()));
+                            document.body.appendChild(e)
+                        })());
+                        {% endset %}
+
+                        {% set bookmarkletUrl = bookmarklet | replace({'\n': '', '    ': ''}) | url_encode(true) | raw %}
+
+                        <li class="headerBookmarklet">
+                            <span>Drag to<br>Bookmarks bar</span>
+                            <a href="javascript:{{- bookmarkletUrl -}}" class="button">Spark It!</a>
+                        </li>
+                        <li class="headerHelp">
+                            <a id="headerHelpLink">More</a>
+                            <ul id="headerHelpDropDown">
+                                <li><a class="startTutorial">Tutorial</a></li>
+                                <li><a href="/faq">FAQ</a></li>
+                                <li><a href="/about">About Us</a></li>
+                                <li><a href="/terms">Terms of Service</a></li>
+                                <li><a href="/privacy">Privacy Policy</a></li>
+                                <li><a href="/press">Press</a></li>
+                                <li><a href="/jobs">Jobs</a></li>
+                            </ul>
+                        </li>
+                        <li class="headerSearch">
+                            <form action="{{ path('pw_search_default_index') }}" method="get" id="headerSearch">
+                                <fieldset>
+                                    {# note: searchQuery comes from SearchBundle DefaultController, and it set when the user has done a search #}
+                                    <input type="search" name="q" id="headerSearchInput" placeholder="Search site" value="{{searchQuery | default('')}}"/>
+                                </fieldset>
+                            </form>
+                        </li>
+                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                            <li class="headerUser">
+                                <a id="headerUserLink" data-class="User" data-id="{{ app.user.id }}"><img src="{{ app.user | user_icon('thumb') }}" alt="{{ app.user.name }}"> <span>{{ app.user.firstName }}</span></a>
+                                <ul id="headerUserDropDown">
+                                    <li><a href="{{ path('user_profile_view_self') }}">Profile Page</a></li>
+                                    <!-- <li><a href="{{ path('pw_user_settings_index') }}">Settings</a></li> -->
+                                    {% if is_granted("ROLE_PARTNER") or is_granted("ROLE_ADMIN") %}
+                                        <li><a href="{{ path('user_profile_edit') }}">Edit Profile</a></li>
+                                        <li><a href="{{ path('pw_user_settings_index') }}">Edit Preferences</a></li>
+                                    {% endif %}
+        							{% if is_granted("ROLE_ADMIN") %}
+                                        <li><a href="{{ path('pw_admin_dashboard_index') }}">Admin</a></li>
+                                    {% endif %}
+                                    {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+                                        <li><a href="{{ path('home', {'_morph': '_exit'}) }}">Exit Morph</a></li>
+                                    {% else %}
+                                        <li><a href="{{ path('fos_user_security_logout') }}">Logout</a></li>
+                                    {% endif %}
+                                </ul>
+                            </li>
+                        {% else %}
+                            <li class="headerLogin">
+                                <a class="login requireAuth" data-url="{{ path('fos_user_security_login') }}">Login</a> /
+                                <a class="register requireAuth" data-url="{{ path('fos_user_security_login') }}">Register</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </header>
+        {% block navContainer %}{% endblock %}
+    {% endblock %}
+
+    {% block container %}
+        <section id="container">
+            <section id="content">
+                {% block flashMessages %}
+                    <section id="flash-messages">
+                        {% for type, flashMessages in app.session.flashbag.all() %}
+                            {% for flashMessage in flashMessages %}
+                                <div class="flash-{{ type }}">
+                                    {{ flashMessage }}
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                    </section>
+                {% endblock %}
+
+                {% if not is_granted("IS_AUTHENTICATED_REMEMBERED") and app.request.attributes.get('_route') != 'user_partner_register' %}
+                    <div id="loginStripContainer">
+                        <div id="loginStrip">
+                            <div id="loginStripContent">
+                                <div id="loginStripFacebook">
+                                    <a href="{{ path('fb_login_check') }}" class="fbLoginButton" title="Login with Facebook">
+                                        <img src="{{ asset('/images/login-facebook.png') }}">
+                                    </a>
+                                    <small>We will <span>never</span> post without your permission</small>
+                                    <img src="{{ asset('/images/ajax-white-pink.gif') }}" class="loading">
+                                </div>
+                                <p>SparkRebel is a Fashion, Beauty and Celebrity inspiration destination.<br />Follow different styles, share and purchase fashion finds.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="nonLoggedUser" style="display:none">
+                        <div class="my_brands">
+                            <h2>Set up your brand stream</h2>
+                            <ul>
+                                <li>View new products daily from <strong>brands you love</strong></li>
+                                <li>See <strong>personalized stream</strong> of products</li>
+                                <li><strong>Track</strong> when items go on <strong>sale</strong></li>
+                                <li><strong>Purchase</strong> items in 2 clicks</li>
+                            </ul>
+                        </div>
+                        <div class="my_stream">
+                            <h2>Set up your personalized stream</h2>
+                            <ul>
+                                <li>Get fashion and beauty <strong>inspiration</strong></li>
+                                <li><strong>Save</strong> fashion finds to <strong>your own collections</strong></li>
+                                <li>Keep up to date with the <strong>latest trends</strong></li>
+                            </ul>
+                        </div>
+                        <div class="my_celebs">
+                            <h2>Set up your celebs stream</h2>
+                            <ul>
+                                <li>Stay up to date with <strong>your favorite celeb styles</strong></li>
+                                <li>Get <strong>newly captured photos</strong> of your favorite celebs</li>
+                                <li>See the latest photos from <strong>red carpet, live concerts, paparazzi</strong></li>
+                                <li>New photos uploaded <strong>daily</strong></li>
+                            </ul>
+                        </div>
+                        <div class="promos_sales">
+                            <h2>Promos are available to <span>members</span> only</h2>
+                            <h3>Member's benefits:</h3>
+                            <ul>
+                                <li>Get a free access to all <strong>promos and coupons</strong></li>
+                                <li>View new products daily from <strong>brands you love</strong></li>
+                                <li>Get fashion and beauty <strong>inspiration</strong></li>
+                                <li><strong>Save</strong> fashion finds to <strong>your own collections</strong></li>
+                            </ul>
+                        </div>
+                        <a class="button primary requireAuth" href="{{ path('fos_user_security_login') }}">Get Started Now!</a>
+                    </div>
+                {% endif %}
+                {% block content %}{% endblock %}
+            </section>
+        </section>
+    {% endblock %}
+
+    
+
+    {% block javascripts %}
+        <script src="{{ asset('js/libs/jquery-1.8.1.min.js') }}"></script>
+        <script src="{{ asset('js/libs/jquery-ui/jquery-ui-1.8.23.min.js') }}"></script>
+        {% javascripts filter='?yui_js' combine=true
+            'js/libs/jquery.cookie.js'
+            'js/libs/jquery.unserializeForm.js'
+            'js/libs/jquery.ba-outside-events.min.js'
+            'js/libs/jquery.timeago-0.11.1.js'
+            'js/libs/guiders/guiders-1.2.7.js'
+            'js/libs/deck.core.js'
+            'js/libs/deck.navigation.js'
+            'js/libs/breakpoints.js'
+            'js/app.js'
+            'js/global.js'
+            'js/follow.js'
+            'js/posts.js'
+            'js/tutorial.js'
+            'js/login.js'
+        %}
+            <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            {% if not app.user.settings.viewedTutorial %}
+                <script>$(function(){ APP.tutorial.loadNotice(); });</script>
+            {% endif %}
+        {% else %}
+            {% if not app.session.get('viewed_tutorial') %}
+                <script>$(function(){ APP.tutorial.loadNotice(); });</script>
+            {% endif %}
+        {% endif %}
+
+        {% if is_granted("ROLE_ADMIN") %}
+            {% javascripts filter='?yui_js' combine=true 'js/admin.js' 'js/admin/*.js' 'js/curator.js' %}
+                <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+        {% endif %}
+    {% endblock %}
+
+    {% if adroll.adv_id and adroll.pix_id  %}
+        <script>
+        adroll_adv_id = "{{ adroll.adv_id }}";
+        adroll_pix_id = "{{ adroll.pix_id }}";
+        (function () {
+            var oldonload = window.onload;
+            window.onload = function(){
+                __adroll_loaded=true;
+                var scr = document.createElement("script");
+                var host = (("https:" == document.location.protocol) ? "https://s.adroll.com" : "http://a.adroll.com");
+                scr.setAttribute('async', 'true');
+                scr.type = "text/javascript";
+                scr.src = host + "/j/roundtrip.js";
+                ((document.getElementsByTagName('head') || [null])[0] ||
+                document.getElementsByTagName('script')[0].parentNode).appendChild(scr);
+                if(oldonload){oldonload()}
+            };
+        }());
+        </script>
+    {% endif %}
+
+    
+    {% block footer %}{% endblock %}
+    
+</body>
+</html>

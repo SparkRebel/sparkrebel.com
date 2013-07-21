@@ -1,0 +1,57 @@
+{% extends '::base.email.twig' %}
+
+{% block subject %}We Miss You!{% endblock %}
+
+{% block content_html %}
+    {% set tag = 'utm_source=missyou_email&utm_medium=email&utm_campaign=transactional_emails&utm_content=long_email' %}
+    <p style="font-family: 'Arial Narrow';">
+        We've noticed that you've not visited us for quite some time now, and <strong>we miss you</strong>!
+    </p>
+    <p style="font-family: 'Arial Narrow';">
+        Come and check out your <a href="{{ url('home') }}?{{ tag }}" style="color: #ed2978; text-decoration: none;">personal stream</a> of sparks, full of fashion ideas tailored to your style.
+    </p>
+    <p style="font-family: 'Arial Narrow';">
+        Check out the new arrivals from <a href="{{ url('home') }}brands?{{ tag }}" style="color: #ed2978; text-decoration: none;">YOUR favorite brands</a>.
+    </p>
+    <p style="font-family: 'Arial Narrow';">
+        Did you know you can <a href="{{ url('home') }}celebs/settings?{{ tag }}" style="color: #ed2978; text-decoration: none;">follow your favorite celebs’ style</a>?
+    </p>
+    <p style="text-align: center; font-family: 'Arial Narrow';">
+        <a href="{{ url('home') }}celebs/settings?{{ tag }}"><img src="{{ baseImageUri }}email/missyou/celebs.jpg" width="488" height="93"></a>
+    </p>
+    <p style="font-family: 'Arial Narrow';">
+        We bring you the latest sparks from your favorite celebs, red carpets and fashion events right to your own personal stream! You can get current updates about your favorite celeb. It’s just like being right there on the red carpet with them! <a href="{{ url('home') }}member/profile/{{ container_param('pw.system_user.sparkrebel.name') }}?{{ tag }}" style="color: #ed2978; text-decoration: none;">Check out our latest events</a>.
+    </p>
+    <p style="text-align: center; font-family: 'Arial Narrow';">
+        <a href="{{ url('home') }}member/profile/{{ container_param('pw.system_user.sparkrebel.name') }}?{{ tag }}"><img src="{{ baseImageUri }}email/missyou/events.jpg" width="477" height="227"></a>
+    </p>
+    <p style="font-family: 'Arial Narrow';">
+        Furthermore, our community will always keep you posted on the hottest trends of the season! Check out our <a href="{{ url('home') }}collections/trending?{{ tag }}" style="color: #ed2978; text-decoration: none;">trending collections</a>.
+    </p>
+{% endblock %}
+
+{% block signature_html %}
+    <p style="margin: 0; padding: 5px 0 5px 0; font-family: 'Arial Narrow';">We hope to see you soon,</p>
+    <h4 style="margin: 0">Team SparkRebel</h4>
+{% endblock %}
+
+{% block content_text %}
+{% autoescape false %}
+We've noticed that you've not visited us for quite some time now, and we miss you!
+
+Come and check out your personal stream ({{ url('home') }}?{{ tag }}) of sparks, full of fashion ideas tailored to your style.
+
+Check out the new arrivals from YOUR favorite brands ({{ url('home') }}brands?{{ tag }}).
+
+Did you know you can follow your favorite celebs’ style? {{ url('home') }}celebs/settings?{{ tag }}
+
+We bring you the latest sparks from your favorite celebs, red carpets and fashion events right to your own personal stream? You can get current updates about your favorite celeb. It’s just like being right there on the red carpet with them! Check out our latest events ({{ url('home') }}member/profile/{{ container_param('pw.system_user.sparkrebel.name') }}?{{ tag }}).
+
+Furthermore, our community will always keep you posted on the hottest trends of the season! Check out our trending collections ({{ url('home') }}collections/trending?{{ tag }}).
+{% endautoescape %}
+{% endblock %}
+
+{% block signature_text %}
+We hope to see you soon,
+- Team SparkRebel
+{% endblock %}

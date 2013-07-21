@@ -1,0 +1,62 @@
+{% extends '::admin/base.html.twig' %}
+
+{% block title %}Admin : Celebs{% endblock %}
+
+{% block content %}
+    <form action="" method="post">
+
+        <header class="adminNav">
+            <ul>
+                <li><h2><a href="{{ path('admin_dashboard_index') }}">Admin</a> : </h2></li>
+                <li><h3>Celebs</h3></li>
+            </ul>
+        </header>
+        
+
+        <table width="100%" class="datagrid">
+            <thead>
+                <tr>             
+                    <th width="1">Icon</th>       
+                    <th width="1">Name</th>
+                    <th width="1">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if celebs.count %}
+                    {% for celeb in celebs %}
+                        <tr {% if loop.index is odd %}class="odd"{% endif %}>
+                            <td>
+
+                                <img src="{{ celeb | board_icon('thumb') }}" width="50" height="50">
+                                
+                            </td>   
+                            <td>
+                            	{{ celeb.name }}
+                            </td>    
+                            <td class="actions">
+                                <ul>
+                                    <li><a href="{{ path('admin_celebs_edit', {id: celeb.id}) }}">Edit</a></li>
+                                    {% if celeb.deleted %}
+                                        <li><a href="#">UnDelete</a></li>
+                                    {% else %}
+                                        <li>
+                                            <a data-method="get" data-confirm="Are You sure?" href="{{ path('admin_celeb_delete', {id: celeb.id}) }}">Delete</a>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            </td>                       
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <td colspan="100" class="no-results">
+                        No <strong>celebs</strong> to display.
+                    </td>
+                {% endif %}
+            </tbody>
+        </table>
+
+        {{ celebs.render() | raw }}
+
+    </form>
+
+{% endblock %}

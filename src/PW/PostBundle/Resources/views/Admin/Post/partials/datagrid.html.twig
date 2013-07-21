@@ -1,0 +1,74 @@
+
+{% block content %}
+    <table width="100%" class="datagrid">
+        <thead>
+            <tr>
+                <th width="1"><input id="selectAll" type="checkbox" disabled="disabled"></th>
+                <th width="1">Thumb</th>
+                <th>{{ posts.sortable('Created', 'created') | raw }}</th>
+                <th>{{ posts.sortable('Created By', 'createdBy') | raw }}</th>
+                <th>{{ posts.sortable('Name', 'name') | raw }}</th>
+                <th>{{ posts.sortable('Board', 'board') | raw }}</th>
+                <th>{{ posts.sortable('Category', 'category') | raw }}</th>
+                <th width="1">{{ posts.sortable('Reposts', 'repostCount') | raw }}</th>
+                <th width="1">{{ posts.sortable('Aggregate', 'aggregateRepostCount') | raw }}</th>
+                <th width="1">&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if posts.count %}
+                {% for post in posts %}
+                    <tr {% if loop.index is odd %}class="odd"{% endif %}>
+                        <td><input type="checkbox" name="posts[]" value="{{ post.id }}"></td>
+                        <td>
+                            <a href="{{ post.image.url }}" target="_blank">
+                                <img src="{{ post.image | version('thumb') }}" width="50" height="50" data-class="Asset" data-id="{{ post.image.id }}">
+                            </a>
+                        </td>
+                        <td>{{ post.created | date('Y-m-d') }}</td>
+                        <td>
+                            {% if post.createdBy is not empty %}
+                                <a href="{{ path('user_profile_view', {name: post.createdBy.name}) }}" target="_blank">
+                                    {{ post.createdBy.name }}</a>
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ path('pw_post_default_view', {id: post.id}) }}" target="_blank">
+                                {{ post.description | truncate() }}
+                            </a>
+                        </td>
+                        <td>{{ post.board.name }}</td>
+                        <td>
+                            {% if post.category.name is defined %}
+                                {{ post.category.name }}
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+                        <td style="text-align: center">
+                            <a href="{{ path('admin_post_reposts', {type: 'reposts', id: post.id}) }}">{{ post.repostCount }}</a>
+                        </td>
+                        <td style="text-align: center">
+                            <a href="{{ path('admin_post_reposts', {type: 'aggregate', id: post.id}) }}">{{ post.aggregateRepostCount }}</a>
+                        </td>
+                        <td class="actions">
+                            <ul>
+                                {% if post.deleted %}
+                                    <li><a href="#">UnDelete</a></li>
+                                {% else %}
+                                    <li><a href="{{ path('admin_post_delete', {id: post.id}) }}" class="delete">Delete</a></li>
+                                {% endif %}
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <td colspan="100" class="no-results">
+                    No Posts to display.
+                </td>
+            {% endif %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,111 @@
+
+<form action="{{ form_path }}" method="post" {{ form_enctype(form) }} class="form">
+    <div class="error">
+        {{ form_errors(form) }}
+    </div>
+    <ul>
+        <li>
+        {% if form.type is defined %}
+            {{ form_errors(form.type) }}
+            {{ form_label(form.type) }}
+            {{ form_widget(form.type) }}
+        {% else %}
+            <label>Type</label>
+            <strong>{{ user.type }}</strong>
+        {% endif %}
+        </li>
+        <li>
+            <label>Icon</label>
+            {% if user is defined %}
+                <img src="{{ user | user_icon('thumb') }}" width="50" height="50" class="userPicture">
+                {% if user.icon is not empty %}
+                    <div class="userPictureDelete">
+                      {{ form_label(form.delete_icon) }}
+                      {{ form_widget(form.delete_icon) }}
+                    </div>
+                {% endif %}
+            {% endif %}
+            <div class="userPictureNew">
+                {{ form_label(form.new_icon) }}
+                {{ form_widget(form.new_icon) }}
+            </div>
+        </li>
+        <li>
+            {{ form_errors(form.user.name) }}
+            {{ form_label(form.user.name) }}
+            {{ form_widget(form.user.name) }}
+        </li>
+        <li>
+            {{ form_errors(form.user.email) }}
+            {{ form_label(form.user.email) }}
+            {{ form_widget(form.user.email) }}
+        </li>
+        {% if form.user.username is defined %}
+            <li>
+                {{ form_errors(form.user.username) }}
+                {{ form_label(form.user.username) }}
+                {{ form_widget(form.user.username) }}
+            </li>
+        {% endif %}
+        <li>
+            {{ form_errors(form.user.plainPassword.password) }}
+            {{ form_label(form.user.plainPassword.password) }}
+            {{ form_widget(form.user.plainPassword.password) }}
+        </li>
+        <li>
+            {{ form_errors(form.user.plainPassword.password_confirm) }}
+            <label>Confirm Password</label>
+            {{ form_widget(form.user.plainPassword.password_confirm) }}
+        </li>
+        {% if form.user.about is defined %}
+            <li>
+                {{ form_errors(form.user.about) }}
+                {{ form_label(form.user.about) }}
+                {{ form_widget(form.user.about) }}
+            </li>
+        {% endif %}
+        {% if form.user.alias is defined %}
+            <li>
+                {{ form_errors(form.user.alias) }}
+                {{ form_label(form.user.alias) }}
+                {{ form_widget(form.user.alias) }}
+            </li>
+        {% endif %}
+        {% if form.user.websiteTitle is defined %}
+            <li>
+                {{ form_errors(form.user.websiteTitle) }}
+                {{ form_label(form.user.websiteTitle) }}
+                {{ form_widget(form.user.websiteTitle) }}
+            </li>
+        {% endif %}
+        {% if form.user.websiteUrl is defined %}
+            <li>
+                {{ form_errors(form.user.websiteUrl) }}
+                {{ form_label(form.user.websiteUrl) }}
+                {{ form_widget(form.user.websiteUrl) }}
+            </li>
+        {% endif %}
+        {% if form.user.roles is defined %}
+            <li>
+                {{ form_errors(form.user.roles) }}
+                {{ form_label(form.user.roles) }}
+                {{ form_widget(form.user.roles) }}
+            </li>
+        {% endif %}
+        {% if form.user.assignedInviteCode is defined %}
+            <li>
+                {{ form_errors(form.user.assignedInviteCode) }}
+                {{ form_label(form.user.assignedInviteCode) }}
+                {{ form_widget(form.user.assignedInviteCode) }}
+
+                {% if user.assignedInviteCode %}
+                    <br>
+                    Current Code: <strong><a href="{{ path('admin_invite_code_details', {'id': user.assignedInviteCode.id}) }}">
+                        {{ user.assignedInviteCode.value }}</a></strong>
+                {% endif %}
+            </li>
+        {% endif %}
+    </ul>
+    <button class="button">{% if user.id is defined %}Save{% else %}Create{% endif %}</button>
+    {{ form_rest(form) }}
+</form>

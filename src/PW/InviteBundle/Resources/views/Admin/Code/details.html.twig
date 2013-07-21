@@ -1,0 +1,65 @@
+{% extends '::admin/base.html.twig' %}
+
+{% block title %}Admin : Invite Code : '{{ code.value }}'{% endblock %}
+
+{% block content %}
+    <header class="adminNav">
+        <ul>
+            <li><h2><a href="{{ path('admin_dashboard_index') }}">Admin</a> : </h2></li>
+            <li><h3><a href="{{ path('admin_invite_code_index') }}">Invite Codes</a></h3></li>
+        </ul>
+    </header>
+
+    <h4>Code Details</h4>
+    <ul>
+        <li>
+            <label>Value:</label>
+            {{ code.value }}
+        </li>
+        {% if code.assignedUser %}
+            <li>
+                <label>Assigned To:</label>
+                {% if code.assignedUser is not empty %}
+                    <a href="{{ path('admin_user_edit', {id: code.assignedUser.id}) }}" target="_blank">{{ code.assignedUser.name }}</a>
+                {% else %}
+                    N/A
+                {% endif %}
+            </li>
+        {% endif %}
+        <li>
+            <label>Created On:</label>
+            {{ code.created | date('Y-m-d') }}
+        </li>
+        <li>
+            <label>Created By:</label>
+            {% if code.createdBy is not empty %}
+                <a href="{{ path('admin_user_edit', {id: code.createdBy.id}) }}" target="_blank">{{ code.createdBy.name }}</a>
+            {% else %}
+                N/A
+            {% endif %}
+        </li>
+        {% if code.maxUses is defined and code.maxUses != 0 %}
+            <li>
+                <label>Maximum Allowed Uses:</label>
+                {{ code.maxUses }} (Left: {{ code.usesLeft }})
+            </li>
+        {% endif %}
+        <li>
+            <label>Used Total:</label>
+            {{ code.usedCount }}
+        </li>
+    </ul>
+
+    <hr>
+
+    {% if code.usedCount %}
+        <h4>Used By</h4>
+        <ul>
+            {% for user in code.usedBy %}
+                <li>
+                    <a href="{{ path('admin_user_edit', {id: user.id}) }}" target="_blank">{{ user.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

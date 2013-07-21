@@ -1,0 +1,38 @@
+{% set baseUri = url('home') | replace({'app_dev.php/': ''}) %}
+{% set baseImageUri = baseUri ~ 'images/' %}
+
+<table border="0" cellpadding="10" cellspacing="0" width="100%" style="background: url({{ baseImageUri }}backgrounds/bg.nav.noise.png) repeat; border-radius: 4px;">
+    <tr>
+        <td>
+            <h2 style="color: #ed2978; font-family: 'Arial Narrow'; margin-bottom: 10px; text-transform: uppercase;">SEE THE LATEST SPARKS FROM {{ collection.name }}</h2>
+            <a href="{{ url('pw_board_default_view', {'id': collection.id, 'slug': collection.slug} ) }}?{{ tracking }}" title="{{ collection.name }}">
+                <table align="center" border="0" cellpadding="0" cellspacing="0" width="274">
+                    <tr>
+                        <td align="center" height="274" valign="middle" width="274" style="background-color: #ffffff; border-radius: 4px;">
+                            <img src="{{ collection.images.first | version('large', true) }}" style="border-radius: 4px; max-height: 270px; max-width: 270px;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table border="0" cellpadding="0" cellspacing="0" width="274" style="margin-top: 5px;">
+                                <tr>
+                                    <td align="center" height="87" width="32%" style="background-color: #ffffff; border-radius: 4px;">
+                                        <img src="{{ collection.images.next | version('small', true) }}" style="border-radius: 4px; max-height: 82px; max-width: 82px;">
+                                    </td>
+                                    <td width="5">&nbsp;</td>
+                                    <td align="center" height="87" width="32%" style="background-color: #ffffff; border-radius: 4px;">
+                                        <img src="{{ collection.images.next | version('small', true) }}" style="border-radius: 4px; max-height: 82px; max-width: 82px;">
+                                    </td>
+                                    <td width="5">&nbsp;</td>
+                                    <td align="center" height="87" width="32%" style="background-color: #ffffff; border-radius: 4px;">
+                                        <img src="{{ collection.images.next | version('small', true) }}" style="border-radius: 4px; max-height: 82px; max-width: 82px;">
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </a>
+        </td>
+    </tr>
+</table>

@@ -1,0 +1,38 @@
+{% block content %}
+    {% if showReplyForm is not defined %}
+        {% set showReplyForm = true %}
+    {% endif %}
+    <li class="comment" data-class="Activity" data-id="{{ activity.id }}" >
+        <a href="{{ path('user_profile_view', {'name' : activity.createdBy.name}) }}" class="userPicture"><img src="{{ activity.createdBy | user_icon('thumb') }}" alt="" width="50" height="50"></a>
+        <p class="commentDetails">
+            <a href="{{ path('user_profile_view', {'name' : activity.createdBy.name}) }}" data-class="User" data-id="{{ activity.createdBy.id }}" >{{ activity.createdBy.name }}</a>
+            {{ activity.content | e | emoji  }}
+            {% if is_granted("ROLE_ADMIN") %}
+                <a data-confirm="Are you sure you want to delete this comment?" data-method="delete" data-replace-on-submit="true" href="{{ path('pw_post_comment_delete', {id: activity.id}) }}">(x)</a>
+            {% endif %}
+        </p>
+        <p class="commentMeta">
+          <small>{{ activity.created | humane_date | raw }}</small>
+          {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and showReplyForm %}
+              | <a class="replyButton">Reply</a>
+          {% endif %}
+        </p>
+        <ul class="subactivity">
+            {% for subactivity in activity.subactivity %}
+                {% include 'PWPostBundle:Activity:partials/subactivity.html.twig' with {'subactivity': subactivity} %}
+            {% endfor %}
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and showReplyForm %}
+                <li class="activityReply">
+                    <p class="commentDetails">
+                        {% set replyForm = craue_cloneForm(formInstance) %}
+                        <form action="{{ path('pw_post_activity_comment', {'id': post.id, 'replyTo': activity.id}) }}" method="post" {{ form_enctype(replyForm) }}>
+                            {{ form_widget(replyForm.content, {'attr': {'class': 'inputField', 'placeholder': 'Write a comment...'} }) }}
+                            {{ form_rest(replyForm) }}
+                            <input type="submit" name="submit" class="button" value="Post reply">
+                        </form>
+                    </p>
+                </li>
+            {% endif %}
+        </ul>
+    </li>
+{% endblock %}

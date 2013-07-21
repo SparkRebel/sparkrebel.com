@@ -1,0 +1,96 @@
+parameters:
+
+    #
+    # Base
+    secret:   ThisTokenIsNotSoSecretChangeIt
+    locale:   en
+    hostname: sparkrebel.local
+
+    #
+    # MongoDB
+    mongodb.default.host: localhost
+    mongodb.default.port: 27017
+    mongodb.default.name: plum
+
+    #
+    # Redis
+    redis.default.dsn: redis://localhost
+    redis.session.dsn: redis://localhost/2
+
+    #
+    # Facebook
+    facebook.app_id:     ~
+    facebook.secret:     ~
+    facebook.app_url:    ~
+    facebook.server_url: ~
+    facebook.namespace:  ~
+
+    #
+    # SwiftMailer
+    mailer.transport:        smtp
+    mailer.encryption:       ~
+    mailer.host:             localhost
+    mailer.port:             25
+    mailer.user:             ~
+    mailer.password:         ~
+    mailer.disable_delivery: false
+    mailer.delivery_address: ~
+
+    #
+    # ElasticSearch
+    elastica.default.host: localhost
+    elastica.default.port: 9200
+
+    #
+    # S3 (deprecated)
+    s3_access_key:     ~
+    s3_secret_key:     ~
+    s3_bucket_default: ~
+
+    # Amazon Web Services
+    aws_key:             ~
+    aws_secret:          ~
+    aws_account_id:      ~
+    aws_canonical_id:    ~
+    aws_s3_asset_bucket: ~
+
+    #
+    # CloudFront/CDN base URL's
+    cdn.base_host.1: sparkrebel.local
+    cdn.base_host.2: sparkrebel.local
+    cdn.base_host.3: sparkrebel.local
+    cdn.base_host.4: sparkrebel.local
+    cdn.base_host.5: sparkrebel.local
+
+    #
+    # beanstalkd
+    beanstalkd.web1.url: 127.0.0.1
+    beanstalkd.feeds.url: 127.0.0.1
+
+    #
+    # Google Analytics
+    google.analytics.account: ~
+
+    #
+    # Adroll
+    adroll.adv_id: ~
+    adroll.pix_id: ~
+
+    #
+    # Exceptional.io
+    exceptional.api_key: ~
+
+    #
+    # Getty Images
+    gettyimages.system_id:       ~
+    gettyimages.system_password: ~
+    gettyimages.user_name:       ~
+    gettyimages.user_password:   ~
+
+    #
+    # Settings
+    settings.max_sparks_for_non_logged_users: 2
+    settings.stream_page_size:                10
+    settings.event_mode:                      foreground
+    pw_celeb.limit:                           100
+    pw_picscout.service.api.key:              ~

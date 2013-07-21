@@ -1,0 +1,98 @@
+{% extends '::admin/base.html.twig' %}
+
+{% block flashMessages %}
+    <section id="flash-messages">
+        {% for type, flashMessages in app.session.flashbag.all() %}
+            {% for flashMessage in flashMessages %}
+                <div class="flash-{{ type }}">
+                    {{ flashMessage|raw }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </section>
+{% endblock %}
+
+{% block title %}Admin : Newsletters{% endblock %}
+
+{% block content %}
+    <form action="" method="post">
+
+        <header class="adminNav">
+            <ul>
+                <li><h2><a href="{{ path('admin_dashboard_index') }}">Admin</a> : </h2></li>
+                <li><h3>Newsletters</h3></li>
+            </ul>
+        </header>
+
+        <div class="massactions">
+            <label for="massAction">Actions</label>
+            <select id="massAction" name="massaction" disabled="disabled">
+                <option></option>
+            </select>
+            <input id="massSubmit" type="submit" value="Submit" disabled="disabled">
+        </div>
+
+        <div class="tools">
+            <a href="{{ path('admin_newsletter_new') }}" class="button">New newsletter</a>
+        </div>
+
+        <table width="100%" class="datagrid">
+            <thead>
+                <tr>
+                    <th width="1"><input id="selectAll" type="checkbox" disabled="disabled"></th>
+                    <th>{{ newsletters.sortable('Send At', 'sendAt') | raw }}</th>
+                    <th>Title</th>
+                    <th style="text-align:center">Top Section</th>
+                    <th style="text-align:center">Bottom Section</th>
+                    <th style="text-align:center">Status</th>
+                    <th width="1">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if newsletters.count %}
+                    {% for newsletter in newsletters %}
+                        <tr {% if loop.index is odd %}class="odd"{% endif %}>
+                            <td><input type="checkbox" name="newsletters[]" value="{{ newsletter.id }}"></td>
+                            <td>{{ newsletter.sendAt | date('Y-m-d H:i') }}</td>
+                            <td><a href="{{ path('admin_newsletter_edit', {'slug' : newsletter.slug} )}}">{{ newsletter.subject }}</a></td>
+                            <td style="text-align:center">
+                                {{ newsletter.topType }}
+                            </td>
+                            <td style="text-align:center">
+                                {{ newsletter.bottomType }}
+                            </td>
+                            <td style="text-align:center">
+                                {{ newsletter.status }}
+                            </td>
+                            <td class="actions">
+                                <a href="{{ path('admin_newsletter_edit', {'slug' : newsletter.slug} )}}">[edit]</a><br>
+                                <a href="{{ path('admin_newsletter_delete', {'slug' : newsletter.slug} )}}" delete="true">[delete]</a><br>
+                                <a href="{{ path('admin_newsletter_commit', {'slug' : newsletter.slug} )}}">[commit]</a><br>
+                                <a href="{{ path('admin_newsletter_test', {'slug' : newsletter.slug} )}}" test="true">[test]</a><br>
+                                <a href="{{ path('admin_newsletter_send', {'slug' : newsletter.slug} )}}" sendToInterval="true">[send to interval]</a><br>
+                                <a href="{{ path('admin_newsletter_send', {'slug' : newsletter.slug} )}}" sendToAll="true">[send to all]</a><br>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <td colspan="100" class="no-results">No newsletters to display.</td>
+                {% endif %}
+            </tbody>
+        </table>
+
+        {{ newsletters.render() | raw }}
+
+    </form>
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+
+    {% javascripts filter='?yui_js'
+    'js/admin/backend/newsletter.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+{% endblock %}

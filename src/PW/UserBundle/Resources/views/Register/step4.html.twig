@@ -1,0 +1,25 @@
+<header>
+    <h2>
+        SparkRebel
+        <span>beta</span>
+    </h2>
+</header>
+<h3>Select up to 5 of your favorite brands…</h3>
+<div class="registrationModalContent">
+    <div class="registrationModalBrands">
+        <form>
+            <ul class="brands">
+                {% for brand in brands %}
+                <li>
+                    <input type="checkbox" id="brand-{{ brand.id }}">
+                    <label for="brand-{{ brand.id }}">{{ brand.name }}</label>
+                </li>
+                {% endfor %}
+            </ul>
+        </form>
+    </div>
+    <div class="registrationModalError">Please select at least one of the options.</div>
+    <a class="registrationModalBack"><span>&lsaquo;</span> Back</a>
+    <a class="registrationModalPaginator">Continue <span>&rsaquo;</span></a>
+    <div class="registrationModalSteps">Step 3 of 5</div>
+</div>

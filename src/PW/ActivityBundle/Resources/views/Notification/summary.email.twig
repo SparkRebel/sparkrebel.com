@@ -1,0 +1,36 @@
+{% extends '::base.email.twig' %}
+
+{% block subject %}{{ get_subject_from_notifications(notifications, email) }}{% endblock %}
+
+{% block content_html %}
+    {% set tag = 'utm_source=notification_email&utm_medium=email&utm_campaign=transactional_emails' %}
+    <h3 style="margin-bottom: 0; color: #FF0078;">
+        {% block header_text %}Your recent notifications:{% endblock %}
+    </h3>
+    {% for notification in notifications %}
+        <table border="0" cellpadding="0" cellspacing="0" width="100%" align="center" style="border-bottom: 1px dotted gray;">
+            <tbody>
+                <tr>
+                    {% set template = 'PWActivityBundle:Notification:partials/' ~ notification.type ~ '.email.twig' %}
+                    {% include [ template, 'PWActivityBundle:Notification:partials/unknown.email.twig'] %}
+                </tr>
+            </tbody>
+        </table>
+    {% endfor %}
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" align="center" style="border-bottom: 1px dotted gray;">
+        <tbody>
+            <tr>
+                <td align="center" style="background-color: #eee">
+                    <a href="{{ url('activity_notification_list', {'id': user.id}) }}?{{ tag }}" style="color: #ed2978; text-decoration: none; font-size: 16px; padding: 15px; display: block">
+                        {% if notifications.count == 1 %}
+                            View all notifications</a>
+                        {% elseif notifications.count == 2 %}
+                            View <strong>both new</strong> notifications</a>
+                        {% else %}
+                            View all <strong>{{ count }} new</strong> notifications</a>
+                        {% endif %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

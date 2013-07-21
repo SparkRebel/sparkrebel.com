@@ -1,0 +1,15 @@
+{% extends '::admin/base.html.twig' %}
+
+{% block title %}Admin : Invite Codes : Create New Code{% endblock %}
+
+{% block content %}
+    <header class="adminNav">
+        <ul>
+            <li><h2><a href="{{ path('admin_dashboard_index') }}">Admin</a> : </h2></li>
+            <li><h3><a href="{{ path('admin_invite_code_index') }}">Invite Codes</a> : </h3></li>
+            <li><h3>Create New Code</h3></li>
+        </ul>
+    </header>
+
+    {% include 'PWInviteBundle:Admin\\Code:partials/form.html.twig' %}
+{% endblock %}

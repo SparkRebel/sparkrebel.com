@@ -1,0 +1,67 @@
+
+{% block content %}
+{% set postForm = get_repost_form() %}
+{% set boardForm = get_board_repost_form() %}
+{% set boards = get_boards() %}
+
+
+    <div class="modalContent">
+        <form id="resparkForm" action="#" method="post">
+            <div class="status"></div>
+            <ul>
+                <li>
+                    {% if postForm.post.description is defined %}
+                        {{ form_errors(postForm.post.description) }}
+                        {{ form_widget(postForm.post.description, { 'attr': {'placeholder': 'Comment'} } ) }}
+                    {% endif %}
+                    <label>Choose your collection:</label>
+                    <div class="resparkCollection">
+                        <div class="customSelectBox">
+                            <span class="customSelectBoxSelected"></span>
+                            <span class="customSelectBoxArrow"></span>
+                            <div class="customSelectBoxOptions">         
+                                {% for item in boards %}
+                                    <span class="customSelectBoxOption" data-value="{{ item.id }}">{{ item.name }}</span>
+                                {% endfor %}
+                                <div style="display:none">
+                                    {{ form_widget(postForm.post.board) }}
+                                </div>   
+                                                                                                
+                                <div class="customSelectBoxCreate">
+                                    {{ form_errors(boardForm.board.name) }}
+                                    <div id="newCollectionErrors"></div>
+                                    {{ form_widget(boardForm.board.name,  { 'attr': {'placeholder': 'Create new Collection'} }) }}                                    
+                                    <a class="button">Create</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div id="resparkModalFacebook">
+                {{ form_widget(postForm.post_on_facebook) }}
+                Post on Facebook
+            </div>
+            <a class="button primary">Spark it!</a>
+            <div id="resparkModalLoading">
+              <img src="{{ asset('images/ajax-gray.gif') }}">
+            </div>
+
+            <div style="display:none;">
+                {{ form_rest(postForm) }}
+                {{ form_rest(boardForm) }}
+            </div>
+
+        </form>
+        <div id="resparkModalSuccess">
+            <h2>You just <span>resparked</span> this to <a class="boardLink">Collection name</a></h2>
+            <a class="sparkLink">View your spark</a>
+            <p>This popup will close in <span class="timer">5</span> seconds.</p>
+        </div>
+
+        <div id="resparkModalError">
+            
+        </div>
+        <div id="resparkModalArrow"></div>
+    </div>
+{% endblock %}

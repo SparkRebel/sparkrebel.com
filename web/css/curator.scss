@@ -1,0 +1,25 @@
+/*-------------------------------------------------------------------
+	PW Modules
+-------------------------------------------------------------------*/
+@import "variables.scss";
+@import "mixins.scss";
+
+/*--------------------------------------
+    Curator Modal
+----------------------------------------*/
+#curatorToggle {
+    border: 2px solid #fff;
+    border-radius: 4px;
+    background: #ccc;
+    color: #fff;
+    position:fixed;
+	padding: 5px;
+    z-index: 1001;
+    top: 80px;
+    right: 0;
+    cursor: pointer;
+}
+
+#curatorToggle.enabled {
+    background: #3B8230;
+}

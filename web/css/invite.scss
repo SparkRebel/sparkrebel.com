@@ -1,0 +1,195 @@
+/*-------------------------------------------------------------------
+    Compass Modules
+-------------------------------------------------------------------*/
+@import "compass/css3/border-radius";
+@import "compass/css3/box-shadow";
+@import "compass/css3/inline-block";
+@import "compass/utilities/general/clearfix";
+
+/*-------------------------------------------------------------------
+    PW Modules
+-------------------------------------------------------------------*/
+@import "variables.scss";
+@import "mixins.scss";
+
+/*--------------------------------------
+    Invitations
+----------------------------------------*/
+.inviteTitle {
+    color: #fff;
+    font-family: 'MisoLight';
+    font-size: $baseFontSize + 20;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    @include pie-clearfix;
+    
+    span {
+        color: $linkColor;
+        float: right;
+        font-family: 'MuseoSans500';
+        font-size: $baseFontSize + 2;
+        padding-top: 5px;
+        text-transform: lowercase;
+        
+        strong {
+            font-family: 'MuseoSans900';
+            font-weight: normal;
+        }
+    }
+}
+
+#inviteFriends {
+    background-color: #DCDCD8;
+    padding: 20px;
+    @include border-radius(4px);
+    @include pie-clearfix;
+  
+    #inviteFriendsTabs {
+        float: left;
+        font-family: 'MuseoSans900';
+        font-size: $baseFontSize;
+        padding-top: 10px;
+        text-transform: uppercase;
+        width: 160px;
+        
+        li {
+            margin-bottom: 4px;
+            
+            a {
+                background-color: lighten(#373737, 50%);
+                display: block;
+                padding: 12px 20px;
+                text-decoration: none;
+                width: 120px;
+                @include border-bottom-left-radius(4px);
+                @include border-top-left-radius(4px);
+                
+                &:hover {
+                    background-color: lighten(#373737, 45%);
+                    color: $linkColor;
+                }
+            }
+            
+            &.current {
+                a {
+                    background-color: #373737;
+                }
+            }
+            
+            &.disabled {
+                background-color: lighten(#373737, 50%);
+                padding: 12px 20px;
+                width: 120px;
+                @include border-bottom-left-radius(4px);
+                @include border-top-left-radius(4px);
+            }
+        }
+    }
+
+    #inviteFriendsContent {
+        background-color: #373737;
+        float: left;
+        min-height: 300px;
+        padding: 20px;
+        width: 540px;
+        @include border-radius(4px);
+        
+        h3 {
+            color: #fff;
+            font-family: 'MuseoSans500';
+            font-size: $baseFontSize + 8;
+            margin-bottom: 15px;
+        }
+        
+        input {
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            background-color: #96999c;
+            border: 1px solid #999;
+            color: #f1f1f1;
+            display: block;
+            font-family: 'MuseoSans500';
+            font-size: $baseFontSize + 4;
+            padding-left: 4px;
+            padding-right: 4px;
+            @include border-radius(4px);
+            @include box-shadow(#333 1px 1px 0);
+            @include size(430px, 34px);
+        }
+    }
+}
+
+/*--------------------------------------
+    Responsive: Tablet and Facebook
+----------------------------------------*/
+@media only screen and (max-width: 810px) {
+    #inviteFriends {
+        #inviteFriendsContent {
+            width: 480px;
+        }
+    }
+}
+
+/*--------------------------------------
+	Responsive: Mobile
+----------------------------------------*/
+@media only screen and (max-device-width: 480px) {
+    .inviteTitle {
+        font-size: $baseFontSize + 10;
+        
+        span {
+            font-size: $baseFontSize;
+        }
+    }
+	
+    #inviteFriends {
+        padding: 10px;
+        
+        #inviteFriendsTabs {
+            font-size: $baseFontSize - 3;
+            width: 80px;
+            
+            li {
+                a {
+                    height: 12px;
+                    padding: 5px 10px;
+                    width: 60px;
+                }
+                
+                &.disabled {
+                    height: 12px;
+                    padding: 5px 10px;
+                    width: 60px;
+                }
+            }
+        }
+        
+        #inviteFriendsContent {
+            min-height: 200px;
+            padding: 10px;
+            width: 180px;
+            
+            h3 {
+                font-size: $baseFontSize;
+                margin-bottom: 10px;
+            }
+            
+            input {
+                font-size: $baseFontSize;
+                height: 24px;
+                width: 170px;
+            }
+        }
+    }
+}
+
+/*--------------------------------------
+	Responsive: Wide
+----------------------------------------*/
+@media only screen and (min-width : 1220px) {
+    #inviteFriends {
+        #inviteFriendsContent {
+            width: 760px;
+        }
+    }
+}

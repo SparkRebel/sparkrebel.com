@@ -1,0 +1,40 @@
+
+{% block content %}
+    <header>
+        <h2>SparkRebel <span>beta</span></h2>
+    </header>
+
+    <div class="modalContent">
+        <div class="error">
+            {% if error is defined %}
+                {{ error }}
+            {% endif %}
+        </div>
+        
+        <div id="loginJoin">
+            <h3>Member Benefits</h3>
+            <ul>
+                <li class="receive"><strong>Receive alerts</strong> when your favorite brands go on sale</li>
+                <li class="follow"><strong>Follow</strong> friends &amp; fashion trendsetters</li>
+                <li class="collect"><strong>Collect</strong> the things you love</li>
+            </ul>
+        </div>
+
+        <div id="inviteRedeem">
+            <div id="loginVideo">
+                <iframe src="http://www.youtube.com/embed/ApQF5TncaOg?rel=0" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <div id="loginFacebook">
+                <a href="{{ path('fb_login_check') }}" class="fbLoginButton" title="Login with Facebook">
+                    <img src="{{ asset('/images/login-facebook.png') }}" width="240" height="49"></a>
+                <small>We will <span>never</span> post without your permission</small>
+                <div id="loginPartner">
+                    Partners only
+                    <a id="loginPartnerLink" href="{{ path('user_partner_login') }}">login</a> /
+                    <a id="registerPartnerLink" href="{{ path('user_partner_register') }}">sign-up</a>
+                </div>
+                <img src="{{ asset('/images/ajax-black-login.gif') }}" class="loading">
+            </div>
+        </div>
+    </div>
+{% endblock %}

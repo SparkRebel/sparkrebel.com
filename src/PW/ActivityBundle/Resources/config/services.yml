@@ -1,0 +1,37 @@
+parameters:
+    pw_activity.activity.class:     PW\ActivityBundle\Document\Activity
+    pw_activity.notification.class: PW\ActivityBundle\Document\Notification
+
+    pw_activity.email:
+        template:
+            notifications: PWActivityBundle:Notification:summary.email.twig
+        from_email:
+            notifications:
+                address:     no-reply@sparkrebel.com
+                sender_name: SparkRebel
+
+services:
+    pw_activity.activity_manager:
+        class: PW\ActivityBundle\Model\ActivityManager
+        parent: pw.model_manager
+        calls:
+            - [ setClass, ["%pw_activity.activity.class%"] ]
+
+    pw_activity.notification_manager:
+        class: PW\ActivityBundle\Model\NotificationManager
+        parent: pw.model_manager
+        calls:
+            - [ setClass, ["%pw_activity.notification.class%"] ]
+            - [ setEmailManager, ["@pw.email_manager"] ]
+
+    pw_activity.mailer:
+        class: PW\ActivityBundle\Mailer\Mailer
+        parent: pw.mailer
+        calls:
+            - [ setParameters, ["%pw_activity.email%"] ]
+            - [ setUserManager, ["@pw_user.user_manager"] ]
+
+    twig.extension.emailsubject:
+        class: PW\ActivityBundle\Extension\EmailSubject
+        tags:
+            - { name: twig.extension }

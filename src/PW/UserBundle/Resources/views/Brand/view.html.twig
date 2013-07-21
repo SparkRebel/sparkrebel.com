@@ -1,0 +1,74 @@
+{% extends 'PWUserBundle:Profile:view.html.twig' %}
+
+{% block content %}
+<div id="userProfile" data-class="{{ user.type|capitalize }}" data-id="{{ user.id }}" >
+    <div id="userLevel">
+        {% if "ROLE_PARTNER" in user.roles %}
+        {% include 'PWUserBundle:Profile:partials/partner.html.twig' %}
+        {% endif %}
+    </div>
+    <section id="userProfileInfo">
+        <div class="userPicture">
+            <img src="{{ user | user_icon('medium') }}" alt="{{ user.name }}">
+        </div>
+        <div class="userInformation">
+            <h2 class="userName">{{ user.name }}</h2>
+            {% include 'PWUserBundle:Profile:partials/followStats.html.twig' %}
+            <div class="followButtons">
+              {% if isMe == false %}
+                  <a id="follow-{{ user.userType }}-{{ user.id }}" class="button follow" href="{{ path('pw_user_follow_user', {'name': user.name}) }}">Follow this Brand</a>
+              {% endif %}
+            </div>
+            {% if user.websiteUrl is defined and user.websiteUrl is not empty %}
+            <div class="userWebsite">
+              <label>Website:</label>
+              <a href="{{ user.websiteUrl }}" rel="nofollow" target="_blank">
+                  {% if user.websiteTitle is defined and user.websiteTitle is not empty %}
+                      {{ user.websiteTitle }}</a>
+                  {% else %}
+                      {{ user.websiteUrl | get_domain_from_url | raw }}</a>
+                  {% endif %}
+            </div>
+            {% endif %}
+        </div>
+        {% if user.about is defined and user.about is not empty %}
+          {% include 'PWUserBundle:Profile:partials/about.html.twig' %}
+        {% endif %}
+    </section>
+    <aside id="userProfileSidebar">
+        {% include 'PWUserBundle:Profile:partials/friends.html.twig' %}
+        {% include 'PWUserBundle:Profile:partials/favorites.html.twig' %}
+        {% include 'PWUserBundle:Profile:partials/activity.html.twig' %}
+    </aside>
+    <section id="userProfileContent">
+      <ul id="userTabs">
+        <li class="first {% if section == "myBoards" %}current{% endif %}"><a class="myBoards" href="{{ path('pw_user_brand_view', {'slug': user.username}) }}">Collections</a></li>
+        <li class="{% if section == "mySparks" %}current{% endif %}"><a class="mySparks" href="{{ path('pw_user_brand_view', {'slug': user.username, section: "mySparks"}) }}">Products</a></li>
+        {% if hasSaleItems %}
+        <li class="{% if section == "onSale" %}current{% endif %}"><a class="onSale" href="{{ path('pw_user_brand_view', {'slug': user.username, section: "onSale"}) }}">On Sale</a></li>
+        {% endif %}
+        <li class="{% if section == "collectionsIFollow" %}current{% endif %}"><a class="collectionsIFollow" href="{{ path('pw_user_brand_view', {'slug': user.username, section: "collectionsIFollow"}) }}">Collections I follow</a></li>
+      </ul>
+      {% if boards is defined %}
+	  	<div id="myBoards">
+        	{% include 'PWUserBundle:Brand:partials/myBoards.html.twig' %}
+	  	</div>
+      {% endif %}
+      {% if section == "mySparks" %}
+	    <div id="mySparks">
+          {% include 'PWUserBundle:Profile:partials/mySparks.html.twig' %}
+      </div>
+	  {% endif %}
+      {% if section == "onSale" %}
+	    <div id="onSale">
+            {% include 'PWUserBundle:Profile:partials/onSale.html.twig' %}
+	    </div>
+	  {% endif %}
+      {% if followingBoards is defined %}
+	  	<div id="collectionsIFollow">
+        	{% include 'PWUserBundle:Brand:partials/collectionsIFollow.html.twig' %}
+	  	</div>
+      {% endif %}
+    </section>
+</div>
+{% endblock %}

@@ -1,0 +1,16 @@
+
+{% block content %}
+    <form id="redeemCodeForm" action="{{ path('invite_redeem_code') }}" method="post" {{ form_enctype(form) }}>
+        <div class="status">{{ form_errors(form) }}</div>
+        <fieldset>
+            <ul>
+                <li>
+                    {{ form_errors(form.code.value) }}
+                    {{ form_widget(form.code.value) }}
+                    <input type="submit" value="Submit" class="button primary">
+                </li>
+            </ul>
+        </fieldset>
+        {{ form_rest(form) }}
+    </form>
+{% endblock %}

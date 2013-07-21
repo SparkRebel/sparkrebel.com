@@ -1,0 +1,39 @@
+parameters:
+    pw.search_provider.provider.class: PW\SearchBundle\Provider\Provider
+    pw.search_provider.method: findForElasticReindex
+
+services:
+    pw.search_provider.website.board:
+        class: %pw.search_provider.provider.class%
+        arguments:
+            objectPersister: "@foq_elastica.object_persister.website.board"
+            objectManager: "@pw_board.board_manager"
+            repoMethod: %pw.search_provider.method%
+
+    pw.search_provider.website.category:
+        class: %pw.search_provider.provider.class%
+        arguments:
+            objectPersister: "@foq_elastica.object_persister.website.category"
+            objectManager: "@pw_category.category_manager"
+            repoMethod: %pw.search_provider.method%
+
+    pw.search_provider.website.item:
+        class: %pw.search_provider.provider.class%
+        arguments:
+            objectPersister: "@foq_elastica.object_persister.website.item"
+            objectManager: "@pw_item.item_manager"
+            repoMethod: %pw.search_provider.method%
+
+    pw.search_provider.website.post:
+        class: %pw.search_provider.provider.class%
+        arguments:
+            objectPersister: "@foq_elastica.object_persister.website.post"
+            objectManager: "@pw_post.post_manager"
+            repoMethod: %pw.search_provider.method%
+
+    pw.search_provider.website.user:
+        class: %pw.search_provider.provider.class%
+        arguments:
+            objectPersister: "@foq_elastica.object_persister.website.user"
+            objectManager: "@pw_user.user_manager"
+            repoMethod: %pw.search_provider.method%

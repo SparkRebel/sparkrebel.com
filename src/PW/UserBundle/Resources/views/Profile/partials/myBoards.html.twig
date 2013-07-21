@@ -1,0 +1,10 @@
+{% if boards.count %}
+
+    <ul class="boardsList">
+    {% for board in boards %}
+        <li>{% include 'PWBoardBundle:Default:partials/thumb.html.twig' with {'data': board} %}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p class="noItems">No own collections yet!</p>
+{% endif %}

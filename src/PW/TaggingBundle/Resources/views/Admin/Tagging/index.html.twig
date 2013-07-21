@@ -1,0 +1,56 @@
+{% extends '::admin/base.html.twig' %}
+
+{% block title %}Admin : Taggings{% endblock %}
+
+{% block content %}
+    <form action="" method="post">
+
+        <header class="adminNav">
+            <ul>
+                <li><h2><a href="{{ path('admin_dashboard_index') }}">Admin</a> : </h2></li>
+                <li><h3>Taggings</h3></li>
+            </ul>
+        </header>
+
+        <div class="tools">
+            <a href="{{ path('admin_tagging_new') }}" class="button">New Tagging</a>
+        </div>
+
+        <table width="100%" class="datagrid">
+            <thead>
+                <tr>
+                    <th width="1"><input id="selectAll" type="checkbox" disabled="disabled"></th>
+                    <th>Name</th>         
+                    <th width="1">&nbsp;</th>           
+                </tr>
+            </thead>
+            <tbody>
+                {% if taggings.count %}
+                    {% for tag in taggings %}
+                        <tr {% if loop.index is odd %}class="odd"{% endif %}>
+                            <td><input type="checkbox" name="taggings[]" value="{{ tag.id }}"></td>
+                            <td>
+                                {{ tag.name }}
+                            </td>      
+
+                            <td class="actions">
+                                <ul>
+                                    <li><a href="{{ path('admin_tagging_edit', {id: tag.id}) }}">Edit</a></li>                                   
+                                    <li><a href="{{ path('admin_tagging_delete', {id: tag.id}) }}" class="delete">Delete</a></li>                                    
+                                </ul>
+                            </td>
+
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <td colspan="100" class="no-results">
+                        No taggings to display
+                    </td>
+                {% endif %}
+            </tbody>
+        </table>
+
+
+    </form>
+{% endblock %}
+

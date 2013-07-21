@@ -1,0 +1,33 @@
+
+{% block content %}
+    <header>
+        <h1>Reject Partner Request</h1>
+    </header>
+
+    <ul>
+        <li><a href="{{ path('admin_user_partner_index') }}">Partners</a></li>
+    </ul>
+
+    <form action="{{ path('admin_user_partner_status', {action: 'reject', id: partner.id}) }}" method="post" {{ form_enctype(form) }}>
+        {{ form_errors(form) }}
+        <fieldset>
+            <legend>Rejecting User: {{ partner.name }}</legend>
+            <ul>
+                {% if partner.icon is defined %}
+                    <li><img src="{{ partner.icon.url }}"></li>
+                {% endif %}
+                <li><label>E-mail:</label> {{ partner.email }}</li>
+                <li><label>Phone:</label> {{ partner.phone }}</li>
+                <li><label>Site URL:</label> {{ partner.link }}</li>
+                <li><label>Reqested Slug:</label> {{ partner.requestedSlug }}</li>
+                <li>
+                    {{ form_errors(form.message) }}
+                    You may enter an optional rejection reason here:<br>
+                    {{ form_widget(form.message) }}
+                </li>
+            </ul>
+        </fieldset>
+        {{ form_rest(form) }}
+        <input type="submit" value="Reject">
+    </form>
+{% endblock %}

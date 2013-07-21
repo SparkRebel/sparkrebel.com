@@ -1,0 +1,17 @@
+avalanche_imagine:
+    filters:
+        thumb:
+            type:    thumbnail
+            options: { size: [50, 50], mode: outbound }
+        small:
+            type:    thumbnail
+            options: { size: [80, 80], mode: outbound }
+        medium:
+            type:    thumbnail
+            options: { size: [180, 180], mode: outbound }
+        large:
+            type:    thumbnail
+            options: { size: [550, 5500], mode: inset }
+        full:
+            type:    thumbnail
+            options: { size: [2000, 2000], mode: inset }

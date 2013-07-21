@@ -1,0 +1,77 @@
+# Symfony2
+app/config/parameters.yml
+app/bootstrap*
+app/cache/*
+app/logs/*
+app/spool/*
+web/bundles/*
+web/assets/*
+web/app_dev.php
+vendor/*
+composer.phar
+
+# Assetic
+web/compiled/*
+web/css/compiled/*
+web/js/compiled/*
+web/css/*_1.css
+web/css/*_2.css
+web/css/*_*_*.css
+web/js/*_1.js
+web/js/*_2.js
+web/js/*_*_*.js
+
+# Ignore mongo dumps
+dump/*
+
+# Numerous always-ignore extensions
+*.diff
+*.err
+*.orig
+*.log
+*.rej
+*.swo
+*.swp
+*.vi
+*~
+*.sass-cache
+!.gitignore
+
+# OS or Editor folders
+.DS_Store
+Thumbs.db
+.cache
+.project
+.settings
+.tmproj
+.tm_properties
+*.esproj
+nbproject
+*.sublime-workspace
+.codeintel
+.tags
+.tags_sorted_by_file
+.idea
+
+# Dreamweaver added files
+_notes
+dwsync.xml
+
+# Komodo
+*.komodoproject
+.komodotools
+
+# Folders to ignore
+.hg
+.svn
+.CVS
+intermediate
+publish
+.idea
+
+# build script local files
+build/buildinfo.properties
+build/config/buildinfo.properties
+phpunit.xml
+*.buildpath
+*.com

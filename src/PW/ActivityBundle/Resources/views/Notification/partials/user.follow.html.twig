@@ -1,0 +1,25 @@
+{% extends 'PWActivityBundle:Notification:partials/base.html.twig' %}
+
+{% block icon %}
+    {% if notification.category == "friend" %}
+        <a href="{{ notification.target.user | profile_link }}" class="notificationLink"></a>
+    {% else %}
+        <a href="{{ notification.target.follower | profile_link }}" class="notificationLink"></a>
+    {% endif %}
+    <a class="notificationPicture" href="{{ notification.target.follower | profile_link }}">
+        <img src="{{ notification.target.follower.icon | version('medium') }}" alt="{{ notification.target.follower.name }}"></a>
+{% endblock %}
+
+{% block name %}
+    <a href="{{ notification.target.follower | profile_link }}">
+        {{ notification.target.follower.name }}</a>
+{% endblock %}
+
+{% block message %}
+    {% if notification.category == "friend" %}
+        is now following <a href="{{ notification.target.user | profile_link }}">
+            {{ notification.target.user.name }}</a>.
+    {% else %}
+        is now following you.
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,49 @@
+parameters:
+    pw_post.post.class:          PW\PostBundle\Document\Post
+    pw_post.post_activity.class: PW\PostBundle\Document\PostActivity
+
+services:
+    pw_post.post_manager:
+        class: PW\PostBundle\Model\PostManager
+        arguments:
+            dm: "@doctrine_mongodb.odm.document_manager"
+        calls:
+            - [ setContainer, ["@service_container"] ]
+            - [ setClass, ["%pw_post.post.class%"] ]
+
+    pw_post.post_activity_manager:
+        class: PW\PostBundle\Model\PostActivityManager
+        parent: pw.model_manager
+        calls:
+            - [ setClass, ["%pw_post.post_activity.class%"] ]
+
+    pw_post.post_listener:
+        class: PW\PostBundle\EventListener\PostListener
+        parent: pw.event_listener
+        public: false
+        tags:
+            - { name: doctrine_mongodb.odm.event_listener, event: postPersist }
+            - { name: doctrine.odm.mongodb.soft_delete.event_listener, event: preSoftDelete }
+            - { name: doctrine.odm.mongodb.soft_delete.event_listener, event: postSoftDelete }
+
+    pw_post.post_comment_listener:
+        class: PW\PostBundle\EventListener\PostCommentListener
+        parent: pw.event_listener
+        public: false
+        tags:
+            - { name: doctrine_mongodb.odm.event_listener, event: postPersist }
+            - { name: doctrine.odm.mongodb.soft_delete.event_listener, event: postSoftDelete }
+
+    validator.unique.post:
+         class: PW\PostBundle\Validator\UniquePostValidator
+         calls:
+             - [ setContainer,  ["@service_container"] ]
+         tags:
+             - { name: validator.constraint_validator, alias: validator.unique.post }
+
+    pw.twig.repost_form:
+        class: PW\PostBundle\Extension\Repost
+        calls:
+            - [ setContainer, ["@service_container"] ]
+        tags:
+            - { name: twig.extension }

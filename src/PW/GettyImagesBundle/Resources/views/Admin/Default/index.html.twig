@@ -1,0 +1,62 @@
+{% extends '::admin/base.html.twig' %}
+
+{% block title %}Admin : Getty Reports{% endblock %}
+
+{% block content %}
+    <form action="" method="post">
+    
+        <header class="adminNav">
+            <ul>
+                <li><h2><a href="{{ path('admin_dashboard_index') }}">Admin</a> : </h2></li>
+                <li><h3>Getty Reports</h3></li>
+            </ul>
+        </header>
+        
+        <div class="tools">
+            {% if can_generate_new == true %}<a href="{{ path('admin_getty_report_new') }}" class="button">Generate New Getty Report</a>{% endif %}
+        </div>
+
+        <table width="100%" class="datagrid">
+            <thead>
+                <tr>
+                    <th width="1"><input id="selectAll" type="checkbox" disabled="disabled"></th>
+                    <th>{{ data.sortable('Id', 'id') | raw }}</th>
+                    <th>{{ data.sortable('Status', 'status') | raw }}</th>
+                    <th>{{ data.sortable('Text Status', 'textStatus') | raw }}</th>
+                    <th>{{ data.sortable('Created', 'created') | raw }}</th>
+                    <th>{{ data.sortable('Modified', 'modified') | raw }}</th>
+                    <th width="1">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if data.count %}
+                    {% for row in data %}
+                        {% set td_background = 'background-color: #000000;' %}
+
+                        <tr {% if loop.index is odd %}class="odd"{% endif %}>
+                            <td style="{{ td_background }}"><input type="checkbox" name="data[]" value="{{ row.id }}"></td>
+                            <td style="{{ td_background }}">{{ row.id }}</td>
+                            <td style="{{ td_background }}">{{ row.status }}</td>
+                            <td style="{{ td_background }}">{{ row.textStatus }}</td>
+                            <td style="{{ td_background }}">{{ row.created | date('Y-m-d') }}</td>
+                            <td style="{{ td_background }}">{{ row.modified | date('Y-m-d H:i:s') }}</td>
+                            <td style="{{ td_background }}" class="actions">
+                                <ul>
+                                    {% if row.getPreviewFilePath() %}<li><a href="{{ path('admin_getty_report_preview', {'id' : row.id}) }}" class="edit">Preview</a></li>{% endif %}
+                                    {% if row.canSend() %}<li><a href="{{ path('admin_getty_report_send', {'id' : row.id}) }}" class="edit" onclick="return confirm('Are you sure that you want to send this Getty Report?');">Send</a></li>{% endif %}
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <td colspan="100" class="no-results">
+                        No Getty Reports to display.
+                    </td>
+                {% endif %}
+            </tbody>
+        </table>
+
+
+
+    </form>
+{% endblock %}

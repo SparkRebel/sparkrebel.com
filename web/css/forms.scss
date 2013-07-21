@@ -1,0 +1,150 @@
+/*-------------------------------------------------------------------
+    Compass Modules
+-------------------------------------------------------------------*/
+@import "compass/css3/border-radius";
+@import "compass/css3/inline-block";
+@import "compass/utilities/general/clearfix";
+
+/*-------------------------------------------------------------------
+    PW Modules
+-------------------------------------------------------------------*/
+@import "variables.scss";
+@import "mixins.scss";
+
+/*--------------------------------------
+    Forms
+----------------------------------------*/
+.form {
+    margin-bottom: 20px;
+    
+    h1,
+    h2 {
+        color: #d1d3d5;
+        font-family: 'MisoLight';
+        font-size: $baseFontSize + 15;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+    }
+    
+    h2 {
+        font-size: $baseFontSize + 8;
+        margin-bottom: 5px;
+    }
+    
+    label {
+        color: #d1d3d5;
+        float: left;
+        margin-right: 10px;
+        padding-top: 8px;
+        
+        &:after {
+            content: ":";
+        }
+    }
+    
+    input[type='text'],
+    input[type='email'],
+    input[type='password'],
+    input[type='url'],
+    input[type='number'],
+    textarea {
+        background-color: #fff;
+        border: 1px solid #9c9c9c;
+        color: $baseFontColor;
+        font-family: Arial;
+        float: left;
+        padding: 6px;
+        width: 300px;
+        @include border-radius(4px);
+    }
+    
+    textarea {
+        overflow: auto;
+        @include size(300px, 200px);
+    }
+    
+    select {
+        margin-top: 5px;
+    }
+    
+    input.button,
+    button.button {
+        height: 27px;
+    }
+    
+    ul {
+        margin-bottom: 30px;
+        
+        li {
+            margin-bottom: 20px;
+            @include pie-clearfix;
+        }
+    }
+    
+    &.partnerLogin {
+        label {
+            width: 80px;
+        }
+        
+        input[type="checkbox"] {
+            float: left;
+            margin: 7px 5px 0 0;
+        }
+        
+        .choice {
+            width: auto;
+        }
+    }
+    
+    &#editBoardForm {
+        label {
+            width: 120px;
+        }
+    }
+    
+    &#userSettings {
+        .settingsNotifications {
+            th {
+                background: image-url("backgrounds/bg.hr.dashed.png") left bottom repeat-x;
+                color: #fff;
+                font-size: $baseFontSize - 2;
+                padding: 8px 10px;
+                text-align: center;
+            }
+            
+            td {
+                padding: 6px 4px;
+                text-align: center;
+                
+                label {
+                    display: block;
+                    float: none;
+                    margin: 0;
+                    padding: 3px 0 0;
+                    text-align: left;
+                    
+                    &:after {
+                        content: "";
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*--------------------------------------
+	Responsive: Mobile
+----------------------------------------*/
+@media only screen and (max-device-width: 480px) {
+    .form {
+        &#userSettings {
+            dl {
+                dd {
+                    float: left;
+                    margin-bottom: 10px;
+                    width: 250px;
+                }
+            }
+        }
+    }
+}

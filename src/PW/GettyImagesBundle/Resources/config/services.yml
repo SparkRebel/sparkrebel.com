@@ -1,0 +1,44 @@
+parameters:
+    pw_getty_images.connect.client.class:          Buzz\Client\Curl
+    pw_getty_images.connect.service.class:         PW\GettyImagesBundle\Services\Connect
+    pw_getty_images.connect.message_factory.class: PW\GettyImagesBundle\Services\Connect\Message\Factory
+
+    pw_getty_images.connect.base_url:        "https://connect.gettyimages.com"
+    pw_getty_images.connect.version:         "v1"
+    pw_getty_images.connect.system_id:       ~
+    pw_getty_images.connect.system_password: ~
+    pw_getty_images.connect.user_name:       ~
+    pw_getty_images.connect.user_password:   ~
+    
+    pw_getty_images.getty_report.class: PW\GettyImagesBundle\Document\GettyReport
+
+services:
+    pw_getty_images.connect.client:
+        public: false
+        class: "%pw_getty_images.connect.client.class%"
+
+    pw_getty_images.connect.message_factory:
+        public: false
+        class: "%pw_getty_images.connect.message_factory.class%"
+
+    pw_getty_images.connect.service:
+        class: "%pw_getty_images.connect.service.class%"
+        arguments:
+            client: "@pw_getty_images.connect.client"
+            message_factory: "@pw_getty_images.connect.message_factory"
+            options:
+                base_url:  "%pw_getty_images.connect.base_url%"
+                version:   "%pw_getty_images.connect.version%"
+                cache_dir: "%kernel.cache_dir%/getty_images"
+                debug:     %kernel.debug%
+        calls:
+            - [ setSystemId, ["%pw_getty_images.connect.system_id%"] ]
+            - [ setSystemPassword, ["%pw_getty_images.connect.system_password%"] ]
+            - [ setUserName, ["%pw_getty_images.connect.user_name%"] ]
+            - [ setUserPassword, ["%pw_getty_images.connect.user_password%"] ]
+    
+    pw_getty_images.getty_report_manager:
+        class: PW\GettyImagesBundle\Model\GettyReportManager
+        parent: pw.model_manager
+        calls:
+            - [ setClass, ["%pw_getty_images.getty_report.class%"] ]

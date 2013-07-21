@@ -1,0 +1,82 @@
+
+{% block content %}
+    <header>
+      <h2>Spark to Collection</h2>
+    </header>
+    <div class="modalContent">
+        <form id="addPostForm" action="{{ post_route }}" method="post" {{ form_enctype(postForm) }}>
+            <div class="status">{{ form_errors(postForm) }}</div>
+            <div class="addImage">
+                {% if posts is defined %}
+                    <ul>
+                        {% for post in posts %}
+                            <li><img src="{{ post.image | version('medium') | default(asset('/images/items/blank.png'))}}" style="max-width: 100px"></li>
+                        {% endfor %}
+                    </ul>
+                {% elseif post is defined %}
+                    <img src="{{ post.image | version('medium') | default(asset('/images/items/blank.png'))}}" style="max-width: 100px">
+                {% endif %}
+                {% if postForm.post.description is defined %}
+                    {{ form_errors(postForm.post.description) }}
+                    {{ form_widget(postForm.post.description) }}
+                {% endif %}
+            </div>
+            <ul>
+                <li class="board">
+                    <h2>Create a new collection&hellip;</h2>
+                    <ol>
+                        <li>Your sparks are <strong>saved</strong> in collections</li>
+                        <li><strong>Name</strong> your new collection: eg. ‘Fashion Pics’ or ‘My Favorite Makeup’</li>
+                        <li>Choose the <strong>category</strong> that best describes the sparks you intend to save in this collection</li>
+                    </ol>
+                    <div class="postCollection">
+                      <label>Create a new collection</label>
+                      {{ form_errors(boardForm.board.name) }}
+                      {{ form_widget(boardForm.board.name) }}
+                      {{ form_errors(boardForm.board.category) }}
+                      {{ form_widget(boardForm.board.category) }}
+                    </div>
+                </li>
+                <li class="board_existing">
+                    <h2>Spark to&hellip;</h2>
+                    <div class="postCollection">
+                      <label>Collection:</label>
+                      {{ form_errors(postForm.post.board) }}
+                      {{ form_widget(postForm.post.board) }}
+                      <label>and publish to</label>
+                      {{ form_errors(postForm.post.category) }}
+                      {{ form_widget(postForm.post.category) }}
+                      <label>category</label>
+                    </div>
+                </li>
+            </ul>
+            <h3 class="show_board_existing">&hellip;OR spark to an <a>existing collection</a></h3>
+            <h3 class="show_board_new">&hellip;OR create a <a>new collection</a></h3>
+            {% if popup is not defined %}
+                <a class="button back">Back</a>
+            {% endif %}
+            <a class="button primary">Spark it!</a>
+            <div id="postModalFacebook">
+                {{ form_widget(postForm.post_on_facebook) }}
+                Post on Facebook
+            </div>
+            <div id="postModalLoading">
+              <img src="{{ asset('images/ajax-black.gif') }}">
+            </div>
+            {{ form_rest(boardForm) }}
+            {{ form_rest(postForm) }}
+        </form>
+        <div id="postModalSuccess">
+            {% if  app.user.hasRole('ROLE_CURATOR') %}
+                <h2>You are curator. Your sparks will be processed and they will appear soon in the stream.</h2>                
+            {% else %}                
+                <h2>You just <span>sparked</span> this to <a class="boardLink"{% if popup %} target="_blank"{% endif %}></a></h2>
+                <a class="sparkLink"{% if popup %} target="_blank"{% endif %}>View your spark</a>
+            {% endif %}
+            <p>This popup will close in <span class="timer">10</span> seconds.</p>
+
+        </div>
+    </div>
+
+    <script>var boardCategoryMap = {{ boardCategoryMap | raw }};</script>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% block content %}
+        <div class="error">
+            {% if error is defined %}
+                {{ error }}
+            {% endif %}
+        </div>
+
+        <form action="{{ path("fos_user_security_check") }}" method="post" class="form partnerLogin">
+            <h3>Partners Login</h3>
+            <fieldset>
+                <ul>
+                    <li>
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="_username" value="{{ last_username }}" class="txt">
+                    </li>
+                    <li>
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="_password" class="txt">
+                    </li>
+                    <li>
+                        <input type="checkbox" id="remember_me" name="_remember_me" value="on">
+                        <label for="remember_me" class="choice">Remember Me</label>
+                    </li>
+                </ul>
+
+                <input type="submit" id="_submit" name="_submit" value="Login" class="button">
+                {% if partner is defined %}
+                    <a id="partnerCancel">Cancel</a>
+                {% endif %}
+            </fieldset>
+        </form>
+{% endblock %}

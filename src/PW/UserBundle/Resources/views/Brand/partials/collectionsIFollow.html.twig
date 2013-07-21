@@ -1,0 +1,16 @@
+{% if followingBoards.count %}
+    <div id="collectionsIFollowContainer">
+        <ul class="boardsList">
+            {% for follow in followingBoards %}
+                <li class="board {{ follow.target.createdBy.userType }}">
+                    {% include 'PWBoardBundle:Default:partials/thumb.html.twig' with {'data': follow.target} %}
+                </li>
+            {% endfor %}
+        </ul>
+        <div id="boardsLoadMore">
+            <a href="{{ path("user_profile_view", {'name' : user.name, 'section' : 'collectionsIFollow', follow_type: app.request.get('follow_type'), 'page': app.request.query.get('page', 0) + 1 })  }}">load more</a>
+        </div>
+    </div>
+{% else %}
+    <p class="noItems">Not following any collections yet!</p>
+{% endif %}

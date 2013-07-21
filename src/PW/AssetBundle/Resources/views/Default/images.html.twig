@@ -1,0 +1,15 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Spark on Collection{% endblock %}
+
+{% block content %}
+    <div style="float:left">
+        <img src="{{img}}" style="max-width: 100px"/>
+    </div>
+    <form action="{{ path('post_add_index') }}" method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+        <input type="submit" value="Add!">
+    </form>
+{% endblock %}
+
+

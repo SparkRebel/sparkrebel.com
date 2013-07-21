@@ -1,0 +1,13 @@
+{% extends friend is defined and friend is not empty ? 'PWActivityBundle:Activity:partials/friend.html.twig' : 'PWActivityBundle:Activity:partials/my.html.twig' %}
+
+{% block icon %}
+<a class="activityPicture" href="{{ path('pw_post_default_view', {id: activity.target.id}) }}">
+	<img src="{{ activity.target.image | version('medium') }}" alt="{{ activity.target.description }}">
+</a>
+{% endblock %}
+
+{% block message %}
+{% if activity.target.parent %}resparked {% else %}sparked {% endif %}
+ <a href="{{ path('pw_post_default_view', {id: activity.target.id}) }}">this spark</a> to
+ <a href="{{ path('pw_board_default_view', {'id': activity.target.board.id, 'slug': activity.target.board.slug} ) }}">{{ activity.target.board.name }}</a>
+{% endblock %}

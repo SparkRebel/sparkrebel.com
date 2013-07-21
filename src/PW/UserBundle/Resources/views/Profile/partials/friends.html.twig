@@ -1,0 +1,39 @@
+{% if friends and friends.count %}
+    {% if isMe and is_granted("IS_AUTHENTICATED_REMEMBERED") %}  
+        <h3>My friends</h3>
+        <div id="userFriends">
+          <div class="jcarousel">
+            <ul>
+              {% for friend in friends %}
+                <li class="{{ friend.target.userType }}">{% include 'PWUserBundle:Default:partials/thumb.html.twig' with {'user': friend.target} %}</li>
+              {% endfor %}
+            </ul>
+          </div>
+          <a class="jcarousel-prev">Previous</a>
+          <a class="jcarousel-next">Next</a>
+        </div>
+        
+    {% endif %}    
+{% endif %}
+        
+{% if not isMe and is_granted("IS_AUTHENTICATED_REMEMBERED") and mutualFriends.count > 0  %}  
+        
+    <h3>Mutual friends</h3>
+    <div id="userFriends">
+      <div class="jcarousel">
+        <ul>
+          {% for friend in mutualFriends %}
+            <li class="{{ friend.userType }}">{% include 'PWUserBundle:Default:partials/thumb.html.twig' with {'user': friend} %}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      <a class="jcarousel-prev">Previous</a>
+      <a class="jcarousel-next">Next</a>
+    </div>
+    
+{% endif %}
+    
+
+
+
+

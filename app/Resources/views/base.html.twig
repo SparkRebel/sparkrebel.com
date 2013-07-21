@@ -1,0 +1,75 @@
+{% extends '::default.html.twig' %}
+
+{% block meta %}
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+{% endblock %}
+
+{% block navContainer %}
+    <nav id="navContainer">
+        <div id="navSubContainer">
+            {{ knp_menu_render('PWApplicationBundle:Builder:mainMenu', {'ancestorClass' : 'current'}) }}
+            <div id="navShowHeader"></div>
+        </div>
+    </nav>
+{% endblock %}
+
+{% block footer %}
+    <footer id="footerNav">
+        <nav>{{ knp_menu_render('PWApplicationBundle:Builder:footerMenu') }}</nav>
+        <div id="siteseal">
+            <img src="{{ asset('images/godaddy_seal.gif') }}" width="132" height="31" alt="GoDaddy.com SSL Security Seal">
+            <script>
+            /*$(function() {
+                $("#siteseal img").css("cursor", "hand").click(function(e) {
+                    var sealId = 'zwl5SqSq3VeStY7DeaaL9suMXxUn8XjpZsq8uQqj94Oijt1uQeGsHgNKjzWG';
+                    window.open(
+                        'https://seal.godaddy.com/verifySeal?sealID=' + sealId,
+                        'SealVerfication',
+                        'location=yes,status=yes,resizable=yes,scrollbars=no,width=592,height=433'
+                    );
+                });
+            });*/
+            </script>
+        </div>
+    </footer>
+    <div id="loginForm">
+        {% include 'PWUserBundle:Security:partials/loginForm.html.twig' %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+        {% block javascripts_notification %}
+            {% javascripts filter='?yui_js' combine=true 'js/notification.js' %}
+                <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+        {% endblock %}
+        {% if not app.user.settings.signupPreferences or app.user.settings.signupPreferences is empty %}
+            {% javascripts filter='?yui_js' combine=true 'js/registration.js' 'js/libs/jquery.easyListSplitter.js' %}
+                <script src="{{ asset_url }}"></script>
+                <script>$(function() { APP.registration.register(); });</script>
+            {% endjavascripts %}
+        {% endif %}
+    {% else %}
+        {% javascripts filter='?yui_js' combine=true 'js/registration.js' 'js/libs/jquery.easyListSplitter.js' %}
+            <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% endif %}
+{% endblock %}
+
+{% block googleAnalytics %}
+    {# Don't load ga.js if we don't have an account #}
+    {% if google_analytics.account is defined and google_analytics.account is not empty %}
+        {# Don't track admins or admins impersonating another user #}
+        {% if not is_granted("ROLE_INTERN") and not is_granted("ROLE_CURATOR") and not is_granted("ROLE_ADMIN") and not is_granted('ROLE_PREVIOUS_ADMIN') %}
+            <script>
+            (function(d,t){
+                var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+                g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+                s.parentNode.insertBefore(g,s)
+            }(document,'script'));
+            </script>
+        {% endif %}
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,3 @@
+pw_picscout:
+    resource: "@PWPicScoutBundle/Controller/"
+    type:     annotation

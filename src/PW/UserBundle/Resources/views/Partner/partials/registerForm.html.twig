@@ -1,0 +1,68 @@
+
+{% block content %}
+    <h2>Partners - Sign Up</h2>
+    
+    <p>Our partners are medium to large businesses that are involved in fashion inspiration, celebrity style watch and brand exploration. If you are not sure you are qualified to sign up as a partner, don't hesitate to contact us at: <a href="mailto:info@sparkrebel.com">info@sparkrebel.com</a></p>
+
+    {% if userTotal > 0 %}
+
+        <p>
+            Thanks for submitting your request to become a partner.
+            You will receive notification by e-mail of our decision soon.
+        </p>
+
+    {% else %}
+
+        <form action="{{ path('user_partner_register') }}" method="post" {{ form_enctype(form) }} class="form">
+            {{ form_errors(form) }}
+            <fieldset>
+                <ul>
+                    <li>
+                        {{ form_errors(form.email) }}
+                        {{ form_label(form.email) }}
+                        {{ form_widget(form.email) }}
+                    </li>
+                    {% if form.plainPassword is defined %}
+                        <li>
+                            {{ form_label(form.plainPassword.password) }}
+                            {{ form_widget(form.plainPassword.password) }}
+                        </li>
+                        <li>
+                            {{ form_errors(form.plainPassword) }}
+                            <label>Confirm Password</label>
+                            {{ form_widget(form.plainPassword.password_confirm) }}
+                        </li>
+                    {% endif %}
+                    <li>
+                        {{ form_errors(form.name) }}
+                        {{ form_label(form.name) }}
+                        {{ form_widget(form.name) }}
+                    </li>
+                    <li>
+                        {{ form_errors(form.phone) }}
+                        {{ form_label(form.phone) }}
+                        {{ form_widget(form.phone) }}
+                    </li>
+                    <li>
+                        {{ form_errors(form.link) }}
+                        {{ form_label(form.link) }}
+                        {{ form_widget(form.link) }}
+                    </li>
+                    <li>
+                        {{ form_errors(form.requestedSlug) }}
+                        {{ form_label(form.requestedSlug) }}
+                        {{ form_widget(form.requestedSlug) }}
+                    </li>
+                    <li>
+                        {{ form_errors(form.icon) }}
+                        {{ form_label(form.icon) }}
+                        {{ form_widget(form.icon) }}
+                    </li>
+                </ul>
+            </fieldset>
+            {{ form_rest(form) }}
+            <input type="submit" value="Send Request" class="button">
+        </form>
+
+    {% endif %}
+{% endblock %}

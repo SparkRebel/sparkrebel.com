@@ -1,0 +1,513 @@
+/*-------------------------------------------------------------------
+    Compass Modules
+-------------------------------------------------------------------*/
+@import "compass/css3/border-radius";
+@import "compass/css3/box-shadow";
+@import "compass/css3/inline-block";
+@import "compass/utilities/general/clearfix";
+
+/*-------------------------------------------------------------------
+    PW Modules
+-------------------------------------------------------------------*/
+@import "variables.scss";
+@import "mixins.scss";
+
+/*--------------------------------------
+    Search
+----------------------------------------*/
+.searchTitle {
+    span {
+        color: $linkColor;
+    }
+}
+
+#search-results {
+    h2 {
+        color: #808080;
+        font-family: 'MuseoSans500';
+        font-size: $baseFontSize + 6;
+        margin-bottom: 20px;
+        
+        strong {
+            font-family: 'MuseoSans900';
+        }
+        
+        small {
+            font-family: 'MuseoSans900';
+            font-size: $baseFontSize - 3;
+        }
+    }
+    
+    h3 {
+        color: #fff;
+        font-family: 'MuseoSans900';
+        font-size: $baseFontSize - 2;
+        text-transform: uppercase;
+        
+        &.vip {
+            color: #baae5e;
+        }
+    }
+}
+
+/*--------------------------------------
+    Search - Boards
+----------------------------------------*/
+#search-results {
+    .boardsList {
+        .boardThumb {
+            background-color: #fff;
+            padding: 6px;
+            @include border-radius(4px);
+            
+            h3 {
+                color: $linkColor;
+                font-size: $baseFontSize - 3;
+            }
+            
+            ul {
+                width: 198px;
+                
+                li {
+                    @include box-shadow(rgba(#000, 0.3) 1px 1px 4px);
+                    @include square(62px);
+                    
+                    &.big {
+                        @include square(198px);
+                        
+                        img {
+                            max-width: 198px;
+                        }
+                    }
+                    
+                    &.last {
+                        margin-right: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*--------------------------------------
+    Search - Members
+----------------------------------------*/
+.usersList {
+    margin-bottom: 20px;
+    @include pie-clearfix;
+    
+    li {
+        background-color: #f2f2f2;
+        float: left;
+        margin: 7px;
+        position: relative;
+        @include border-radius(4px);
+        @include size(146px, 202px);
+        
+        a {
+            display: block;
+            height: 182px;
+            padding: 10px;
+            text-decoration: none;
+        }
+        
+        .userPicture {
+            background-color: #fff;
+            border: 1px solid #cbcbcb;
+            margin-bottom: 5px;
+            padding: 2px;
+            @include border-radius(4px);
+            
+            img {
+                display: block;
+                @include border-radius(4px);
+                @include square(120px);
+            }
+        }
+        
+        h4 {
+            color: #4d4d4d;
+            font-family: 'MuseoSans900';
+            font-size: $baseFontSize - 2;
+            margin-bottom: 5px;
+        }
+        
+        p {
+            color: #919191;
+            font-family: 'MuseoSans500';
+            font-size: $baseFontSize - 4;
+        }
+        
+        .button {
+            display: none;
+            height: 18px;
+            left: 32px;
+            padding: 4px 10px 4px 30px;
+            position: absolute;
+            top: 18px;
+            width: auto;
+            
+            &:before {
+                background-position: -300px -248px;
+            }
+            
+            &:hover:before {
+                background-position: -300px -284px;
+            }
+            
+            &.unfollow {
+                left: 25px;
+            }
+        }
+        
+        &:hover {
+            .button {
+                display: block;
+            }
+        }
+    }
+}
+
+/*--------------------------------------
+    Search - Stores
+----------------------------------------*/
+#search-results.stores {
+    .usersList {
+        li {
+            .userPicture {
+                border: none;
+                padding: 0;
+                
+                img {
+                    @include square(125px);
+                }
+            }
+        }
+    }
+}
+
+/*--------------------------------------
+    Search - Sparks
+----------------------------------------*/
+.sparksList {
+    margin-bottom: 20px;
+    @include pie-clearfix;
+    
+    li {
+        background-color: #fff;
+        float: left;
+        margin: 20px;
+        padding: 6px;
+        @include border-radius(4px, 4px);
+        @include box-shadow(#000 1px 1px 3px);
+        @include size(188px, 338px);
+        
+        .post {
+            overflow: hidden;
+            position: relative;
+            @include size(188px, 338px);
+            
+            .postAttribution {
+                color: #7b7b7b;
+                font-size: $baseFontSize - 3;
+                margin-bottom: 2px;
+                
+                small {
+                    color: #cacaca;
+                    font-size: $baseFontSize - 4;
+                }
+            }
+            
+            .postImage {
+                background-color: #f0f0f0;
+                display: table-cell;
+                margin-bottom: 4px;
+                overflow: hidden;
+                position: relative;
+                text-align: center;
+                vertical-align: middle;
+                @include border-radius(4px);
+                @include size(188px, 198px);
+                
+                .postActions {
+                    display: none;
+                    left: 12px;
+                    position: absolute;
+                    top: 12px;
+                    z-index: 100;
+                    
+                    .button {
+                        float: left;
+                    }
+                    
+                    .button.repost {
+                        padding-left: 24px;
+                        
+                        &:before {
+                            background-position: -300px -1765px;
+                            left: 4px;
+                            top: -2px;
+                            @include size(14px, 24px);
+                        }
+                    }
+                }
+                
+                img {
+                    display: block;
+                    height: auto;
+                    margin: 0 auto;
+                    max-height: 100%;
+                    max-width: 188px;
+                    width: auto;
+                }
+            }
+            
+            p {
+                color: #929292;
+                font-size: $baseFontSize - 3;
+                line-height: 1.2;
+                margin: 4px 0;
+                
+                &.postDescription {
+                    line-height: 1.2;
+                }
+                
+                &.repostTo {
+                    color: #424242;
+                    font-size: $baseFontSize - 4;
+                    font-family: 'MuseoSans900';
+                    margin-bottom: 5px;
+                    text-transform: uppercase;
+                    @include pie-clearfix;
+                    
+                    .userPicture {
+                        float: left;
+                        margin-right: 5px;
+                        @include square(30px);
+                        
+                        img {
+                            max-height: 100%;
+                            max-width: 100%;
+                        }
+                    }
+                    
+                    small {
+                        color: #929292;
+                        font-family: Arial;
+                        font-size: $baseFontSize - 4;
+                        margin: -2px 0 0 3px;
+                        text-transform: lowercase;
+                        @include inline-block;
+                    }
+                }
+            }
+            
+            &:hover {
+                .postImage {
+                    .postActions {
+                        display: block;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*--------------------------------------
+    Search - Items from stores
+----------------------------------------*/
+#search-results {
+    .itemsList {
+        margin-bottom: 20px;
+        @include pie-clearfix;
+        
+        li {
+            background-color: #fff;
+            float: left;
+            margin: 20px;
+            padding: 6px;
+            @include border-radius(4px);
+            @include box-shadow(#000 1px 1px 3px);
+            @include size(188px, 130px);
+            
+            .itemFromStore {
+                color: #414141;
+                font-size: $baseFontSize - 2;
+                @include pie-clearfix;
+                
+                h2 {
+                    font-size: $baseFontSize + 2;
+                    margin-bottom: 10px;
+                }
+                
+                .itemAuthor {
+                    float: left;
+                    margin-bottom: 10px;
+                    width: 133px;
+                }
+                
+                .itemPrice {
+                    color: $baseFontColor;
+                    float: right;
+                    margin-bottom: 10px;
+                    text-align: right;
+                    width: 50px;
+                }
+                
+                .button {
+                    clear: both;
+                    float: left;
+                    padding-left: 30px;
+                    
+                    &.itemBuy {
+                        &:before {
+                            background-position: -300px -390px;
+                        }
+                        
+                        &:hover:before {
+                            background-position: -300px -421px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*--------------------------------------
+    Responsive: Tablet and Facebook
+----------------------------------------*/
+@media only screen and (max-width: 810px) {
+    #search-results {
+        .boardsList {
+            .boardThumb {
+                ul {
+                    width: 138px;
+                    
+                    li {
+                        @include square(42px);
+                        
+                        &.big {
+                            @include square(138px);
+                            
+                            img {
+                                max-width: 138px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    .usersList {
+        li {
+            margin: 17px;
+        }
+    }
+    
+    .sparksList {
+        li {
+            margin: 20px;
+        }
+    }
+    
+    .itemsList {
+        li {
+            margin: 20px;
+        }
+    }
+}
+
+/*--------------------------------------
+    Responsive: Mobile
+----------------------------------------*/
+@media only screen and (max-device-width: 480px) {
+    #search-results {
+        .boardsList {
+            .boardThumb {
+                ul {
+                    width: 288px;
+                    
+                    li {
+                        @include square(92px);
+                        
+                        &.big {
+                            @include square(288px);
+                            
+                            img {
+                                max-width: 288px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        .usersList {
+            li {
+                margin: 2px;
+            }
+        }
+        
+        .sparksList {
+            li {
+                margin: 10px 0;
+                @include size(288px, 400px);
+                
+                .post {
+                    @include size(288px, 400px);
+                    
+                    .postImage {
+                        @include size(288px, 303px);
+                        
+                        img {
+                            max-height: 288px;
+                            max-width: 303px;
+                        }
+                    }
+                }
+            }
+        }
+        
+        .itemsList {
+            li {
+                margin: 10px 0;
+                width: 288px;
+            }
+        }
+    }
+}
+
+/*--------------------------------------
+    Responsive: Wide
+----------------------------------------*/
+@media only screen and (min-width : 1220px) {
+    #search-results {
+        .boardsList {
+            .boardThumb {
+                ul {
+                    width: 258px;
+                    
+                    li {
+                        @include square(82px);
+                        
+                        &.big {
+                            @include square(258px);
+                            
+                            img {
+                                max-width: 258px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        .usersList {
+            li {
+                margin: 12px;
+            }
+        }
+    }
+}

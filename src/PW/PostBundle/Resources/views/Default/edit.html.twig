@@ -1,0 +1,32 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Edit Spark:{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='compass,?yui_css' 'css/forms.scss' %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+
+{% endblock %}
+
+{% block content %}
+    <header>
+        <h2>Edit your spark</h2>
+    </header>
+    <div style="visibility:hidden;">    
+      <a id="post-edit-link" data-dialog-class="postModal existingBoard" data-dialog-width="780" href="{{ path('pw_post_edit', {id: post.id}) }}" title="Edit spark" class="dialog edit">Edit</a>
+      
+      {% include 'PWPostBundle:Default:partials/editForm.html.twig' %}
+    </div>
+    
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+<script>
+$(function() {
+    $('#post-edit-link').trigger('click');
+});
+</script>
+{% endblock %}

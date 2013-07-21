@@ -1,0 +1,32 @@
+{% extends '::admin/base.html.twig' %}
+
+{% block title %}Admin : Interns boards{% endblock %}
+
+{% block content %}
+    <header class="adminNav">
+        <ul>
+            <li><h2><a href="{{ path('admin_dashboard_index') }}">Admin</a> : </h2></li>
+            <li><h2><a href="{{ path('admin_intern_boards') }}">Interns boards</a> : </h2></li>
+            <li><h3>{{ board.name }}</h3></li>
+        </ul>
+    </header>
+    
+    <form action="{{ path('admin_change_board_owner', {'id': board.id}) }}" method="post" {{ form_enctype(form) }} class="form">
+        <h2>Change the owner of board {{ board.name }}</h2>
+        
+        <div class="error">
+            {{ form_errors(form) }}
+        </div>
+        <ul>
+            <li>
+                {{ form_errors(form.createdBy) }}
+                {{ form_label(form.createdBy) }}
+                {{ form_widget(form.createdBy) }}
+            </li>
+
+        </ul>
+        <button data-confirm="Are You sure?" class="button">Change owner</button>
+        {{ form_rest(form) }}
+    </form>
+    
+{% endblock %}

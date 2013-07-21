@@ -1,0 +1,196 @@
+parameters:
+    pw.events:
+        jobs:
+            asset.create:
+                #- asset:sync $assetId$
+            asset.processed:
+                #- asset:upload $assetId$
+            asset.remove:
+                - asset:remove $assetId$
+
+            comment.create:
+                - activity:create comment.create $commentId$
+                - notify:user comment.create $commentId$
+            comment.reply: # mutually exclusive with comment.create
+                - activity:create comment.reply $commentId$
+                - notify:user comment.reply $commentId$
+            comment.tag: # TODO comment tagging isn't implemented
+                - activity:create comment.tag $commentId$ $userId$
+                - notify:user comment.tag $commentId$
+
+            board.create:
+                - follow:board:new $userId$ $boardId$
+            board.delete:
+                #- board:deleted $boardId$ # TODO split this  <- moved to BoardManager:delete
+                # - follow:delete board $boardId$
+                # - board:deletePosts $boardId$ # maybe?
+            board.follow:
+                - follow:board $followerId$ $targetId$
+                - activity:create board.follow $followId$
+                - notify:user board.follow $followId$
+            board.unfollow:
+                #- unfollow:board $followerId$ $targetId$
+                #- stream:refresh $followerId$ $type$
+
+            notify.friends:
+                - notify:friends $activityId$
+            post.create:
+                - follow:post $postId$
+                - activity:create post.create $postId$
+                - post:process:unified $postId$
+            post.repost: # TODO test
+                - notify:user post.repost $postId$
+
+            stream.user.refresh:
+                - stream:build $userId$
+                #- stream:refresh $userId$ onsale
+            stream.brand.refresh:
+                #- stream:refresh $userId$ brand
+                #- stream:refresh $userId$ brandOnsale
+
+            user.follow:
+                - follow:user $followerId$ $targetId$
+                - activity:create user.follow $followId$
+                - notify:user user.follow $followId$
+            user.unfollow:
+                #- unfollow:user $followerId$ $targetId$
+                #- stream:refresh $followerId$ $type$
+
+    pw.email.class: PW\ApplicationBundle\Document\Email
+    pw.event.class: PW\ApplicationBundle\Document\Event
+
+    pw.system_user.sparkrebel.name:     Events
+    pw.system_user.sparkrebel.email:    admin@sparkrebel.com
+    pw.system_user.sparkrebel.username: %pw.system_user.sparkrebel.email%
+
+services:
+    # Abstract Model Manager
+    pw.model_manager:
+        class: PW\ApplicationBundle\Model\AbstractManager
+        abstract: true
+        arguments:
+            dm: "@doctrine_mongodb.odm.document_manager"
+        calls:
+            - [ setValidator, ["@validator"] ]
+            - [ setSoftDeleteManager, ["@doctrine.odm.mongodb.soft_delete.manager"] ]
+
+    # Abstract Event Listener
+    pw.event_listener:
+        class: PW\ApplicationBundle\EventListener\AbstractEventListener
+        abstract: true
+        arguments:
+            container: "@service_container"
+
+    # Abstract Mailer
+    pw.mailer:
+        class: PW\ApplicationBundle\Mailer\Mailer
+        abstract: true
+        arguments: ["@mailer", "@router", "@twig"]
+
+    # Email Manager
+    pw.email_manager:
+        class: PW\ApplicationBundle\Model\EmailManager
+        parent: pw.model_manager
+        calls:
+            - [ setClass, ["%pw.email.class%"] ]
+
+    # Event Manager
+    pw.event:
+        class: PW\ApplicationBundle\Model\EventManager
+        arguments:
+            environment: "%kernel.environment%"
+            config: "%pw.events%"
+        calls:
+            - [ setMode, [%pw_event.mode%] ]
+            - [ setContainer, ["@service_container"] ]
+        tags:
+            - { name: doctrine_mongodb.odm.event_listener, event: postPersist }
+            - { name: doctrine_mongodb.odm.event_listener, event: postRemove }
+            - { name: doctrine_mongodb.odm.event_listener, event: postUpdate }
+
+    twig.extension.text:
+        class: Twig_Extensions_Extension_Text
+        tags:
+            - { name: twig.extension }
+
+    pw.twig.container:
+        class: PW\ApplicationBundle\Extension\Container
+        calls:
+            - [ setContainer, ["@service_container"] ]
+        tags:
+            - { name: twig.extension }
+
+    pw.twig.common:
+        class: PW\ApplicationBundle\Extension\Common
+        tags:
+            - { name: twig.extension }
+
+    pw.twig.humanedate:
+        class: PW\ApplicationBundle\Extension\HumaneDate
+        tags:
+            - { name: twig.extension }
+
+    pw.twig.getdomainfromurl:
+        class: PW\ApplicationBundle\Extension\GetDomainFromUrl
+        tags:
+            - { name: twig.extension }
+
+    pw.twig.sluggify:
+        class: PW\ApplicationBundle\Extension\Sluggify
+        tags:
+            - { name: twig.extension }
+
+    pw.twig.cleanenv:
+        class: PW\ApplicationBundle\Extension\CleanEnv
+        tags:
+            - { name: twig.extension }
+
+    pw.twig.strip_entities:
+        class: PW\ApplicationBundle\Extension\StripEntities
+        tags:
+            - { name: twig.extension }
+
+    pw.search:
+        class: PW\ApplicationBundle\Provider\SearchProvider
+        calls:
+            - [ setContainer, ["@service_container"] ]
+
+    pw.stream:
+        class: PW\ApplicationBundle\Provider\StreamProvider
+        arguments: ["@session"]
+
+    pw.listener.response:
+        class: PW\ApplicationBundle\EventListener\ResponseListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+            - { name: kernel.event_listener, event: kernel.view, method: onKernelView, priority: 10 }
+
+    # Query Parameter
+    pw.subscriber.query_parameter:
+        class: PW\ApplicationBundle\EventListener\QueryParameterListener
+        arguments:
+            container: "@service_container"
+        tags:
+            - { name: kernel.event_subscriber }
+
+    # @todo: Remove when PR 119 is merged (https://github.com/symfony/AsseticBundle/pull/119)
+    # assetic.worker.cache_busting:
+    #     class: Assetic\Factory\Worker\CacheBustingWorker
+    #     public: false
+    #     tags:
+    #         - { name: assetic.factory_worker }
+
+#    pw.listener.item.create:
+#        class: PW\ApplicationBundle\EventListener\ItemCreateListener
+#        calls:
+#            - [ setContainer, ["@service_container"] ]
+#        tags:
+#            - { name: doctrine_mongodb.odm.event_listener, event: prePersist, priority: 500 }
+#            - { name: doctrine_mongodb.odm.event_listener, event: preUpdate, priority: 500 }
+
+#    pw.listener.route.storage:
+#        class: PW\ApplicationBundle\EventListener\RouteStorageListener
+#        arguments: ["@router"]
+#        tags:
+#            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+

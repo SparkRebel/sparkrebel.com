@@ -1,0 +1,146 @@
+
+{% block content %}
+    <form action="{{ form_path }}" method="post" {{ form_enctype(form) }} class="form weeklyNewsletter">
+        {{ form_errors(form) }}
+        <fieldset>
+            <ul>
+                <li>
+                    {{ form_errors(form.newsletter.sendAt) }}
+                    {{ form_label(form.newsletter.sendAt) }}
+                    {{ form_widget(form.newsletter.sendAt) }}
+                </li>
+                <li>
+                    {{ form_errors(form.newsletter.subject) }}
+                    {{ form_label(form.newsletter.subject) }}
+                    {{ form_widget(form.newsletter.subject) }}
+                </li>
+                <li>
+                    {{ form_errors(form.newsletter.heading) }}
+                    {{ form_label(form.newsletter.heading) }}
+                    {{ form_widget(form.newsletter.heading) }}
+                </li>
+                <li>
+                    {{ form_errors(form.newsletter.topType) }}
+                    {{ form_label(form.newsletter.topType) }}
+                    {{ form_widget(form.newsletter.topType) }}
+                </li>
+                <li style="display: list-item;">
+                    <label class="required">Curated Top</label>
+                    <div id="pw_newsletter_create_newsletter_curatedTop">
+                        <div>
+                            {{ form_errors(form.newsletter.curatedTopTitle) }}
+                            {{ form_label(form.newsletter.curatedTopTitle) }}
+                            {{ form_widget(form.newsletter.curatedTopTitle) }}
+                        </div>
+                        {% if newsletter is defined and newsletter.curatedTopImage %}
+                            <div>
+                                <img src="{{ newsletter.curatedTopImage.url }}">
+                            </div>
+                        {% endif %}
+                        <div>
+                            {{ form_errors(form.newsletter.curatedTopImage) }}
+                            {{ form_label(form.newsletter.curatedTopImage) }}
+                            {{ form_widget(form.newsletter.curatedTopImage) }}
+                        </div>
+                        <div>
+                            {{ form_errors(form.newsletter.curatedTopLink) }}
+                            {{ form_label(form.newsletter.curatedTopLink) }}
+                            {{ form_widget(form.newsletter.curatedTopLink) }}
+                        </div>
+                        <div>
+                            {{ form_errors(form.newsletter.curatedTopDescription) }}
+                            {{ form_label(form.newsletter.curatedTopDescription) }}
+                            {{ form_widget(form.newsletter.curatedTopDescription) }}
+                        </div>
+                        <div>
+                            {{ form_errors(form.newsletter.curatedTopContent) }}
+                            {{ form_label(form.newsletter.curatedTopContent) }}
+                            {{ form_widget(form.newsletter.curatedTopContent) }}
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    {{ form_errors(form.newsletter.eventsTopBoard) }}
+                    {{ form_label(form.newsletter.eventsTopBoard) }}
+                    {{ form_widget(form.newsletter.eventsTopBoard) }}
+                </li>
+                <li>
+                    {{ form_errors(form.newsletter.bottomType) }}
+                    {{ form_label(form.newsletter.bottomType) }}
+                    {{ form_widget(form.newsletter.bottomType) }}
+                </li>
+                <li style="display: list-item;">
+                    <label class="required">Curated Bottom</label>
+                    <div id="pw_newsletter_create_newsletter_curatedBottom">
+                        <div>
+                            {{ form_errors(form.newsletter.curatedBottomTitle) }}
+                            {{ form_label(form.newsletter.curatedBottomTitle) }}
+                            {{ form_widget(form.newsletter.curatedBottomTitle) }}
+                        </div>
+                        {% if newsletter is defined and newsletter.curatedBottomImage %}
+                            <div>
+                                <img src="{{ newsletter.curatedBottomImage.url }}">
+                            </div>
+                        {% endif %}
+                        <div>
+                            {{ form_errors(form.newsletter.curatedBottomImage) }}
+                            {{ form_label(form.newsletter.curatedBottomImage) }}
+                            {{ form_widget(form.newsletter.curatedBottomImage) }}
+                        </div>
+                        <div>
+                            {{ form_errors(form.newsletter.curatedBottomLink) }}
+                            {{ form_label(form.newsletter.curatedBottomLink) }}
+                            {{ form_widget(form.newsletter.curatedBottomLink) }}
+                        </div>
+                        <div>
+                            {{ form_errors(form.newsletter.curatedBottomDescription) }}
+                            {{ form_label(form.newsletter.curatedBottomDescription) }}
+                            {{ form_widget(form.newsletter.curatedBottomDescription) }}
+                        </div>
+                        <div>
+                            {{ form_errors(form.newsletter.curatedBottomContent) }}
+                            {{ form_label(form.newsletter.curatedBottomContent) }}
+                            {{ form_widget(form.newsletter.curatedBottomContent) }}
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    {{ form_errors(form.newsletter.eventsBottomBoard) }}
+                    {{ form_label(form.newsletter.eventsBottomBoard) }}
+                    {{ form_widget(form.newsletter.eventsBottomBoard) }}
+                </li>
+                <li>
+                    {{ form_errors(form.newsletter.showTrendingCollections) }}
+                    {{ form_label(form.newsletter.showTrendingCollections) }}
+                    {{ form_widget(form.newsletter.showTrendingCollections) }}
+                </li>
+                <li>
+                    {{ form_errors(form.newsletter.showFromYourStream) }}
+                    {{ form_label(form.newsletter.showFromYourStream) }}
+                    {{ form_widget(form.newsletter.showFromYourStream) }}
+                </li>
+                <li>
+                    {{ form_errors(form.newsletter.showFromYourFavoriteBrands) }}
+                    {{ form_label(form.newsletter.showFromYourFavoriteBrands) }}
+                    {{ form_widget(form.newsletter.showFromYourFavoriteBrands) }}
+                </li>
+                <li>
+                    {{ form_errors(form.newsletter.status) }}
+                    {{ form_label(form.newsletter.status) }}
+                    {{ form_widget(form.newsletter.status) }}
+                </li>
+            </ul>
+        </fieldset>
+        <input type="submit" value="Save" class="button">
+        {{ form_rest(form) }}
+    </form>
+
+    {{ tinymce_init() }}
+
+    {% javascripts filter='?yui_js'
+    'js/admin/backend/newsletter.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+{% endblock %}

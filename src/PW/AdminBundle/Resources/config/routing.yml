@@ -1,0 +1,4 @@
+pw_admin:
+    resource: "@PWAdminBundle/Controller/"
+    type:     annotation
+    prefix:   /

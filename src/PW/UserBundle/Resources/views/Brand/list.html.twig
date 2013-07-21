@@ -1,0 +1,80 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}All brands &amp; Stores{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='compass,?yui_css' 'css/brands.scss' %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block content %}
+    <h2>Brands &amp; Stores</h2>
+
+    {% if is_granted('ROLE_USER') %}
+
+        <div class="myBrandsFilters">     
+            <h3>My Brands</h3>       
+            <ul>                
+                {% for brand in brands_i_follow %}
+                    <li>
+                        <a href="{{ path('brands_stream', {brand_id: brand.id, slug: brand.name}) }}">
+                            <div class="brandLogo">
+                                <img src="{{ brand | user_icon('thumb') }}" width="50" height="50">
+                            </div>
+                            <p>{{brand.name}}</p>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <a href="{{ path('brands_settings') }}">Add/Remove brands</a>
+
+        </div>
+        
+    {% endif %}
+
+    <div id="brandsAndStores">
+        <ul id="brandsList">
+            <li class="first">
+                {{ _self.render_brand_group(brands, '#') }}
+                {% for letter in 'A'..'F' %}
+                    {{ _self.render_brand_group(brands, letter) }}
+                {% endfor %}
+            </li>
+            <li>
+                {% for letter in 'G'..'M' %}
+                    {{ _self.render_brand_group(brands, letter) }}
+                {% endfor %}
+            </li>
+            <li>
+                {% for letter in 'N'..'T' %}
+                    {{ _self.render_brand_group(brands, letter) }}
+                {% endfor %}
+            </li>
+            <li class="last">
+                {% for letter in 'U'..'Z' %}
+                    {{ _self.render_brand_group(brands, letter) }}
+                {% endfor %}
+            </li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% macro render_brand_group(brands, letter) %}
+    <span class="brandLetter">{{ letter }}</span>
+    <ul class="brandsList{{ letter }}">
+        {% if brands[letter] is defined %}
+            {% for brand in brands[letter] %}
+                {{ _self.render_brand(brand) }}
+            {% endfor %}
+        {% endif %}
+    </ul>
+{% endmacro %}
+
+{% macro render_brand(brand) %}
+    <li data-class="{{ brand.type|capitalize }}" data-id="{{ brand.id }}">
+        {% include 'PWUserBundle:Brand:partials/medium.html.twig' with {'data': brand} %}
+    </li>
+{% endmacro %}

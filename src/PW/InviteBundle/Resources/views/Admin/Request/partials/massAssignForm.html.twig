@@ -1,0 +1,17 @@
+
+{% block content %}
+    <form action="{{ path('admin_invite_request_mass') }}" method="post">
+        <fieldset>
+            <ul>
+                <li>
+                    Code: <input type="text" name="code" required="required">
+                </li>
+            </ul>
+        </fieldset>
+        {% for requestId in postData.get('requests') %}
+            <input type="hidden" name="requests[]" value="{{ requestId }}">
+        {% endfor %}
+        <input type="hidden" name="massaction" value="{{ postData.get('massaction') }}">
+        <input type="submit" value="Assign Code to {{ postData.get('requests') | length }} Requests">
+    </form>
+{% endblock %}

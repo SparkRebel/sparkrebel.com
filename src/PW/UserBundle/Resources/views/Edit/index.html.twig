@@ -1,0 +1,20 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Profile : Edit{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='compass,?yui_css' combine=true
+        'css/forms.scss'
+        'css/profile.scss'
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+    {{ block('stream_stylesheets') }}
+{% endblock %}
+
+{% block content %}
+  <div id="userEdit">
+    {% include 'PWUserBundle:Edit:partials/form.html.twig' %}
+  </div>
+{% endblock %}

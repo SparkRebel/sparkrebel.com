@@ -1,0 +1,30 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <!-- <h2>{{ title }}</h2> -->
+    {% if is_granted('ROLE_USER') %}
+        {% render 'PWPostBundle:Stream:stream' with {'type': 'onsaleStream', 'id': app.user.id} %}
+    {% else %}
+        {% render 'PWPostBundle:Stream:stream' with {'type': 'onsaleAnon'} %}
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts filter='?yui_js' combine=true
+        'js/jquery.sqbricks.js'
+        'js/libs/webfont.js'
+        'js/libs/jquery.jail.js'
+        'js/libs/jquery.infinitescroll.js'
+        'js/libs/jquery.rwdImageMaps.js'
+        'js/libs/jquery.tooltip.js'
+        'js/stream.js'
+    %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+{% endblock %}

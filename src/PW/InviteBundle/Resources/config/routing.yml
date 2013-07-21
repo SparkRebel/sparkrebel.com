@@ -1,0 +1,7 @@
+pw_invite:
+    resource: "@PWInviteBundle/Controller/"
+    type:     annotation
+    
+pw_admin_invite:
+    resource: "@PWInviteBundle/Controller/Admin/"
+    type:     annotation

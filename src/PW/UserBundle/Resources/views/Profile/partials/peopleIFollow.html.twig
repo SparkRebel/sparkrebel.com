@@ -1,0 +1,10 @@
+{% if followingBrands %}
+    <h3>Brands &amp; Stores</h3>
+    <ul>
+    {% for follow in followingBrands %}
+        <li class="brand">{% include 'PWUserBundle:Default:partials/row.html.twig' with {'user': follow} %}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+      <p class="noItems">Not following any Brand &amp; Stores yet</p>
+{% endif %}

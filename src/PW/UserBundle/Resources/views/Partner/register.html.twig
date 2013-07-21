@@ -1,0 +1,19 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Partners - Sign Up{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='compass,?yui_css' combine=true
+        'css/partners.scss'
+        'css/forms.scss'
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block content %}
+  <div id="partners">
+    {% include 'PWUserBundle:Partner:partials/registerForm.html.twig' %}
+  </div>
+{% endblock %}

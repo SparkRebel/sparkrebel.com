@@ -1,0 +1,15 @@
+parameters:
+    pw_banner.banner.class: PW\BannerBundle\Document\Banner
+    pw_promo.promo.class: PW\BannerBundle\Document\Promo
+
+services:
+    pw_banner.banner_manager:
+        class: PW\BannerBundle\Model\BannerManager
+        parent: pw.model_manager
+        calls:
+            - [ setClass, ["%pw_banner.banner.class%"] ]
+    pw_promo.promo_manager:
+        class: PW\BannerBundle\Model\PromoManager
+        parent: pw.model_manager
+        calls:
+            - [ setClass, ["%pw_promo.promo.class%"] ]

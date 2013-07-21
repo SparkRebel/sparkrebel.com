@@ -1,0 +1,20 @@
+{% if activities.count %}
+<h3>Activity</h3>
+<div class="userProfileBlock">
+  <div id="userActivity">
+    <div class="jcarousel">
+      <ul>
+          {% for activity in activities %}
+          <li>
+            {# this would be better {{ activity.html }} #}
+    		{% set template = 'PWActivityBundle:Activity:partials/' ~ activity.type ~ '.html.twig' %}
+    		{% include [ template, 'PWActivityBundle:Activity:partials/unknown.html.twig'] %}
+          </li>
+          {% endfor %}
+      </ul>
+    </div>
+    <a class="jcarousel-prev">Previous</a>
+    <a class="jcarousel-next">Next</a>
+  </div>
+</div>
+{% endif %}

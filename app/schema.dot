@@ -1,0 +1,65 @@
+digraph G {
+overlap=false;
+splines=true;
+edge [fontname="Helvetica",fontsize=8];
+ranksep=0.1;
+nodesep=0.1;
+node [shape=record,fontname="Helvetica",fontsize=9];
+	"Common Structure" [shape=Mrecord,label="{<0>Common Structure|{<f0>created\lcreatedBy\ldeleted\ldeletedBy\lisActive\lmodified\lmodifiedBy\l|<f1>Date\lReferenceOne User\lDate\lReferenceOne User\lBoolean\lDate\lReferenceOne User\l}|All documents have these fields unless otherwise stated}"];
+
+	// Correct as of 2012/03/01
+	"Asset" [shape=Mrecord,label="{<0>Asset|{<f0>_id\laspectRatio\ldescription\lhash\lhost\lmeta\loriginalDimensions\lsource\ltags\lurl\lsourceDomain\lsourcePage\lsourceUrl\ltype\l|<f1>MongoID\lFloat\lString\lString\lString\lHash\lHash\lString\lCollection\lString\lString\lString\lString\l\String}}"];
+	"Board" [shape=Mrecord,label="{<0>Board|{<f0>_id\ladminScore\lcategory\lfollowerCount\lisPublic\lisSystem\lname\lpostCount\ltags\l|<f1>MongoID\lInt\lReferenceOne Category\lInt\lBoolean\lBoolean\lString\lInt\lCollection\l}}"];
+	"Follow" [shape=Mrecord,label="{<0>Follow|{<f0>_id\lfollower\lisFriend\ltarget\luser\l|<f1>mongoID\lString\lReferenceOne User\lBoolean\lReferenceOne Board\|User\lReferenceOne User\l}}"];
+	"Item" [shape=Mrecord,label="{<0>Item|{<f0>_id\lbrandName\lbrandUser\lcategories\ldescription\limagePrimary\limages\lisDiscontinued\lisOnSale\llink\lmerchantName\lmerchantUser\lname\lprice\lpricePrevious\ltags\l|<f1>autoincrement\lString\lReferenceOne User\lReferenceMany Category\lString\lReference One Asset\lReferenceMany Asset\lBoolean\lBoolean\l\String\lString\lReferenceOne User\lString\lFloat\lFloat\lCollection\l}}"];
+	"Post" [shape=Mrecord,label="{<0>Post|{<f0>_id\laggregateRepostCount\lboard\lcategory\lcommentCount\lcomments\lcontentType\ldescription\limage\llink\loriginal\lparent\lrepostCount\ltags\ltarget\luserType\l|<f1>string\lInt\lReferenceOne Board\lReferenceOne Category\lInt\lEmbedMany Comment\lString\lString\lString\lString\lReferenceOne Post\lReferenceOne Post\lInt\lCollection\lReferenceOne Something\lString\l}}"];
+	"User" [shape=Mrecord,label="{<0>User|{<f0>_id\labout\lalgorightm\lassignedInviteCode\lbirthday\lconfirmationToken\lemail\lemailCanonical\lenabled\lfacebookData\lfacebookId\lflagSummary\licon\llastLogin\lloginCount\lname\lpassword\lpasswordRequestedAt\lroles\lsalt\lsettings\lslug\ltype\lusername\lusernameCanonical\lwebsiteTitle\lwebsiteUrl\l|<f1>mongoId\lString\lString\lString\lPWDate\lString\lString\lString\lBoolean\lHash\lInt\lHash\lReferenceOne Asset\lDate\lInt\lString\lString\lDate\lCollection\lString\lHash\lString\lString\lString\lString\lString\lString\l}|No createdBy field}"];
+
+	"Follow" -> "Board" [label="Follow->Target (Board)"];
+	"Follow" -> "User" [label="Follow->Target (User)"];
+	"Follow" -> "User" [label="Follow->Follower"];
+	"Follow" -> "User" [label="Follow->User"];
+	"Item" -> "Asset" [label="Item->Image"];
+	"Item" -> "User" [label="Item->Brand"];
+	"Item" -> "User" [label="Item->Merchant"];
+	"Post" -> "Board" [label="Post->Board"];
+	"Post" -> "Post" [label="Post->Original"];
+	"Post" -> "Post" [label="Post->Parent"];
+	"Post" -> "Item" [label="Post->Target (Item)"];
+	"Post" -> "Asset" [label="Post->Target (Asset)"];
+	"User" -> "Asset" [label="User->Icon"];
+
+	// Probably out of date information, needs reviewing
+	"Activity" [shape=Mrecord,label="{<0>Activity|{<f0>_id\ldata\ltype\ltargets\l|<f1>MongoID\lHash\lString\lReferenceMany Anything\l}}"];
+	"Category" [shape=Mrecord,label="{<0>Category|{<f0>_id\lname\lparent\ltype\l|<f1>MongoID\lString\lReferenceOne Category\lString\l}}"];
+	"Comment" [shape=Mrecord,label="{<0>Comment (Embedded)|{<f0>_id\lcontent\lparent\l|<f1>MongoID\lString\lReferenceOne Comment\l}}"];
+	"EventLog" [shape=Mrecord,label="{<0>EventLog|{<f0>_id\lclient\ldata\levent\lip\ltargets\l|<f1>MongoID\lString\lHash\lString\lInt\lReferenceMany Anything\l}| No deleted, isActive or modified fields - events are immutable}"];
+	"Feedback" [shape=Mrecord,label="{<0>Feedback|{<f0>_id\lcompany\lemail\lip\lisUnread\lmessage\lname\lphone\lsubject\lurlLastVisited\luserAgent\l|<f1>MongoID\lString\lString\lInt\lBoolean\lString\lString\lString\lString\lString\lString\l}}"];
+	"Flag" [shape=Mrecord,label="{<0>Flag|{<f0>_id\lclient\lip\lreason\ltarget\ltargetUser\ltype\lurl\luserAgent\l|<f1>MongoID\lString\lInt\lString\lReferenceOne Anything\lReferenceOne User\lString\lString\lString\l}}"];
+	"Outfit" [shape=Mrecord,label="{<0>Outfit|{<f0>_id\lassets\lcontributors\ldescription\limageMap\lisTweaked\litems\lname\lparent\ltags\l|<f1>autoincrement\lEmbedMany OutfitAsset\lReferenceMany User\lString\lEmbedOne OutfitImageMap\lBoolean\lEmbedMany OutfitItem\lString\lReferenceOne Outfit\lCollection\l}}"];
+	"OutfitAsset" [shape=Mrecord,label="{<0>OutfitAsset (Embedded)|{<f0>id\lx\ly\lscale\l|<f1>ReferenceOne Asset\lFloat\lFloat\lFloat\l}}"];
+	"OutfitItem" [shape=Mrecord,label="{<0>OutfitItem (Embedded)|{<f0>id\lx\ly\lscale\l|<f1>ReferenceOne Item\lFloat\lFloat\lFloat\l}}"];
+	"Tag" [shape=Mrecord,label="{<0> Tag|{<f0>_id\lscore|<f1>string\lfloat\l}}"];
+
+	"Asset" -> "Tag" [label="Asset->Tags"];
+	"Activity" -> "Anything" [label="Activity->Targets"];
+	"Board" -> "Category" [label="Board->Category"];
+	"Board" -> "Tag" [label="Board->Tags"];
+	"Category" -> "Category" [label="Category->Parent"];
+	"Comment" -> "Comment" [label="Comment->Parent"];
+	"EventLog" -> "Anything" [label="EventLog->Targets"];
+	"Flag" -> "Anything" [label="Flag->Target"];
+	"Flag" -> "User" [label="Flag->TargetUser"];
+	"Item" -> "Category" [label="Outfit->Categories"];
+	"Item" -> "Tag" [label="Item->Tags"];
+	"Outfit" -> "Outfit" [label="Outfit->Parent"];
+	"Outfit" -> "OutfitAsset" [label="Outfit->OutfitAssets"];
+	"Outfit" -> "OutfitItem" [label="Outfit->OutfitItems"];
+	"Outfit" -> "User" [label="Outfit->Contributors"];
+	"Outfit" -> "Tag" [label="Outfit->Tags"];
+	"OutfitAsset" -> "Asset" [label="OutfitAsset->Asset"];
+	"OutfitItem" -> "Item" [label="OutfitItem->Item"];
+	"Post" -> "Comment" [label="Post->Comments"];
+	"Post" -> "Outfit" [label="Post->Target (Outfit)"];
+	"User" -> "User" [label="User->InvitedBy"];
+}

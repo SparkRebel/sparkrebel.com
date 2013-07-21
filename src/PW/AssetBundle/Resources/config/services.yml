@@ -1,0 +1,23 @@
+parameters:
+
+services:
+    pw.asset:
+        class: PW\AssetBundle\Provider\AssetProvider
+        calls:
+            - [ setDocumentManager, ["@doctrine_mongodb.odm.document_manager"] ]
+            - [ setHandler, [%pw_asset.handler%] ]
+            - [ setEventManager, ["@pw.event"] ]
+            - [ setHost, [%host%] ]
+
+    twig.extension.text:
+        class: Twig_Extensions_Extension_Text
+        tags:
+            - { name: twig.extension }
+
+    pw.twig.assets:
+        class: PW\AssetBundle\Extension\AssetUrl
+        tags:
+            - { name: twig.extension }
+        calls:
+            - [ setDocumentManager, ["@doctrine_mongodb.odm.document_manager"] ]
+            - [ setEventManager, ["@pw.event"] ]

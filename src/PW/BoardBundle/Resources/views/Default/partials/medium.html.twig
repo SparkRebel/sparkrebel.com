@@ -1,0 +1,10 @@
+{% block content %}
+	<h3 data-class="Board" data-id="{{ data.id }}" ><a href="{{ path('pw_board_default_view', {'id': data.id, 'slug': data.slug} ) }}">{{ data.name }}</a></h3>
+	<a href="{{ path('pw_board_default_view', {'id': data.id, 'slug': data.slug} ) }}">
+	{#
+	{% for image in data.images %}
+		<img src="{{ image }}">Repost</img>
+	{% endfor %}
+	#}
+	</a>
+{% endblock %}

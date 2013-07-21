@@ -1,0 +1,20 @@
+
+{% block content %}
+    <h2><strong>Sorry we're in closed beta.</strong> You need an invite for access. Want one? Fill in your email address below.</h2>
+    <h4 class="hide status">&nbsp;</h4>
+    <form id="inviteRequestForm" action="{{ path('invite_request') }}" method="post" {{ form_enctype(form) }} class="form">
+        {{ form_errors(form) }}
+        <fieldset>
+            <ul>
+                <li>
+                    {{ form_errors(form.inviteRequest.email) }}
+                    {{ form_label(form.inviteRequest.email) }}
+                    {{ form_widget(form.inviteRequest.email) }}
+                    <input type="submit" value="Send Request" class="button">
+                </li>
+            </ul>
+        </fieldset>
+        {{ form_rest(form) }}
+    </form>
+    <a href="#" id="loginRequestCancel">Cancel</a>
+{% endblock %}

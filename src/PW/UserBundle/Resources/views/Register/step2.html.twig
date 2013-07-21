@@ -1,0 +1,27 @@
+<header>
+    <h2>
+        SparkRebel
+        <span>beta</span>
+    </h2>
+</header>
+<h3>
+    If your closet could talk, how would it describe your style? (Choose up to 5)
+</h3>
+<div class="registrationModalContent">
+    <div class="registrationModalStyles">
+        <form>
+            <ul class="areas">
+                {% for area in areas %}
+                <li>
+                    <input type="checkbox" id="area-{{ area.id }}">
+                    <label for="area-{{ area.id }}">{{ area.name }}</label>
+                </li>
+                {% endfor %}
+            </ul>
+        </form>
+    </div>
+    <div class="registrationModalError">Please select at least one of the options.</div>
+    <a class="registrationModalBack"><span>&lsaquo;</span> Back</a>
+    <a class="registrationModalPaginator">Continue <span>&rsaquo;</span></a>
+    <div class="registrationModalSteps">Step 1 of 5</div>
+</div>

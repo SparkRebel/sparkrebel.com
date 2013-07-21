@@ -1,0 +1,75 @@
+/*-------------------------------------------------------------------
+    Compass Modules
+-------------------------------------------------------------------*/
+@import "compass/reset";
+@import "compass/utilities/general/clearfix";
+
+/*-------------------------------------------------------------------
+    PW Modules
+-------------------------------------------------------------------*/
+@import "variables.scss";
+@import "mixins.scss";
+
+/*--------------------------------------
+    Basic Elements
+----------------------------------------*/
+body {
+    background-color: #f5f5f5;
+    color: #000;
+    font-family: Arial, helvetica, sans-serif;
+    font-size: $baseFontSize + 2;
+}
+
+/*--------------------------------------
+	404 and 500
+----------------------------------------*/
+#error404,
+#error500 {
+    h1 {
+        font-family: 'MuseoSans900';
+        font-size: $baseFontSize + 40px;
+    }
+    
+    h2 {
+        color: #6d6e71;
+        font-family: 'MisoRegular';
+        font-size: $baseFontSize + 20px;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+    }
+    
+    p {
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+}
+
+/*--------------------------------------
+	404
+----------------------------------------*/
+#error404 {
+    margin: 100px auto 20px;
+    text-align: center;
+    width: 540px;
+    
+    #errorImage {
+        background: image-url("errors/404.png") center top no-repeat;
+        height: 375px;
+        margin-bottom: 20px;
+    }
+}
+
+/*--------------------------------------
+	500
+----------------------------------------*/
+#error500{
+    margin: 100px auto 20px;
+    text-align: center;
+    width: 540px;
+    
+    #errorImage {
+        background: image-url("errors/500.png") center top no-repeat;
+        height: 220px;
+        margin-bottom: 20px;
+    }
+}

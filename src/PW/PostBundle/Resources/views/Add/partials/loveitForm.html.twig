@@ -1,0 +1,24 @@
+
+{% block content %}
+    <div class="modalContent">
+        <form id="loveitForm" action="" method="post">
+            <div class="status"></div>
+            <ul id="loveitModalTags">
+                {% for tagging in all_taggings() %}
+                    <li><a href="#" data-url="{{ path('new_tagging', {'tagging': tagging.id}) }}">{{ tagging.name }}</a></li>    
+                {% endfor %}                
+            </ul>
+            <div id="loveitModalLoading">
+              <img src="{{ asset('images/ajax-white-loveit.gif') }}">
+            </div>
+        </form>
+        <div id="loveitModalSuccess">
+            <div id="loveitSuccessContent">
+                <h2>You just <span>&hearts;</span> this!</h2>
+                <a class="sparkLink">View your spark</a>
+            </div>
+            <p>This will close in <span class="timer">5</span> seconds.</p>
+        </div>
+        <div id="loveItModalArrow"></div>
+    </div>
+{% endblock %}

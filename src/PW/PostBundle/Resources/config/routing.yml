@@ -1,0 +1,3 @@
+pw_post:
+    resource: "@PWPostBundle/Controller/"
+    type:     annotation

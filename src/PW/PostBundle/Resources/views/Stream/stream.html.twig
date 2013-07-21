@@ -1,0 +1,125 @@
+{% if streamPending is defined and streamPending %}
+    <div class="waiting-box">
+        <strong>Your personal stream is being customized. Please <a href="javascript:this.location.reload();">refresh</a> in a short while, to see your personalized results.</strong>
+    </div>
+{% endif %}
+
+{% if posts %}
+    <div id="stream" data-type="{{ type }}">
+        {% set timestamp = null %}
+        {% if brand_id is not defined %}
+            {% set brand_id = null %}
+        {% endif %}
+        {% if celeb_id is not defined %}
+            {% set celeb_id = null %}
+        {% endif %}
+
+        {#% if fw_board.createdBy.id is defined %}
+            <div class="post pinned" data-class="Post">
+                <div class="postImage">
+                    <a data-class="Board" data-id="{{ fw_board.id }}" href="{{ path('pw_board_default_view', {'id': fw_board.id, 'slug': fw_board.slug} ) }}" class="aLink">
+                        <img class="lazy" src="/images/items/blank.png" data-src="{{ asset('images/items/pinned/2012-09-27-parisfw.jpg') }}" alt="Paris Fashion Week" data-ratio="0.649" data-class="Asset" data-width="375">
+                        <noscript><img src="{{ asset('images/items/pinned/2012-09-27-parisfw.jpg') }}" alt="Paris Fashion Week"></noscript>
+                    </a>
+                </div>
+            </div>
+        {% endif %#}
+        
+        {% if showBanner is not defined %}
+            {% set showBanner = false %}
+        {% endif %}
+        {% if banner is not defined %}
+            {% set banner = null %}
+        {% endif %}
+        {% if showBanner and banner %}
+            <div class="post pinned" data-class="Post">
+                <div class="postImage">
+                    <a data-class="Board" data-id="{{ banner.id }}" href="{{ banner.url }}" class="aLink" title="{{ banner.description }}" onclick="_gaq.push(['_trackEvent', 'Banners', 'Clicked', '{{ banner.id }}']);">
+                        <img class="lazy" src="/images/items/blank.png" data-src="{{ banner.image | version('large') }}" alt="{{ banner.description }}" data-ratio="{{ banner.image.aspectRatio | default('') }}" data-class="Asset" data-width="{{ banner.image.originalDimensions['width'] }}" data-id="{{ banner.image.id }}">
+                        <noscript><img src="{{ banner.image | version('large') }}" alt="{{ banner.description }}"></noscript>
+                    </a>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if promos is not defined %}
+            {% set promos = null %}
+        {% endif %}
+        {% if promos %}
+        {% for promo in promos %}
+            {% set promoViewCanonicalUrl = url('promo_default_view', {'id': promo.id, 'slug': promo.description | sluggify }) %}
+            {% set twitterText = promo.description|slice(0, 50) ~ (promo.description|length > 50 ? '…' : '') %}
+            {% set twitterCountUrl = url('promo_default_view', {'id': promo.id }) %}
+        <div class="post sales" data-class="Post">
+            {% if not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                {% set promoUrl = '' %}
+                <div class="postPromo">
+                    <div class="postPromoContent">
+                        <div class="postPromoIcon"></div>
+                        <p>Promos available for members only</p>
+                        <a class="requireAuth" data-url="{{ path('fos_user_security_login') }}">Click here to login/sign-up</a>
+                    </div>
+                </div>
+            {% else %}
+                {% set promoUrl = promo.url %}
+            {% endif %}
+            <div class="postImage ">
+                <a class="aLink" href="{{ promoUrl }}"{% if promo.isUrlTargetBlank %} target="_blank"{% endif %} onclick="_gaq.push(['_trackEvent', 'Promos', 'Clicked', '{{ promo.id }}']);">
+                    <img data-width="{{ promo.image.originalDimensions['width'] }}" data-id="{{ promo.image.id }}" data-class="Asset" data-ratio="{{ promo.image.aspectRatio | default('') }}" alt="{{ promo.description }}" src="{{ promo.image | version('large') }}" class="lazy" style="display: block; opacity: 1;">
+                </a>
+            </div>
+            <div class="postTag">
+                <a class="aLink" href="{{ promoUrl }}"{% if promo.isUrlTargetBlank %} target="_blank"{% endif %}>Sale alert</a>
+            </div>
+            <div class="postShare">
+                <div class="addthis_toolbox addthis_default_style">
+                    <div class="fb-like fb_edge_widget_with_comment fb_iframe_widget">
+                        <span style="height: 20px; width: 75px;">
+                            <iframe src="//www.facebook.com/plugins/like.php?href={{ promoViewCanonicalUrl | clean_env | url_encode() }}&amp;locale=en_US&amp;send=false&amp;layout=button_count&amp;width=75&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font=lucida+grande&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:75px; height:21px;" allowTransparency="true"></iframe>
+                        </span>
+                    </div>
+                    <div class="fb-send" data-href="{{ promoViewCanonicalUrl | clean_env }}" data-font="lucida grande"></div>
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-url="{{ promoViewCanonicalUrl | clean_env }}" data-counturl="{{ twitterCountUrl | clean_env }}" data-text="{{ twitterText }}" data-via="SparkRebel">Tweet</a>
+                </div>
+            </div>
+            <div class="postFooter"></div>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        {% for row in posts %}
+    		{% if row.isActive %}
+				{% include 'PWPostBundle:Default:partials/medium.html.twig' with {'data': row} %}
+			{% endif %}
+			{% set timestamp = row.created %}
+        {% endfor %}
+        <div id="nextPosts">
+            {% set timestamp = timestamp | date("U") %}
+            {% set last_banner = null %}{% if banner %}{% set last_banner = banner.id %}{% endif %}
+            <a href="{{ path('stream', {'type':type, 'timestamp':timestamp, 'limit':limit, 'id':id, 'brand_id': brand_id, 'celeb_id': celeb_id, 'last_banner':last_banner}) }}">Grab More Sparks</a>
+        </div>
+    </div>
+    <div id="loveitModalContainer" style="display: none;">
+        {% include 'PWPostBundle:Add:partials/loveitForm.html.twig' %}
+    </div>
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+        <div id="resparkModalContainer" style="display: none;">
+            {% include 'PWPostBundle:Add:partials/repostForm.html.twig' %}
+        </div>
+    {% endif %}
+{% else %}
+    {% if type == 'onsaleStream' %}
+        {% set noSparkMsg = "No items were price-reduced from the brands you follow. Follow more <a href=\"#{path('brands_list')}\">brands</a> to get more sales items." %}
+    {% else %}
+        {% set noSparkMsg = false %}
+    {% endif %}
+
+    <h3 class="streamTitle">No sparks.</h3>
+    <p class="streamText">
+    {% if noSparkMsg is defined and noSparkMsg != false %}
+        {{noSparkMsg | raw}}
+    {% else %}
+        No sparks found.
+    {% endif %}
+    </p>
+{% endif %}

@@ -1,0 +1,7 @@
+pw_flag:
+    resource: "@PWFlagBundle/Controller/"
+    type:     annotation
+
+pw_admin_flag:
+    resource: "@PWFlagBundle/Controller/Admin/"
+    type:     annotation

@@ -1,0 +1,22 @@
+pw_user_brand_api:
+    resource: PW\UserBundle\Controller\Api\BrandController
+    type:     rest
+
+pw_user_api:
+    resource: PW\UserBundle\Controller\Api\UserController
+    type:     rest
+
+#
+# Frontend
+fb_login_check:
+    pattern:  /fb_login_check
+    defaults: { _controller: PWUserBundle:Security:facebookSecurityCheck }
+
+#
+# FOSUserBundle
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+fos_user_register:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /register

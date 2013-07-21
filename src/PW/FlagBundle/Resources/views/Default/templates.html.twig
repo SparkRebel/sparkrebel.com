@@ -1,0 +1,125 @@
+<div id="flagPost">
+  <form>
+    <header>
+      <h2>What's wrong with this picture?</h2>
+    </header>
+    <div class="modalContent">
+    	<fieldset id="type">
+    		<ul>
+      		<li>
+        		<input type="radio" id="inappropriate" value="inappropriate" name="type">
+        		<label for="inappropriate">Inappropriate image</label>
+      		</li>
+      		<li>
+        		<input type="radio" id="copyright" value="copyright" name="type">
+        		<label for="copyright">Copyright issue</label>
+      		</li>
+      		<li>
+        		<input type="radio" id="other" value="other" name="type">
+        		<label for="other">Other</label>
+      		</li>
+    		</ul>
+    	</fieldset>
+
+    	<hr>
+
+    	<fieldset id="flagCopyright">
+        	<div id="flagCopyrightText">
+            	<p>In order to send this form you must complete and check all fields (except for the "Additional Details" section). We cannot process a form with missing fields. We will automatically provide a copy of completed forms to our officially designated copyright agent.</p>
+            	<p>For more detail regarding our copyright policy and the identity of our copyright agent, please see our online Terms of Service, which are available at <a href="http://sparkrebel.com/terms">sparkrebel.com/terms</a>.</p>
+            	<p>If you prefer not to use this form to contact us regarding copyright infringement, you can also contact us by: <a href="mailto:copyrights@sparkrebel.com">copyrights@sparkrebel.com</a> or as set forth in our Terms of Service.</p>
+            	<p>Before using this form to report a copyright infringement, you should make sure that the content you are reporting actually infringes your copyright. If you are not sure what your rights are or whether your copyright has been infringed, then please contact your attorney in order to clarify your rights and remedies. Don't make false claims - there could be adverse legal consequences in your jurisdiction if you make false claims. We may at our discretion provide all information in any copyright infringement notice that you complete to the individual or entity that provided the allegedly infringing content.</p>
+            	<p>If, after you submit a form you realize that you have misidentified content or any potential infringement, you may submit a retraction of any copyright infringement notice by sending us a statement of retraction, identifying the content that you previously identified as infringing (including providing the applicable URL), and signing or typing your full legal name. Any retractions must be sent from the same account or address from which the original notice of copyright infringement was submitted.</p>
+            	<a class="button">Next</a>
+        	</div>
+        	<div id="flagCopyrightForm">
+                <div id="copyrightName">
+                	<label class="required">Your Full Name</label>
+                	<input type="text" name="copyrightName">
+                </div>
+                <div id="copyrightAddress">
+                	<label class="required">Address</label>
+                	<textarea name="copyrightAddress"></textarea>
+                </div>
+                <div id="copyrightPhone">
+                	<label class="required">Phone number</label>
+                	<input type="tel" name="copyrightPhone">
+                </div>
+                <div id="copyrightEmail">
+                	<label class="required">Email</label>
+                	<input type="email" name="copyrightEmail"/>
+                </div>
+                <div id="copyrightOriginal">
+                	<label class="required">Please identify the copyrighted work that is being infringed upon.</label>
+                	<textarea name="copyrightOriginal"></textarea>
+                </div>
+                <div id="copyrightFaith">
+                	<input type="checkbox" id="copyrightFaith" name="copyrightFaith">
+                	<label for="copyrightFaith">I have a good faith belief that use of the copyrighted materials described above as allegedly infringing is not authorized by the copyright owner, its agent, or the law.</label>
+                </div>
+                <div id="copyrightAccurate">
+                	<input type="checkbox" id="copyrightAccurate" name="copyrightAccurate" >
+                	<label for="copyrightAccurate">I swear, under penalty of perjury, that the information in the notification is accurate and that I am the copyright owner or am authorized to act on behalf of the owner of an exclusive right that is allegedly infringed.</label>
+                </div>
+                <div id="copyrightSignature">
+                	<label>Sign your full legal name</label>
+                	<input type="text" name="copyrightSignature">
+                </div>
+        	</div>
+    	</fieldset>
+
+    	<fieldset id="flagOther">
+    		<div id="otherSubject">
+      		<label class="required">Subject</label>
+      		<input type="text" name="otherSubject"/>
+    		</div>
+    	</fieldset>
+
+    	<div id="comments">
+    		<label>Additional details</label>
+    		<textarea name="comments"></textarea>
+    	</div>
+
+    	<fieldset id="anonUser">
+    		<div id="anonName">
+      		<label class="required">Your name</label>
+      		<input type="text" name="anonName"/>
+    		</div>
+    		<div id="anonEmail">
+      		<label class="required">Your email</label>
+      		<input type="text" name="anonEmail"/>
+    		</div>
+    	</fieldset>
+
+    	<input type="submit" value="Submit" class="button" id="flagSubmit">
+  	</div>
+  </form>
+</div>
+<div id="flagComment">
+  <form>
+    <header>
+      <h2>What's wrong with this comment?</h2>
+    </header>
+    <div class="modalContent">
+
+    	<div id="comments">
+    		<label>Additional details</label>
+    		<textarea name="comments"></textarea>
+    	</div>
+
+    	<fieldset id="anonUser">
+    		<div id="anonName">
+      		<label class="required">Your name</label>
+      		<input type="text" name="anonName"/>
+    		</div>
+    		<div id="anonEmail">
+      		<label class="required">Your email</label>
+      		<input type="text" name="anonEmail"/>
+    		</div>
+    	</fieldset>
+
+    	<input type="submit" value="Submit" class="button">
+  	</div>
+  </form>
+
+</div>

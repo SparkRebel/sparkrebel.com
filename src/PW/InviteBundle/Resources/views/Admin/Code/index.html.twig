@@ -1,0 +1,113 @@
+{% extends '::admin/base.html.twig' %}
+
+{% block title %}Admin : Invite Codes{% endblock %}
+
+{% block content %}
+    <form action="" method="post">
+
+        <header class="adminNav">
+            <ul>
+                <li><h2><a href="{{ path('admin_dashboard_index') }}">Admin</a> : </h2></li>
+                <li><h3>Invite Codes</h3></li>
+            </ul>
+        </header>
+
+        {{ knp_menu_render('PWInviteBundle:Admin\\Builder:codesMenu') }}
+
+        <div class="massactions">
+            <label for="massAction">Actions</label>
+            <select id="massAction" name="massaction" disabled="disabled">
+                <option></option>
+                {% if status != 'exhausted' %}
+                    <option value="delete">Delete Selected</option>
+                {% endif %}
+            </select>
+            <input id="massSubmit" type="submit" value="Submit" disabled="disabled">
+        </div>
+
+        <div class="tools">
+            <a href="{{ path('admin_invite_code_new') }}" class="button">New Code</a>
+        </div>
+
+        <table width="100%" class="datagrid">
+            <thead>
+                <tr>
+                    <th width="1"><input id="selectAll" type="checkbox" disabled="disabled"></th>
+                    <th>{{ codes.sortable('Created Date', 'created') | raw }}</th>
+                    <th>Code</th>
+                    <th>Max Uses</th>
+                    <th>Assigned To</th>
+                    {% if status != 'unused' %}
+                        <th>{{ codes.sortable('Total Uses', 'usedCount') | raw }}</th>
+                        <th>{{ codes.sortable('Uses Left', 'usesLeft') | raw }}</th>
+                    {% endif %}
+                    <th>Comment</th>
+                    <th width="1">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if codes.count %}
+                    {% for code in codes %}
+                        <tr {% if loop.index is odd %}class="odd"{% endif %}>
+                            <td><input type="checkbox" name="codes[]" value="{{ code.id }}"></td>
+                            <td>{{ code.created | date('Y-m-d') }}</td>
+                            <td>
+                                {{ code.value }}
+                                <a class="clipboard" data-value="{{ url('home', { invite: code.value }) }}"><img src="{{ asset('images/icons/clipboard.png') }}"></a>
+                            </td>
+                            <td>
+                                {% if code.maxUses is not empty %}
+                                    {{ code.maxUses }}
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if code.assignedUser is not empty %}
+                                    <a href="{{ path('admin_user_edit', {id: code.assignedUser.id}) }}" target="_blank">{{ code.assignedUser.name }}</a>
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            </td>
+                            {% if status != 'unused' %}
+                                <td>{{ code.usedCount }}</td>
+                                <td>
+                                    {% if code.usesLeft is not empty %}
+                                        {{ code.usesLeft }}
+                                    {% else %}
+                                        N/A
+                                    {% endif %}
+                                </td>
+                            {% endif %}
+                            <td>
+                                <span title="{{ code.comment }}">{{ code.comment | truncate() }}</span>
+                            </td>
+                            <td class="actions">
+                                <ul>
+                                    <li><a href="{{ path('admin_invite_code_details', {'id': code.id}) }}">Details</a></li>
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <td colspan="100" class="no-results">No invite codes to display with status <strong>{{ status }}</strong></td>
+                {% endif %}
+            </tbody>
+        </table>
+
+        {{ codes.render() | raw }}
+
+    </form>
+
+    <hr>
+
+    <div style="margin-left: 10px">
+        <form action="{{ path('admin_invite_code_generate', {'status': status}) }}" method="post" {{ form_enctype(form) }}>
+            {{ form_errors(form) }}
+            {{ form_errors(form.count) }}
+            Generate {{ form_widget(form.count) }} random invite codes with a maximum of {{ form_widget(form.maxUses) }} allowed uses (Enter '0' for no maximum).
+            {{ form_rest(form) }}
+            <input type="submit" value="Generate">
+        </form>
+    </div>
+{% endblock %}

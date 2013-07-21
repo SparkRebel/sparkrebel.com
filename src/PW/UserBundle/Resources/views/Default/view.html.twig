@@ -1,0 +1,7 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ data.name }}{% endblock %}
+
+{% block content %}
+<h2 data-class="User" data-id="{{ data.id }}" >{{ data.name }}</h2>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% block content %}
+{% set ts = null %}
+<ul id="footerFriendsActivityList">
+    {% if notifications.count > 0 %}
+        {% for notification in notifications %}
+        {% if ts is null %}
+            {% set ts = notification.created|date('U') %}
+        {% endif %}
+    		<li class="{{ notification.type }}" data-class="Notification" data-id="{{ notification.id }}">
+                {% set template = 'PWActivityBundle:Notification:partials/' ~ notification.type ~ '.html.twig' %}
+                {% include [ template, 'PWActivityBundle:Notification:partials/unknown.html.twig'] %}
+            </li>
+        {% endfor %}
+    {% else %}
+        <li>You have no <strong>friend activities</strong>.</li>
+    {% endif %}
+    <li class="seeAll">
+      <a href="{{ path('activity_notification_friend_list', {'id': app.user.id}) }}">See All</a> {{ newCount }} Unread
+    </li>
+</ul>
+
+<script>
+    APP.notifications.friendsTs = '{{ ts }}';
+{% if newCount > 0 %}
+    APP.notifications.setFriends({{ newCount }});
+{% endif %}    
+</script>
+{% endblock %}
+

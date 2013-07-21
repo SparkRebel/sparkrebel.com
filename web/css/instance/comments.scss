@@ -1,0 +1,363 @@
+/*-------------------------------------------------------------------
+		Compass Modules
+-------------------------------------------------------------------*/
+@import "compass/css3/border-radius";
+@import "compass/css3/box-shadow";
+@import "compass/css3/images";
+@import "compass/css3/inline-block";
+@import "compass/utilities/general/clearfix";
+/*-------------------------------------------------------------------
+		PW Modules
+-------------------------------------------------------------------*/
+@import "../variables.scss";
+@import "../mixins.scss";
+/*--------------------------------------
+	Comments
+----------------------------------------*/
+.commentsContainer {
+  clear: left;
+  float: left;
+	margin-bottom: 20px;
+	@include pie-clearfix;
+	
+	.commentsList {
+    background-color: #c2c2c2;
+	  padding: 0 10px 0 70px;
+	  width: 480px;
+	  @include border-bottom-left-radius(4px);
+    @include border-bottom-right-radius(4px);
+		
+		h3 {
+		  color: $linkColor;
+			font-family: 'MuseoSans500';
+			font-size: $baseFontSize - 3;
+			padding: 10px 0 8px;
+			text-transform: uppercase;
+		}
+		
+		#commentsLoading {
+		  display: none;
+		  margin-bottom: 50px;
+		}
+		
+		.commentsAdd {
+			margin-bottom: 20px;
+			position: relative;
+			@include pie-clearfix;
+			
+			.inputField {
+				background-color: #f2f2f2;
+				border: 1px solid #999;
+				font-family: Arial;
+				font-size: $baseFontSize - 2;
+				margin-bottom: 10px;
+				padding: 10px;
+				@include border-radius(4px);
+				@include box-shadow(rgba(black, 0.3) 0 0 3px 1px inset);
+				@include size(458px, 80px);
+			}
+			
+			.button {
+        background: #ccc;
+        color: #fff;
+        bottom: 15px;
+        position: absolute;
+        right: 5px;
+        @include box-shadow(rgba(black, 0.3) 0 0 8px 1px inset);
+        
+        &:hover {
+          background-color: #ed2978;
+        	border-color: #ed2978;
+        	@include background-image(linear-gradient(#ed2978, #ed2978, #dc196f, #ed2978));
+        	@include box-shadow(none);
+        }
+			}
+			
+			.loading {
+			  display: none;
+			  bottom: 14px;
+			  left: 10px;
+			  position: absolute;
+			}
+		}
+		
+		ul {
+			border-top: 1px dotted #808080;
+			margin-bottom: 10px;
+			
+			li {
+				border-bottom: 1px dotted #808080;
+				padding: 10px 0;
+				position: relative;
+				@include pie-clearfix;
+				
+				.userPicture {
+				  background-color: #d4d4cf;
+          border: 1px solid #c4c4bd;
+          float: left;
+          font-size: $baseFontSize - 2;
+          margin-right: 5px;
+          padding: 3px;
+          @include border-radius(4px);
+          @include square(35px);
+          
+          img {
+            display: block;
+            max-height: 100%;
+            max-width: 100%;
+          }
+				}
+				
+				.userActivity {
+					border: 1px dashed #c0c0bc;
+					display: block;
+					float: left;
+					margin-right: 8px;
+					padding: 8px;
+					@include square(32px);
+				}
+				
+				.commentDetails {
+					float: left;
+					font-size: $baseFontSize - 3;
+					line-height: 1.3;
+					margin-bottom: 5px;
+					width: 430px;
+					word-wrap: break-word;
+					
+                    a {
+                        font-weight: bold;
+                    }
+				}
+				
+				.commentMeta {
+				  color: #aaa1a4;
+				  float: left;
+                  font-size: $baseFontSize - 3;
+                  position: relative;
+                  width: 430px;
+          
+          a {
+            font-weight: normal;
+          }
+          
+          small {
+            color: #666;
+            font-size: $baseFontSize - 4;
+            margin-top: -1px;
+            @include inline-block;
+          }
+          
+          .flag {
+  				  color: #666;
+      		  right: 0px;
+      		  top: 0;
+      		  
+      		  &:hover {
+      		    color: $linkColor;
+      		  }
+      		}
+				}
+				
+				.commentProduct {
+					float: right;
+					@include square(65px);
+					img {
+						max-height: 100%;
+						max-width: 100%;
+					}
+				}
+				
+				.commentButtons {
+					float: right;
+					width: 90px;
+				}
+				
+				ul {
+					border-top: none;
+					clear: both;
+					margin-bottom: 0;
+					padding: 0 0 0 45px;
+					
+					li {
+						border: none;
+						
+						.commentDetails {
+						  width: 377px;
+						  
+						  small {
+						    color: #666;
+						    font-size: $baseFontSize - 4;
+						  }
+						}
+					}
+					
+					li.activityReply {
+            display: none;
+            padding-right: 10px;
+            padding-top: 0;
+            
+            .inputField {
+      				background-color: #fff;
+      				border: 1px solid #acacac;
+      				font-family: Arial;
+      				font-size: $baseFontSize - 2;
+      				margin-bottom: 5px;
+      				padding: 10px;
+      				@include border-radius(4px);
+      				@include size(403px, 50px);
+      			}
+      			
+      			.button {
+              clear: both;
+              float: right;
+              height: 27px;
+      			}
+					}
+				}
+			}
+		}
+	}
+}
+/*--------------------------------------
+    Responsive: Tablet and Facebook
+----------------------------------------*/
+@media only screen and (max-width: 810px) {
+	.commentsContainer {
+    .commentsList {
+		  width: 320px;
+		  
+			.commentsAdd {
+				.inputField {
+					width: 298px;
+				}
+			}
+			
+			ul {
+        margin-bottom: 10px;
+        
+				li.comment {
+					.commentDetails,
+					.commentMeta {
+            width: 272px;
+					}
+					
+					ul {
+            padding-left: 20px;
+            
+  					li {
+  						.commentDetails {
+  						  padding-left: 0;
+								width: 242px;
+  						}
+  					}
+  					
+  					li.activityReply {
+              .inputField {
+                @include size(268px, 50px);
+        			}
+  					}
+  				}
+				}
+			}
+		}
+	}
+}
+/*--------------------------------------
+	Responsive: Mobile
+----------------------------------------*/
+@media only screen and (max-device-width: 480px) {
+	.commentsContainer {
+    float: none;
+    margin-bottom: 0;
+    
+    .commentsList {
+		  float: none;
+			padding-left: 10px;
+			width: 280px;
+			
+			.commentsAdd {
+				.inputField {
+					width: 258px;
+				}
+			}
+			
+			ul {
+				li.comment {
+					.commentDetails,
+					.commentMeta {
+						width: 232px;
+						
+						.flag {
+    				  top: 15px;
+        		}
+					}
+					
+					ul {
+            padding-left: 10px;
+            
+  					li {
+  						.commentDetails {
+  						  padding-left: 0;
+								width: 212px;
+  						}
+  					}
+  					
+  					li.activityReply {
+              .inputField {
+                @include size(238px, 50px);
+        			}
+  					}
+  				}
+				}
+			}
+		}
+	}
+}
+/*--------------------------------------
+	Responsive: Wide
+----------------------------------------*/
+@media only screen and (min-width : 1220px) {
+	.commentsContainer {
+    .commentsList {
+  		width: 580px;
+  		
+  		.commentsAdd {
+  			.inputField {
+  				@include size(558px, 80px);
+  			}
+  		}
+  		
+  		ul {
+  			li.comment {
+  				.commentDetails,
+  				.commentMeta {
+  					width: 532px;
+  				}
+  				
+  				ul {
+  					li {
+  						.commentDetails {
+  						  width: 477px;
+  						}
+  					}
+  					
+  					li.activityReply {
+              .inputField {
+        				@include size(503px, 50px);
+        			}
+  					}
+  				}
+  			}
+  		}
+  	}
+  }
+}
+/*--------------------------------------
+	Section: Items & Outfits
+----------------------------------------*/
+.viewItemNotRetail {
+  .commentsContainer {
+    clear: both;
+  }
+}

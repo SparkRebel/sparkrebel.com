@@ -1,0 +1,59 @@
+{% extends '::admin/base.html.twig' %}
+
+{% block title %}Admin : CMS Pages{% endblock %}
+
+{% block content %}
+    <form action="" method="post">
+
+        <header class="adminNav">
+            <ul>
+                <li><h2><a href="{{ path('admin_dashboard_index') }}">Admin</a> : </h2></li>
+                <li><h3>CMS Pages</h3></li>
+            </ul>
+        </header>
+
+        <div class="massactions">
+            <label for="massAction">Actions</label>
+            <select id="massAction" name="massaction" disabled="disabled">
+                <option></option>
+            </select>
+            <input id="massSubmit" type="submit" value="Submit" disabled="disabled">
+        </div>
+
+        <div class="tools">
+            <a href="{{ path('admin_cms_page_new') }}" class="button">New Page</a>
+        </div>
+
+        <table width="100%" class="datagrid">
+            <thead>
+                <tr>
+                    <th width="1"><input id="selectAll" type="checkbox" disabled="disabled"></th>
+                    <th>{{ pages.sortable('Created Date', 'created') | raw }}</th>
+                    <th>Title</th>
+                    <th style="text-align:center">Active</th>
+                    <th width="1">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if pages.count %}
+                    {% for page in pages %}
+                        <tr {% if loop.index is odd %}class="odd"{% endif %}>
+                            <td><input type="checkbox" name="pages[]" value="{{ page.id }}"></td>
+                            <td>{{ page.created | date('Y-m-d') }}</td>
+                            <td><a href="{{ path('admin_cms_page_edit', {'slug' : page.slug} )}}">{{ page.title }}</a></td>
+                            <td style="text-align:center">
+                                {% if page.isActive %}&#10003;{% endif %}
+                            </td>
+                            <td class="actions"></td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <td colspan="100" class="no-results">No <strong>{{ status }}</strong> CMS Pages to display.</td>
+                {% endif %}
+            </tbody>
+        </table>
+
+        {{ pages.render() | raw }}
+
+    </form>
+{% endblock %}

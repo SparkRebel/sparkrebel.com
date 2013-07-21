@@ -1,0 +1,278 @@
+/*-------------------------------------------------------------------
+    Compass Modules
+-------------------------------------------------------------------*/
+@import "compass/css3/border-radius";
+@import "compass/css3/box-shadow";
+@import "compass/css3/inline-block";
+@import "compass/utilities/general/clearfix";
+
+/*-------------------------------------------------------------------
+	PW Modules
+-------------------------------------------------------------------*/
+@import "variables.scss";
+@import "mixins.scss";
+
+#friendsActivity,
+#notifications {
+    background-color: #DCDCD8;
+    padding: 20px;
+    position: relative;
+    width: 720px;
+    @include border-bottom-left-radius(4px);
+    @include border-bottom-right-radius(4px);
+    @include border-top-left-radius(4px);
+    
+    h2 {
+        background: image-url("icons/friends.png") left top no-repeat;
+        color: #4d4d4d;
+        font-family: 'MuseoSans900';
+        font-size: $baseFontSize + 14;
+        margin-bottom: 10px;
+        padding: 2px 0 0 42px;
+    }
+    
+    h3 {
+        border-top: 1px dotted #808080;
+        color: #4d4d4d;
+        font-family: 'MuseoSans900';
+        font-size: $baseFontSize - 1;
+        margin-bottom: 10px;
+        padding-top: 8px;
+        text-transform: uppercase;
+    }
+    
+    .activities {
+        border-bottom: 1px solid #e5e5e2;
+        border-top: 1px solid #ccccc6;
+        border-left: 1px solid #d0d0ca;
+        border-right: 1px solid #d0d0ca;
+        color: #666;
+        font-family: 'MuseoSans500';
+        font-size: $baseFontSize - 1;
+        margin-bottom: 40px;
+        overflow: hidden;
+        @include border-radius(4px);
+        
+        li {
+            background-color: #d7d7d2;
+            padding: 10px;
+            @include pie-clearfix;
+            
+            &:nth-child(even) {
+                background-color: #e2e2df
+            }
+            
+            .notificationPicture {
+                float: left;
+                margin-right: 10px;
+                @include square(50px);
+                
+                img {
+                    display: block;
+                    max-height: 50px;
+                    max-width: 50px;
+                }
+            }
+            
+            p {
+                padding-top: 15px;
+                
+                small {
+                    color: #999;
+                    font-size: $baseFontSize - 4;
+                    margin-left: 5px;
+                    @include inline-block;
+                }
+            }
+        }
+    }
+    
+    #notificationsPaginate {
+        font-family: 'MuseoSans500';
+        font-size: $baseFontSize;
+        text-transform: uppercase;
+        @include pie-clearfix;
+        
+        li {
+            float: left;
+            margin-right: 20px;
+            
+            a {
+                text-decoration: none;
+            }
+            
+            span {
+                background-image: image-url("backgrounds/bg.sprite.global.png");
+                background-repeat: no-repeat;
+                margin-top: -1px;
+                @include inline-block;
+                @include size(9px, 12px);
+            }
+            
+            &.first {
+                span {
+                    background-position: 0 -32px;
+                    margin-right: 3px;
+                }
+                
+                a {
+                    span {
+                        background-position: 0 -96px;
+                    }
+                }
+            }
+            
+            &.next {
+                span {
+                    background-position: 0 0;
+                    margin-left: 3px;
+                }
+                
+                a {
+                    span {
+                        background-position: 0 -64px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+#friendsActivity {
+    #myFriends {
+        background-color: #a5a5a1;
+        padding: 20px 0 20px 17px;
+        position: absolute;
+        right: -200px;
+        top: 0;
+        width: 183px;
+        @include border-bottom-right-radius(4px);
+        @include border-top-right-radius(4px);
+        @include box-shadow(rgba(#000, 0.4) 0 0 3px inset);
+        
+        h4 {
+            color: #4A4A4A;
+            font-family: 'MuseoSans900';
+            font-size: $baseFontSize - 1;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+        
+        ul {
+            li {
+                float: left;
+                margin: 0 5px 5px 0;
+                
+                .userPicture {
+                    position: relative;
+                    
+                    img {
+                        border: 1px solid #a9a8a6;
+                        display: block;
+                        @include border-radius(4px);
+                        @include square(50px);
+                    }
+                    
+                    span {
+                        background-color: $linkColor;
+                        border: 1px solid #666;
+                        color: #fff;
+                        display: block;
+                        font-size: $baseFontSize - 3;
+                        font-weight: bold;
+                        left: -4px;
+                        padding-top: 3px;
+                        position: absolute;
+                        text-align: center;
+                        top: 6px;
+                        @include border-radius(20px);
+                        @include size(16px, 13px);
+                    }
+                }
+            }
+        }
+    }
+}
+
+#notifications {
+    width: auto;
+    @include border-radius(4px);
+}
+
+/*--------------------------------------
+    Responsive: Tablet and Facebook
+----------------------------------------*/
+@media only screen and (max-width: 810px) {
+	#friendsActivity {
+        width: 480px;
+        
+        .activities {
+            font-size: $baseFontSize - 3;
+        }
+        
+        #myFriends {
+            right: -200px;
+        }
+    }
+}
+
+/*--------------------------------------
+    Responsive: Mobile
+----------------------------------------*/
+@media only screen and (max-device-width: 480px) {
+    #friendsActivity,
+    #notifications {
+        padding: 10px;
+        width: 280px;
+        @include border-radius(4px);
+        
+        .activities {
+            font-size: $baseFontSize - 3;
+            
+            li {
+                .userPicture {
+                    img {
+                        float: left;
+                        @include square(40px);
+                    }
+                }
+                
+                p {
+                    padding-top: 5px;
+                }
+            }
+        }
+    }
+    
+    #friendsActivity {
+        #myFriends {
+            position: static;
+            right: auto;
+            top: auto;
+            width: 262px;
+            @include border-radius(4px);
+            @include pie-clearfix;
+            
+            h4 {
+                color: #424242;
+            }
+            
+            ul {
+                padding-left: 5px;
+                
+                li {
+                    margin: 0 9px 9px 0;
+                }
+            }
+        }
+    }
+}
+
+/*--------------------------------------
+    Responsive: Wide
+----------------------------------------*/
+@media only screen and (min-width : 1220px) {
+    #friendsActivity {
+        width: 960px;
+    }
+}

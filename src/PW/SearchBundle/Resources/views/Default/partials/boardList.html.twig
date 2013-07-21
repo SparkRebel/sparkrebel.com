@@ -1,0 +1,7 @@
+<ul class="boardsList">
+    {% for board in boardList %}
+        <li data-class="Board" data-id="{{ board.id }}" >
+            {% include 'PWBoardBundle:Default:partials/thumb.html.twig' with {'data': board} %}
+        </li>
+    {% endfor %}
+</ul>

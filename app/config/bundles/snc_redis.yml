@@ -1,0 +1,17 @@
+snc_redis:
+    clients:
+        default:
+            type:    predis
+            alias:   default
+            logging: %kernel.debug%
+            dsn:     %redis.default.dsn%
+            options:
+                profile: 2.4
+        session:
+            type:    predis
+            alias:   session
+            dsn:     %redis.session.dsn%            
+
+
+    session:
+        client: session            

@@ -1,0 +1,10 @@
+parameters:
+    pw_item.item.class: PW\ItemBundle\Document\Item
+
+services:
+    pw_item.item_manager:
+        class: PW\ItemBundle\Model\ItemManager
+        parent: pw.model_manager
+        calls:
+            - [ setClass, ["%pw_item.item.class%"] ]
+            - [ setContainer, ["@service_container"] ]

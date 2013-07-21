@@ -1,0 +1,7 @@
+pw_cms:
+    resource: .
+    type:     doctrine_mongodb
+
+pw_admin_cms:
+    resource: "@PWCmsBundle/Controller/Admin/"
+    type:     annotation

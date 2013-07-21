@@ -1,0 +1,122 @@
+{% extends '::admin/base.html.twig' %}
+
+{% block title %}Admin : Users{% endblock %}
+
+{% block content %}
+    <form action="" method="post">
+
+        <header class="adminNav">
+            <ul>
+                <li><h2><a href="{{ path('admin_dashboard_index') }}">Admin</a> : </h2></li>
+                <li><h3>Users</h3></li>
+            </ul>
+        </header>
+
+        {{ knp_menu_render('PWUserBundle:Admin\\Builder:usersMenu') }}
+        {{ knp_menu_render('PWUserBundle:Admin\\Builder:statusMenu') }}
+
+        <div class="massactions">
+            <label for="massAction">Actions</label>
+            <select id="massAction" name="massaction" disabled="disabled">
+                <option></option>
+                <option value="delete">Delete Selected</option>
+            </select>
+            <input id="massSubmit" type="submit" value="Submit" disabled="disabled">
+        </div>
+
+        <div class="tools">
+            <a href="{{ path('admin_user_create') }}" class="button">New User</a>
+        </div>
+
+        <table width="100%" class="datagrid">
+            <thead>
+                <tr>
+                    <th width="1"><input id="selectAll" type="checkbox" disabled="disabled"></th>
+                    <th width="1">Icon</th>
+                    <th>{{ users.sortable('E-mail', 'email') | raw }}</th>
+                    <th>{{ users.sortable('Name', 'name') | raw }}</th>
+                    {% if type == 'user' %}
+                        <th width="1">Facebook</th>
+                    {% endif %}
+                    <th width="1">{{ users.sortable('Created', 'created') | raw }}</th>
+                    <th width="1">{{ users.sortable('Last Login', 'lastLogin') | raw }}</th>
+                    <th width="1">SubId</th>
+                    <th width="1">UtmData</th>
+                    <th width="1">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if users.count %}
+                    {% for user in users %}
+                        <tr {% if loop.index is odd %}class="odd"{% endif %}>
+                            <td><input type="checkbox" name="users[]" value="{{ user.id }}"></td>
+                            <td>
+                                <img src="{{ user | user_icon('thumb') }}" width="50" height="50">
+                            </td>
+                            <td>{{ user.email }}</td>
+                            <td>
+                                <a href="{{ path('user_profile_view', {name: user.name}) }}" target="_blank">{{ user.name }}</a>
+                            </td>
+                            {% if type == 'user' %}
+                                <td style="text-align:center">
+                                    {% if user.facebookId is not empty %}&#10003;{% endif %}
+                                </td>
+                            {% endif %}
+                            <td>
+                                {{ user.created | date('Y-m-d G:i') }}
+                            </td>
+                            <td>
+                                {% if user.lastLogin is not empty %}
+                                    {{ user.lastLogin | date('Y-m-d') }}
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            </td>
+                            <td>
+                                {{ user.subid | default('n/a') }}
+                            </td>
+                            <td>
+                                {{ user.utmData | default('n/a') }}
+                            </td>
+                            <td class="actions">
+                                <ul>
+                                    <li><a href="{{ path('home', {'_morph': user.username}) }}">Morph</a></li>
+                                    <li><a href="{{ path('admin_user_edit', {id: user.id}) }}">Edit</a></li>
+                                    {% if user.deleted %}
+                                        <li><a href="{{ path('admin_user_undelete', {id: user.id}) }}">UnDelete</a></li>
+                                    {% else %}
+                                        <li><a href="{{ path('admin_user_delete', {id: user.id}) }}" class="delete">Delete</a></li>
+                                    {% endif %}
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <td colspan="100" class="no-results">
+                        No {% if status != 'all' %}<strong>{{ status }}</strong>{% endif %} <strong>{{ type }}'s</strong> to display.</strong>
+                    </td>
+                {% endif %}
+            </tbody>
+        </table>
+
+        {{ users.render() | raw }}
+
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+<script>
+$(function() {
+    $(".actions .delete").click(function(e){
+        return confirm("Are you sure you want to delete this User?\n" +
+            "This action will also delete the following:\n" +
+            "    - User's Followers (association only)\n" +
+            "    - User's Boards\n" +
+            "    - User's Posts\n" +
+            "    - User's Comments"
+        );
+    });
+});
+</script>
+{% endblock %}

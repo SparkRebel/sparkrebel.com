@@ -1,0 +1,18 @@
+
+{% block content %}
+    <header>
+        <h1>Undo Rejection of Partner Request</h1>
+    </header>
+
+    <ul>
+        <li><a href="{{ path('admin_user_partner_index') }}">Partners</a></li>
+    </ul>
+
+    <p>Are you sure you want to undo this rejection by {{ partner.statusUpdatedBy.name }} on {{ partner.statusUpdatedAt | date('Y-m-d') }}?</p>
+
+    <form action="{{ path('admin_user_partner_status', {action: 'unreject', id: partner.id}) }}" method="post" {{ form_enctype(form) }}>
+        {{ form_errors(form) }}
+        {{ form_rest(form) }}
+        <input type="submit" value="Undo Rejection">
+    </form>
+{% endblock %}

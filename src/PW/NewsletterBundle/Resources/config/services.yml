@@ -1,0 +1,38 @@
+parameters:
+    pw_newsletter.prod.active: true
+    pw_newsletter.dev.email: testing@sparkrebel.com
+    pw_newsletter.newsletter.class: PW\NewsletterBundle\Document\Newsletter
+    pw_newsletter.newsletter_email.class: PW\NewsletterBundle\Document\NewsletterEmail
+    pw_newsletter.email:
+            template: PWNewsletterBundle:Admin\\Newsletter:newsletter.email.twig
+            from_email:
+              address:     no-reply@sparkrebel.com
+              sender_name: SparkRebel
+
+services:
+    pw_newsletter.newsletter_manager:
+        class: PW\NewsletterBundle\Model\NewsletterManager
+        parent: pw.model_manager
+        calls:
+            - [ setClass, ["%pw_newsletter.newsletter.class%"] ]
+            - [ setContainer, ["@service_container"] ]
+
+    pw_newsletter.mailer:
+            class: PW\NewsletterBundle\Mailer\Mailer
+            parent: pw.mailer
+            calls:
+                - [ setParameters, ["%pw_newsletter.email%"] ]
+                - [ setNewsletterManager, ["@pw_newsletter.newsletter_manager"] ]
+
+    pw_newsletter.newsletter_email_manager:
+            class: PW\NewsletterBundle\Model\NewsletterEmailManager
+            parent: pw.model_manager
+            calls:
+                - [ setClass, ["%pw_newsletter.newsletter_email.class%"] ]
+                - [ setContainer, ["@service_container"] ]
+
+    pw_newsletter.twig.cache_extension:
+            class: PW\NewsletterBundle\Extension\Cache
+            arguments: ["@service_container"]
+            tags:
+                - { name: twig.extension }

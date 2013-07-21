@@ -1,0 +1,10 @@
+{% if res.vip is defined %}
+    <h3 class="vip">VIP Collections</h3>
+    
+    {% include 'PWSearchBundle:Default:partials/boardList.html.twig' with {'boardList': res.vip} %}
+{% endif %}
+
+{% if res.standard is defined %}
+    <h3>Collections</h3>
+    {% include 'PWSearchBundle:Default:partials/boardList.html.twig'  with {'boardList': res.standard} %}
+{% endif %}

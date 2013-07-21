@@ -1,0 +1,17 @@
+{% extends popup ? '::popup/base.html.twig' : '::base.html.twig' %}
+
+{% block title %}Post on Collection{% endblock %}
+
+
+{% block content %}
+
+    <h2>Error while loading assets</h2>    
+    <div class="modalContent">
+    
+      <p class="error">
+        Unfortunately we couldnt fetch the assets from given website. If situation will appear again, 
+        please contact administrator.
+      </p>  
+    </div>   
+{% endblock %}
+

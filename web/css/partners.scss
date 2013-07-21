@@ -1,0 +1,92 @@
+/*-------------------------------------------------------------------
+    Compass Modules
+-------------------------------------------------------------------*/
+@import "compass/css3/border-radius";
+@import "compass/css3/inline-block";
+@import "compass/utilities/general/clearfix";
+
+/*-------------------------------------------------------------------
+    PW Modules
+-------------------------------------------------------------------*/
+@import "variables.scss";
+@import "mixins.scss";
+
+/*--------------------------------------
+    Partners
+----------------------------------------*/
+#partners {
+    h2 {
+        color: #d1d3d5;
+        font-family: 'MisoLight';
+        font-size: $baseFontSize + 15;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+    }
+    
+    p {
+        color: #c7c7c7;
+        font-family: "MuseoSans500";
+        font-size: $baseFontSize - 1;
+        line-height: 1.3;
+        margin-bottom: 20px;
+        width: 550px;
+    }
+    
+    .form {
+        ul {
+            li {
+                label {
+                    width: 140px;
+                }
+                
+                #select_image {
+                    height: 20px;
+                    margin-right: 5px;
+                    padding: 5px 20px 0;
+                    @include inline-block;
+                }
+            }
+        }
+    }
+}
+
+/*--------------------------------------
+    Responsive: Tablet and Facebook
+----------------------------------------*/
+@media only screen and (max-width: 810px) {
+    
+}
+
+/*--------------------------------------
+    Responsive: Mobile
+----------------------------------------*/
+@media only screen and (max-device-width: 480px) {
+    #partners {
+        p {
+            font-size: $baseFontSize - 1;
+            width: 300px;
+        }
+        
+        .form {
+            ul {
+                li {
+                    input[type='text'],
+                    input[type='email'],
+                    input[type='password'],
+                    input[type='url'],
+                    input[type='number'],
+                    textarea {
+                        width: 280px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*--------------------------------------
+    Responsive: Wide
+----------------------------------------*/
+@media only screen and (min-width : 1220px) {
+    
+}

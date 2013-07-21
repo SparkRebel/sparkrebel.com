@@ -1,0 +1,43 @@
+imports:
+    - { resource: config_dev.yml }
+
+framework:
+    test: ~
+    session:
+        storage_id: session.storage.mock_file
+    profiler:
+        #enable: false
+
+
+web_profiler:
+    toolbar: false
+    intercept_redirects: false
+
+swiftmailer:
+    disable_delivery: true
+
+#
+# MongoDB
+doctrine_mongodb:
+    document_managers:
+        default:
+            database: %mongodb.default.name%-test
+
+#
+# Redis
+snc_redis:
+    clients:
+        default:
+            dsn: %redis.default.dsn%/10
+
+#
+# Mongolog
+monolog:
+    handlers:
+        main:
+            type:  stream
+            path:  %kernel.logs_dir%/%kernel.environment%.log
+            level: alert
+
+parameters:
+    pw_event.mode: false

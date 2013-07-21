@@ -1,0 +1,7 @@
+pw_newsletter:
+    resource: "@PWNewsletterBundle/Controller/"
+    type:     annotation
+
+pw_admin_newsletter:
+    resource: "@PWNewsletterBundle/Controller/Admin/"
+    type:     annotation

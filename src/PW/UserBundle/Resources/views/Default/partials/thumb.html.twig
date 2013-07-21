@@ -1,0 +1,7 @@
+{% block content %}
+	{% if user.userType == 'user' %}
+		<a data-class="User" data-id="{{ user.id }}" href="{{path('user_profile_view', {'name': user.name}) }}" title="{{ user.name }}"><img src="{{ user | user_icon('thumb') }}" width="50" height="50"  alt="{{ user.name }}"></a>
+	{% else %}
+		<a data-class="{{ user.userType }}" data-id="{{ user.id }}" href="{{path('pw_user_brand_view', {'slug': user.name}) }}" title="{{ user.name }}"><img src="{{ user | user_icon('thumb') }}" width="50" height="50" alt="{{ user.name }}"></a>
+	{% endif %}
+{% endblock %}

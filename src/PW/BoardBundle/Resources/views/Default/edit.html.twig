@@ -1,0 +1,20 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Edit Collection: {{ board.name }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='compass,?yui_css' 'css/forms.scss' %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block content %}
+    <header>
+        <h2>Edit your collection</h2>
+    </header>
+    
+    <div class="modalContent">
+      {% include 'PWBoardBundle:Default:partials/form.html.twig' %}
+    </div>
+{% endblock %}

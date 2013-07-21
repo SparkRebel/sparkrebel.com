@@ -1,0 +1,15 @@
+<html>
+<head>
+    <title>{{- subject | trim -}}</title>
+</head>
+<body>
+    <span style="font-family: monospace"><b>Subject:</b> {{ subject }}</span>
+    <br/>
+    <div style="border: 1px #666 solid">
+        <iframe src="{{ path('pw_email_view', {'type': type, 'output': 'html'}) }}" style="width: 100%; height: 100%"></iframe>
+    </div>
+    <div style="border: 1px #666 solid">
+        <iframe src="{{ path('pw_email_view', {'type': type, 'output': 'text'}) }}" style="width: 100%; height: 100%"></iframe>
+    </div>
+</body>
+</html>

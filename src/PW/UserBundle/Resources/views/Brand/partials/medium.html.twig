@@ -1,0 +1,4 @@
+
+{% block content %}
+    <h3 data-class="{{ data.type|capitalize }}" data-id="{{ data.id }}" ><a href="{{ path('pw_user_brand_view', {'slug': data.username} ) }}">{{ data.name }}</a></h3>
+{% endblock %}

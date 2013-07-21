@@ -1,0 +1,111 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ user.name }}{% endblock %}
+
+{% block content %}
+    <div id="userProfile" data-id="{{ user.id }}" data-class="User" >
+        <div id="userLevel">
+            {% if "ROLE_PARTNER" in user.roles %}
+                {% include 'PWUserBundle:Profile:partials/partner.html.twig' with {'user': user} %}
+            {% endif %}
+        </div>
+        <section id="userProfileInfo">
+            <div class="userPicture">
+                <img src="{{ user | user_icon('medium') }}" alt="{{ user.name }}">
+            </div>
+            <div class="userInformation">
+                <h2 class="userName" data-id="{{ user.id }}" data-class="User" >{{ user.name }}</h2>
+                    {% if not user.isCeleb %}
+                        {% include 'PWUserBundle:Profile:partials/followStats.html.twig' with {'user': user} %}
+                        <div class="followButtons">
+                            {% if isMe == false %}
+                                <a id="follow-{{ user.userType }}-{{ user.id }}" class="button userProfile follow" href="{{ path('pw_user_follow_user', {'name': user.name}) }}">Follow this User</a>
+                                {% if is_granted("ROLE_ADMIN") %}
+                                    <a href="{{ path('home', {'_morph': user.username}) }}" class="button userProfile morph">Morph</a>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                    {% if user.websiteUrl is defined and user.websiteUrl is not empty %}
+                    <div class="userWebsite">
+                        <label>Website:</label>
+                        <a href="{{ user.websiteUrl }}" rel="nofollow" target="_blank">
+                        {% if user.websiteTitle is defined and user.websiteTitle is not empty %}
+                            {{ user.websiteTitle }}</a>
+                        {% else %}
+                            {{ user.websiteUrl | get_domain_from_url | raw }}</a>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+            </div>
+            {% if user.about is defined and user.about is not empty %}
+                {% include 'PWUserBundle:Profile:partials/about.html.twig' %}
+            {% endif %}
+        </section>
+        <aside id="userProfileSidebar">
+            {% include 'PWUserBundle:Profile:partials/friends.html.twig' %}
+            {% include 'PWUserBundle:Profile:partials/favorites.html.twig' %}
+            {% include 'PWUserBundle:Profile:partials/activity.html.twig' %}
+        </aside>
+        <section id="userProfileContent">
+            <ul id="userTabs">
+                <li class="first {% if section == "myBoards" %}current{% endif %}"><a class="myBoards" href="{{ path('user_profile_view', {'name': user.name}) }}">Collections</a></li>
+                <li class="{% if section == "mySparks" %}current{% endif %}"><a class="mySparks" href="{{ path('user_profile_view', {'name': user.name, section: "mySparks"}) }}">Sparks</a></li>
+                <li class="{% if section == "collectionsIFollow" %}current{% endif %}"><a class="collectionsIFollow" href="{{ path('user_profile_view', {'name': user.name, section: "collectionsIFollow"}) }}">Collections I follow</a></li>
+                <li class="last {% if section == "peopleIFollow" %}current{% endif %}"><a class="peopleIFollow" href="{{ path('user_profile_view', {'name': user.name, section: "peopleIFollow"}) }}">Brands I follow</a></li>
+            </ul>
+            {% if section == "myBoards" %}
+                <div id="myBoards">
+                    {% include 'PWUserBundle:Profile:partials/myBoards.html.twig' %}
+                </div>
+            {% endif %}
+            {% if section == "mySparks" %}
+                <div id="mySparks">
+                    {% include 'PWUserBundle:Profile:partials/mySparks.html.twig' %}
+                </div>
+            {% endif %}
+            {% if section == "collectionsIFollow" %}
+                <div id="collectionsIFollow">
+                    {% include 'PWUserBundle:Profile:partials/collectionsIFollow.html.twig' %}
+                </div>
+            {% endif %}
+            {% if section == "peopleIFollow" %}
+                <div id="peopleIFollow">
+                    {% include 'PWUserBundle:Profile:partials/peopleIFollow.html.twig' %}
+                </div>
+            {% endif %}
+        </section>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='compass,?yui_css' combine=true
+        'css/profile.scss'
+        'css/boards.scss'
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts filter='?yui_js' combine=true
+        'js/libs/jquery.jcarousel.js'
+        'js/libs/jquery.jcarousel.control.js'
+        'js/libs/jquery.history.js'
+        'js/boards.js'
+        'js/profile.js'
+        'js/jquery.sqbricks.js'
+        'js/libs/webfont.js'
+        'js/libs/jquery.jail.js'
+        'js/libs/jquery.infinitescroll.js'
+        'js/libs/jquery.rwdImageMaps.js'
+        'js/libs/jquery.tooltip.js'
+        'js/stream.js'
+    %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+{% endblock %}

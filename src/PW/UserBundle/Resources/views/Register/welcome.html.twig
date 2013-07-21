@@ -1,0 +1,15 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{% javascripts filter='?yui_js' combine=true 'js/libs/jquery.easyListSplitter.js' 'js/registration.js' 'js/login.js' %}
+		<script src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+	<script>
+		$(function() {
+			APP.registration.register();
+		});
+	</script>
+{% endblock %}

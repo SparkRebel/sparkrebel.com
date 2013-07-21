@@ -1,0 +1,3 @@
+pw_search:
+    resource: "@PWSearchBundle/Controller/"
+    type:     annotation

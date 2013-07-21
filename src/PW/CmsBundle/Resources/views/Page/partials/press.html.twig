@@ -1,0 +1,29 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='compass,?yui_css' 'css/press.scss' %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block content %}
+<div id="aboutUs">
+    <ul id="aboutUsTabs">
+    {% for ss in subsections %}
+        {% set class = '' %}
+        {% set class = class ~ (loop.last ? ' last' : '') %}
+        {% set class = class ~ (subsection == ss.subsection ? ' current' : '') %}
+
+        <li class="{{class}}"><a href="{{ ss.url }}">{{ ss.title }}</a></li>
+    {% endfor %}
+    </ul>
+
+  <div id="aboutUsContent" class="{{ page.subsection }}">
+  {{ body | raw }}
+  </div>
+</div>
+
+{% endblock %}

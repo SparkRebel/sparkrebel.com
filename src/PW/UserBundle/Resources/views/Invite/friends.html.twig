@@ -1,0 +1,47 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Invite Your Friends{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='compass,?yui_css' 'css/invite.scss' %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block content %}
+
+<h2 class="inviteTitle">
+    Invite Friends
+    <span>
+        <strong>
+            {% if assignedCode and (assignedCode.usesLeft or assignedCode.maxUses == 0) %}
+                {{ assignedCode.usesLeft | default('unlimited') }}
+            {% else %}
+                0
+            {% endif %}
+        </strong>
+        invitation{{ assignedCode and assignedCode.usesLeft == 1 ? '' : 's' }} remaining
+    </span>
+</h2>
+
+<div id="inviteFriends">
+    <ul id="inviteFriendsTabs">
+        <li id="inviteFriendsTabLink" class="current"><a href="#">Link</a></li>
+        <li id="inviteFriendsTabEmail" class="disabled">E-mail</li>
+        <li id="inviteFriendsTabFacebook" class="disabled">Facebook</li>
+    </ul>
+    <div id="inviteFriendsContent">
+        <div id="inviteFriendsLink">
+            {% set basePath = app.request.getUriForPath('/') %}
+            {% if assignedCode and (assignedCode.usesLeft or assignedCode.maxUses == 0) %}
+                <h3>Copy &amp; Paste the link below to invite friends to SparkRebel</h3>
+                <input type="text" value="{{ basePath }}?invite={{ assignedCode.value }}" readonly="readonly" onfocus="this.select()">
+            {% else %}
+                <h3>Sorry! You have run out of invitation requests.</h3>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

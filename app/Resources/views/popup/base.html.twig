@@ -1,0 +1,47 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='compass,?yui_css'
+        'css/forms.scss'
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+    <style>
+    #flash-messages { display: none }
+    #adminToggle { display: none }
+    #curatorToggle { display: none }
+    {% if app.environment == 'dev' %}
+        .sf-toolbarreset { display: none }
+    {% endif %}
+    </style>
+{% endblock %}
+
+{% block header %}{% endblock %}
+
+{% block container %}
+    <section id="container" style="padding-top:0">
+        <section id="content" style="min-height:0">
+            {% block flashMessages %}
+                {{ parent() }}
+            {% endblock %}
+            {% block content %}{% endblock %}
+        </section>
+    </section>
+{% endblock %}
+
+{% block footer %}
+    {% if not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+        <div id="loginForm">
+            {% include 'PWUserBundle:Security:partials/loginForm.html.twig' %}
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% block javascripts_notification %}{% endblock %}
+    {% if app.environment == 'dev' %}
+        <script>$(function(){ $(".sf-toolbarreset").parent().css("display", "none"); });</script>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends '::admin/base.html.twig' %}
+
+{% block title %}Admin : Users : Edit {{ user.type | capitalize }} : {{ user.email }}{% endblock %}
+
+{% block content %}
+    <header class="adminNav">
+        <ul>
+            <li><h2><a href="{{ path('admin_dashboard_index') }}">Admin</a> : </h2></li>
+            <li><h3><a href="{{ path('admin_user_index') }}">Users</a> : </h3></li>
+            <li><h3>Edit {{ user.type | capitalize }} : {{ user.email }}</h3></li>
+        </ul>
+    </header>
+
+    <div class="actions">
+        <a href="{{ path('home', {'_morph': user.username}) }}" class="button morph">Morph</a>
+        <a href="{{ path('admin_user_delete', {'id': user.id}) }}" class="button delete">Delete {{ user.type | capitalize }}</a>
+    </div>
+
+    {% include 'PWUserBundle:Edit:partials/form.html.twig' %}
+{% endblock %}

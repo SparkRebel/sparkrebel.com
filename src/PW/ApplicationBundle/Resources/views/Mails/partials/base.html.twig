@@ -1,0 +1,15 @@
+{% block section %}
+
+	{% block title %}
+	<h3>{{ type }}</h3>
+	{% endblock %}
+
+	{% block chunks %}
+	<ul>
+	{% for chunk in chunks %}
+		<li>{{ chunk.html | raw }}</li>
+	{% endfor %}
+	</ul>
+	{% endblock %}
+
+{% endblock %}

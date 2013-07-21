@@ -1,0 +1,32 @@
+<div id="editFeatureBoard">
+  <form action="{{ path('admin_feature_board_edit') }}" method="post">
+    <header>
+      <h2>Edit Featured Board</h2>
+    </header>
+    <div class="modalContent">
+
+    	<fieldset>
+    		<div>
+				<input type="hidden" name="feature[id]" id="featureId"/>
+				<label>Priority</label>
+				<input type="text" name="feature[priority]" id="featurePriority"/>
+    		</div>
+    	</fieldset>
+    	<fieldset>
+    		<div>
+				<label>From</label>
+				<input type="text" name="feature[start]" id="featureStart"/>
+    		</div>
+    	</fieldset>
+    	<fieldset>
+    		<div>
+				<input type="hidden" id="featureEnd"/>
+				<label>To</label>
+				<input type="text" name="feature[end]" id="featureEnd"/>
+    		</div>
+    	</fieldset>
+
+    	<input type="submit" value="Submit" class="button">
+  	</div>
+  </form>
+</div>

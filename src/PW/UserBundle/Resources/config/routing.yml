@@ -1,0 +1,16 @@
+pw_user:
+    resource: "@PWUserBundle/Controller/"
+    type:     annotation
+    
+pw_admin_user:
+    resource: "@PWUserBundle/Controller/Admin/"
+    type:     annotation
+
+#
+# FOSUserBundle
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+fos_user_register:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /register

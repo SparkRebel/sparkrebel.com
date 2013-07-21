@@ -1,0 +1,20 @@
+parameters:
+    emails:
+        singup_email:
+            template: PWUserBundle:Register:signup.email.twig
+            from_email:
+                address:     no-reply@sparkrebel.com
+                sender_name: SparkRebel
+
+        miss_you_email:
+            template:  PWUserBundle:Register:missyou.email.twig
+            from_email:                
+                address:     no-reply@sparkrebel.com
+                sender_name: SparkRebel
+
+services:
+    pw.global_mailer:
+        class: PW\MailerBundle\Mailer\Mailer
+        parent: pw.mailer
+        calls:
+            - [ setParameters, ["%emails%"] ]

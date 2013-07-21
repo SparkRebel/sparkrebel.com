@@ -1,0 +1,12 @@
+{% if boards %}
+	{% for title, boards in boards %}
+		{% if title %}<h2>{{ title }}</h2>{% endif %}
+		<ul class="boardsList">
+		{% for board in boards %}
+			<li>{% include 'PWBoardBundle:Default:partials/thumb.html.twig' with {'data': board} %}</li>
+		{% endfor %}
+		</ul>
+	{% endfor %}
+{% else %}
+	<!-- <p class="noItems">No collections yet!</p> -->
+{% endif %}

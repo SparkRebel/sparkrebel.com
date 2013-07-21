@@ -1,0 +1,4 @@
+pw_application:
+    resource: "@PWApplicationBundle/Controller/"
+    type:     annotation
+    prefix:   /

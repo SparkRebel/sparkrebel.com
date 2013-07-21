@@ -1,0 +1,13 @@
+{% extends 'PWActivityBundle:Notification:partials/base.email.twig' %}
+
+{% block message %}
+    {% if notification.category == "friend" %}
+        commented on
+        <a href="{{ url('pw_post_default_view', {id: notification.target.post.id}) }}?{{ tag }}#notificationList" style="color: #ed2978; text-decoration: none;">
+            a spark</a>.
+    {% else %}
+        commented on
+        <a href="{{ url('pw_post_default_view', {id: notification.target.post.id}) }}?{{ tag }}#notificationList" style="color: #ed2978; text-decoration: none;">
+            your spark</a>.
+    {% endif %}
+{% endblock %}

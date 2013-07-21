@@ -1,0 +1,55 @@
+
+{% block content %}
+
+    <form action="{{ form_path }}" method="post" {{ form_enctype(form) }} class="form">
+        {{ form_errors(form) }}
+        <fieldset>
+            <ul>
+                <li>
+                    <input type="hidden" name="id" value="{{ object.id }}" />
+                    {{ form_errors(form.job.cmd) }}
+                    {{ form_label(form.job.cmd) }}
+                    {{ form_widget(form.job.cmd) }}
+                </li>
+                <li>
+                    {{ form_errors(form.job.keywords) }}
+                    {{ form_label(form.job.keywords) }}
+                    {{ form_widget(form.job.keywords) }}
+                </li>
+                <li>
+                    {% if job_board %}
+                    <label class="required" for="collection">Collection</label>
+                    <a href="{{ path('pw_board_default_view', {'id': job_board.id, 'slug': job_board.slug}) }}">{{ job_board.name }}</a>
+                    {% else %}
+                    <label class="required" for="new_collection_name">New Collection Name</label>
+                    <input id="new_collection_name" type="text" value="Type new or existing Collection name here" required="required" name="new_collection_name">
+                    {% endif %}
+                </li>
+                <li>
+                    {{ form_errors(form.job.user) }}
+                    {{ form_label(form.job.user) }}
+                    {{ form_widget(form.job.user) }}
+                </li>
+                <li>
+                    {{ form_errors(form.job.startDate) }}
+                    {{ form_label(form.job.startDate) }}
+                    {{ form_widget(form.job.startDate) }}
+                </li>
+                <li>
+                    {{ form_errors(form.job.endDate) }}
+                    {{ form_label(form.job.endDate) }}
+                    {{ form_widget(form.job.endDate) }}
+                </li>
+                <li>
+                    {{ form_errors(form.job.isActive) }}
+                    {{ form_label(form.job.isActive) }}
+                    {{ form_widget(form.job.isActive) }}
+                </li>
+            </ul>
+        </fieldset>
+        <input type="submit" value="Save" class="button">
+        {{ form_rest(form) }}
+    </form>
+
+    {{ tinymce_init() }}
+{% endblock %}

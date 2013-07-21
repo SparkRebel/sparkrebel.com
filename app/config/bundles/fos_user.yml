@@ -1,0 +1,15 @@
+fos_user:
+    db_driver: mongodb
+    firewall_name: main
+    user_class: PW\UserBundle\Document\User
+    from_email:
+        address:     no-reply@sparkrebel.com
+        sender_name: SparkRebel
+    service:
+        mailer:       pw_user.mailer
+        user_manager: pw_user.user_manager
+    registration:
+        confirmation:
+            enabled: false
+        form:
+            type: pw_user_registration

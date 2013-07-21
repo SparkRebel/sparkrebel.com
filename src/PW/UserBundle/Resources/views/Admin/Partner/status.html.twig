@@ -1,0 +1,15 @@
+{% extends '::admin/base.html.twig' %}
+
+{% block title %}Admin - Partners{% endblock %}
+
+{% block content %}
+    {% if action == 'approve' %}
+        {% include 'PWUserBundle:Admin\\Partner:partials/approve.html.twig' %}
+    {% endif %}
+    {% if action == 'reject' %}
+        {% include 'PWUserBundle:Admin\\Partner:partials/reject.html.twig' %}
+    {% endif %}
+    {% if action == 'unreject' %}
+        {% include 'PWUserBundle:Admin\\Partner:partials/unreject.html.twig' %}
+    {% endif %}
+{% endblock %}

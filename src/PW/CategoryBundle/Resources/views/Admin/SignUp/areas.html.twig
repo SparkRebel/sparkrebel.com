@@ -1,0 +1,56 @@
+{% extends '::admin/base.html.twig' %}
+
+{% block title %}Admin : Areas of interest{% endblock %}
+
+{% block content %}
+        <header class="adminNav">
+            <ul>
+                <li><h2><a href="{{ path('admin_dashboard_index') }}">Admin</a> : </h2></li>
+                <li><h3>Signup Process: Areas of interest Collections (1st screen)</h3></li>
+            </ul>
+        </header>
+
+        <table width="50%" class="datagrid">
+            {% for area in areas %}
+                    <thead>
+                        <tr>
+                            <th colspan="3"><strong>{{area.name}}</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if area.boards.count %}
+                            {% for board in area.boards %}
+                                <tr {% if loop.index is odd %}class="odd"{% endif %}>
+                                    <td>
+                                        <a href="{{ path('pw_board_default_view', {'id': board.id, 'slug': board.slug}) }}" data-class="Board" data-id="{{ board.id }}">
+                                            {{ board.name }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ path('user_profile_view', {'name': board.createdBy.name} ) }}" data-class="User" data-id="{{ board.createdBy.id }}" class="aLink userPicture">
+                                            <img src="{{ board.createdBy | user_icon('thumb') }}" alt=""> {{ board.createdBy.name }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a data-method="delete" data-confirm="Are You sure?" href="{{ path('admin_signup_area_delete', {'id': board.id, 'area_id': area.id}) }}">
+                                            delete
+                                        </a>                                        
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr><td colspan="100" class="no-results">No collections to display</td></tr>
+                        {% endif %}
+                        <tr>
+                            <td colspan="3">
+                                <form action="{{ path('admin_signup_area_add') }}" method="post">
+                                    <input type="hidden" name="area_id" value="{{ area.id }}" />
+                                    Add Board ID: <input type="text" name="board_id" value="" style="width: 200px;" />
+                                    <input type="submit" name="submit" value="Add" />
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+            {% endfor %}
+        </table>
+{% endblock %}

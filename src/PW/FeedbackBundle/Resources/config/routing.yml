@@ -1,0 +1,3 @@
+pw_feedback:
+    resource: "@PWFeedbackBundle/Controller/"
+    type:     annotation

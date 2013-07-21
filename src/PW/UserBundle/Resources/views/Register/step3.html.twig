@@ -1,0 +1,25 @@
+<header>
+    <h2>
+        SparkRebel
+        <span>beta</span>
+    </h2>
+</header>
+<h3>Which topics are you most obsessed with? (Choose up to 5)</h3>
+<div class="registrationModalContent">
+    <div class="registrationModalTopics">
+        <form>
+            <ul class="categories">
+                {% for category in categories %}
+                <li>
+                    <input type="checkbox" id="category-{{ category.id }}">
+                    <label for="category-{{ category.id }}">{{ category.name }}</label>
+                </li>
+                {% endfor %}
+            </ul>
+        </form>
+    </div>
+    <div class="registrationModalError">Please select at least one of the options.</div>
+    <a class="registrationModalBack"><span>&lsaquo;</span> Back</a>
+    <a class="registrationModalPaginator">Continue <span>&rsaquo;</span></a>
+    <div class="registrationModalSteps">Step 2 of 5</div>
+</div>

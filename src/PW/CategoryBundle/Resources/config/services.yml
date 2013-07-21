@@ -1,0 +1,14 @@
+parameters:
+    pw_category.category.class: PW\CategoryBundle\Document\Category
+
+services:
+    pw_category.category_manager:
+        class: PW\CategoryBundle\Model\CategoryManager
+        parent: pw.model_manager
+        calls:
+            - [ setClass, ["%pw_category.category.class%"] ]
+
+    pw.category:
+        class: PW\CategoryBundle\Provider\CategoryProvider
+        calls:
+            - [ setContainer, ["@service_container"] ]

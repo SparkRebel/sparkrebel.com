@@ -1,0 +1,23 @@
+
+{% block content %}
+    <form action="{{ path('admin_invite_request_assign', {id: inviteRequest.id}) }}" method="post" {{ form_enctype(form) }}>
+        {{ form_errors(form) }}
+        <fieldset>
+            <ul>
+                <li>
+                    {{ form_errors(form.type) }}
+                    Select the type of code you want to assign to <strong>{{ inviteRequest.email }}</strong>:
+                    <br>
+                    {{ form_widget(form.type) }}
+                </li>
+                <li class="hide">
+                    {{ form_errors(form.code) }}
+                    Code:
+                    {{ form_widget(form.code) }}
+                </li>
+            </ul>
+        </fieldset>
+        {{ form_rest(form) }}
+        <input type="submit" value="Assign Code">
+    </form>
+{% endblock %}

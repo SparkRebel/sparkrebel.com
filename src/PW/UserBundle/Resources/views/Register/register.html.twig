@@ -1,0 +1,45 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='compass,?yui_css' 'css/forms.scss' %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block content %}
+    <h2>Register</h2>
+
+    <form action="{{ path('fos_user_registration_register') }}" method="post" {{ form_enctype(form) }} class="form">
+        {{ form_errors(form) }}
+        <fieldset>
+            <ul>
+                <li>
+                    {{ form_errors(form.name) }}
+                    {{ form_label(form.name) }}
+                    {{ form_widget(form.name) }}
+                </li>
+                <li>
+                    {{ form_errors(form.email) }}
+                    {{ form_label(form.email) }}
+                    {{ form_widget(form.email) }}
+                </li>
+                <li>
+                    {{ form_errors(form.plainPassword.password) }}
+                    {{ form_label(form.plainPassword.password) }}
+                    {{ form_widget(form.plainPassword.password) }}
+                </li>
+                <li>
+                    {{ form_errors(form.plainPassword.password_confirm) }}
+                    Confirm Password
+                    {{ form_widget(form.plainPassword.password_confirm) }}
+                </li>
+            </ul>
+        </fieldset>
+        {{ form_rest(form) }}
+        <input type="submit" value="Sign Up">
+    </form>
+
+{% endblock %}

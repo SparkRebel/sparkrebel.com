@@ -1,0 +1,15 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}All Categories{% endblock %}
+
+{% block content %}
+    {% if categories.count %}
+        <ul>
+        {% for category in categories %}
+			<li><a href="{{ path('board_category_view',{'slug' : category.slug } ) }}">{{ category.name }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <h2>No categories exist.</h2>
+    {% endif %}
+{% endblock %}

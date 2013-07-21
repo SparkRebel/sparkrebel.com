@@ -1,0 +1,320 @@
+{% extends '::base.html.twig' %}
+
+{% set canonicalUrl = url('pw_post_default_view', {'id': post.id, 'slug': post.description | sluggify}) %}
+{% if post.board.name is defined %}
+    {% set pageTitle = post.board.name ~ ': ' ~ post.description|slice(0, 50) ~ (post.description|length > 50 ? '…' : '') %}
+    {% set metaDescription = post.description ~ '. See more sparks from the ' ~ post.board.name ~ ' collection on SparkRebel.com' %}
+{% endif %}
+
+{% block title %}{{pageTitle}}{% endblock %}
+
+{% block opengraph %}
+    {{ parent() }}
+    <meta property="og:type"  content="{{ facebook.namespace }}:spark">
+    <meta property="og:url"   content="{{ canonicalUrl | clean_env }}">
+    <meta property="og:title" content="{{ post.description }}">
+    <meta property="og:image" content="{{ post.image | version('large',true) }}">
+    <meta property="{{ facebook.namespace }}:collection" content="{{ url('pw_board_default_view', {'id': post.board.id, 'slug': post.board.slug}) | clean_env }}">
+    {% if post.board.category %}
+        <meta property="{{ facebook.namespace }}:channel" content="{{ url('board_category_view', {'slug': post.board.category.slug}) | clean_env }}">
+    {% endif %}
+{% endblock %}
+
+{% block meta %}
+    {{ parent() }}
+    {% if not index %}
+        <meta name="robots" content="NOINDEX, FOLLOW">
+    {% endif %}
+    <meta name="description" content="{{ metaDescription }}">
+{% endblock %}
+
+{% block canonical %}{{ canonicalUrl }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter='compass,?yui_css' combine=true
+        'css/instance/instance.scss'
+        'css/instance/comments.scss'
+        'css/boards.scss'
+        'css/modals.scss'
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block content %}
+
+    <div class="itemDetail">
+        <div class="itemInformation">
+            <header>
+                <a href="{{ post.createdBy | profile_link }}" class="userPicture" data-class="{{ post.createdBy.type | capitalize }}" data-id="{{ post.createdBy.id }}" ><img src="{{ post.createdBy | user_icon('thumb') }}" alt="" width="50" height="50"></a>
+                <h2>
+                    <a href="{{ post.createdBy | profile_link }}" data-class="{{ post.createdBy.type | capitalize }}" data-id="{{ post.createdBy.id }}"> {{ post.createdBy.name }} </a>
+                    {% if post.parent %}
+                        resparked
+                    {% else %}
+                        sparked
+                    {% endif %}
+                     this to <a href="{{ path('pw_board_default_view', {'id': post.board.id, 'slug': post.board.slug}) }}" data-class="Board" data-id="{{ post.board.id }}" >{{ post.board.name }}</a>
+                </h2>
+                {% if post.original %}
+                <p class="original">Originally sparked by <a href="{{ post.original.createdBy | profile_link }}" data-class="{{ post.original.createdBy.type | capitalize }}" data-id="{{ post.original.createdBy.id }}" >
+                    {{ post.original.createdBy.name }} </a> to <a href="{{ path('pw_board_default_view', {'id': post.original.board.id, 'slug': post.original.board.slug}) }}" data-class="Board" data-id="{{ post.original.board.id }}">{{ post.original.board.name }}</a> </p>
+            {% endif %}
+            </header>
+            {% if post.targetType == 'items' %}
+                {% include 'PWPostBundle:Default:partials/itemPost.html.twig' with {'item': post.target} %}
+            {% endif %}
+
+            {% if friends_who_resparked is not null and friends_who_resparked|length > 0 %}
+            <div class="friendsWhoReposted">
+              <p>Friends who resparked this</p>
+              <ul>
+              {% for user in friends_who_resparked %}
+                <li>
+                    {% include 'PWUserBundle:Default:partials/thumb.html.twig' with {'user': user} %}
+                </li>
+              {% endfor %}
+              </ul>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="itemPicture" data-class="Post" data-id="{{ post.id }}" >
+            {% if not is_granted("IS_AUTHENTICATED_REMEMBERED") and post.isSalesAndPromos %}
+                <div class="postPromo">
+                    <div class="postPromoContent">
+                        <div class="postPromoIcon"></div>
+                        <p>Promos available for members only</p>
+                        <a class="requireAuth" data-url="{{ path('fos_user_security_login') }}">Click here to login/sign-up</a>
+                    </div>
+                </div>
+            {% endif %}
+            <div class="itemPictureImage {% if post.isCeleb or (post.original and post.original.isCeleb) %} celebImage {% endif %}">
+
+                {% set meta = post.getImage().getMeta() %}
+                {% if meta and meta.copyright %}
+                    <div class="itemPictureCopyright">
+                        Photo by {{ meta.copyright }}
+                    </div>
+                {% endif %}
+
+                {% if post.isVideoPost %}
+                    {{  post.videoHtml | raw }}
+                {% else %}
+                    <img src="{{ post.image | version('large') }}" alt="{{ post.description }}" data-class="Asset" data-id="{{ post.image.id }}">
+                {% endif %}
+            </div>
+            <div class="itemPictureOverlayTop">
+                <a data-description="{{ post.description }}" data-href="{{ path('post_add_index', {'type': 'repost', 'id': post.id}) }}" class="button respark" data-id="{{ post.id }}" title="Respark">Respark</a>
+                <a class="button loveit" data-id="{{ post.id }}" title="Love it!">Love it!</a>
+                <a class="button fullscreen" title="Fullscreen">Fullscreen</a>
+                {% if post.link and not (post.original and (post.original.createdBy.isCeleb or post.original.image.isGetty)) and not post.createdBy.isCeleb and not post.image.isGetty %}
+                <a href="{{ post.link }}" class="button store" rel="nofollow" target="_blank">{% if post.targetType == 'items' %} Buy it from {% else %} See it on {% endif %}<span>
+                    {% if post.targetType == 'items' %}
+                        {% if post.target.merchantName %}
+                            {{ post.target.merchantName }}
+                        {% elseif post.original %}
+                            {{ post.original.createdBy.name }}
+                        {% else %}
+                            {{ post.createdBy.name }}
+                        {% endif %}
+                    {% else %}
+                        {{ post.link | get_domain_from_url | raw|slice(0, 20) ~ (post.link | get_domain_from_url | raw|length > 20 ? '…' : '') }}
+                    {% endif %}
+                    </span></a>
+                {% endif %}
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and post.wasCreatedBy(app.user) %}
+                    <a data-confirm="Are you sure you want to delete this Spark?" data-method="delete" href="{{ path('pw_post_delete', {id: post.id}) }}" class="button delete postDeleteButton">Delete</a>
+                    <a data-dialog-class="postModal existingBoard" data-dialog-width="780" href="{{ path('pw_post_edit', {id: post.id}) }}" title="Edit spark" class="button dialog edit">Edit</a>
+                {% endif %}
+                <div class="addthis_toolbox addthis_default_style ">
+                    <div class="fb-like fb_edge_widget_with_comment fb_iframe_widget">
+                        <span style="height: 20px; width: 75px;">
+                            <iframe src="//www.facebook.com/plugins/like.php?href={{ url('pw_post_default_view', {'id': post.id, 'slug': post.description | sluggify} ) | url_encode() }}&amp;locale=en_US&amp;send=false&amp;layout=button_count&amp;width=75&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font=lucida+grande&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:75px; height:21px;" allowTransparency="true"></iframe>
+                        </span>
+                    </div>
+                    <div class="fb-send" data-href="{{ url('pw_post_default_view', {'id': post.id, 'slug': post.description | sluggify} ) }}" data-font="lucida grande"></div>
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-url="{{ url('pw_post_default_view', {'id': post.id, 'slug': post.description | sluggify} ) }}" data-text="{{pageTitle}}" data-via="SparkRebel">Tweet</a>
+                </div>
+            </div>
+            <div class="itemPictureOverlayBottom">
+            {% if allBoardPosts %}
+                <p>More items in this collection: ({{ allBoardPostsCount - 1 }})</p>
+              {% if allBoardPostsCount > 1 %}
+                <div class="jcarousel">
+                  <ul>
+                  {% for otherPost in allBoardPosts %}
+                      {% if otherPost != post %}
+                          <li data-class="Post" data-id="{{ otherPost.id }}">
+                              <a href="{{ path('pw_post_default_view', {'id': otherPost.id, 'slug': otherPost.description | sluggify } ) }}">
+                                <img src="{{ otherPost.image | version('thumb') }}" alt="Item">
+                                {% if otherPost.isVideoPost %}
+                                    <img src="{{ asset('images/icons/video.png') }}" class="postImagePlay">
+                                {% endif %}
+                              </a>
+                          </li>
+                      {% endif %}
+                  {% endfor %}
+                  </ul>
+                </div>
+                <a class="jcarousel-prev">Previous</a>
+                <a class="jcarousel-next">Next</a>
+              {% endif %}
+            {% else %}
+                <p>No more items on this collection</p>
+            {% endif %}
+            </div>
+        </div>
+        
+        <div class="itemPictureFullscreen" style="display: none;">
+            <img src="{{ asset('/images/ajax-white-fullscreen.gif') }}" class="loading">
+            <ul class="itemPictureFullscreenImages">
+                <li class="current"><img src="{{ asset('/images/items/blank.png') }}" data-src="{{ post.image | version('full') }}" data-width="{{ post.image.originalDimensions['width'] }}" data-height="{{ post.image.originalDimensions['height'] }}" alt="{{ post.description }}"></li>
+            
+                {% for other_post in allBoardPosts %}
+                    {% if other_post.id != post.id %}
+                        <li><img src="{{ asset('/images/items/blank.png') }}" data-src="{{ other_post.image | version('full') }}" data-width="{{ other_post.image.originalDimensions['width'] }}" data-height="{{ other_post.image.originalDimensions['height'] }}" alt="{{ other_post.description }}"></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <a class="itemPictureFullscreenPrev">Prev</a>
+            <a class="itemPictureFullscreenNext">Next</a>
+        </div>
+        
+        <div id="loveitModalContainer" style="display: none;">
+            {% include 'PWPostBundle:Add:partials/loveitForm.html.twig' %}
+        </div>
+        
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            <div id="resparkModalContainer" style="display: none;">
+                {% include 'PWPostBundle:Add:partials/repostForm.html.twig' %}
+            </div>
+        {% endif %}
+        
+        <div class="itemBoards">
+            <p id="collections-header-paragraph">
+
+            </p>
+            <div class="jcarousel">
+              <ul>
+                {% for aBoard in allBoards %}
+                  <li>{% include 'PWBoardBundle:Default:partials/thumb.html.twig' with {'data': aBoard} %}</li>
+                {% endfor %}
+              </ul>
+            </div>
+            <a class="jcarousel-prev">Previous</a>
+            <a class="jcarousel-next">Next</a>
+        </div>
+
+        <div class="itemShare">
+            
+        </div>
+
+        {% if (is_granted("IS_AUTHENTICATED_REMEMBERED") and post.isSalesAndPromos) or not post.isSalesAndPromos %}
+        <div class="itemDescription" data-class="User" data-id="{{ post.createdBy.id}}" >
+          <div class="itemDescriptionUser">
+            <a href="{{ post.createdBy | profile_link }}" class="userPicture"><img src="{{ post.createdBy | user_icon('thumb') }}" alt="" width="50" height="50"></a>
+          </div>
+          <a href="{{ post.createdBy | profile_link }}"> {{ post.createdBy.name }} </a>
+          <p>{{ post.description|strip_entities }}</p>
+          <p class="itemDescriptionMeta"><small>{{ post.created | humane_date | raw }}</small></p>
+        </div>
+        {% endif %}
+    </div>
+    {% if (is_granted("IS_AUTHENTICATED_REMEMBERED") and post.isSalesAndPromos) or not post.isSalesAndPromos %}
+    <div class="commentsContainer">
+        <a name="comments"></a>
+        <div class="commentsList">
+            <h3 id="commentsCount">
+                {% if post.commentCount == 0 %}
+                    No Comments
+                {% elseif post.commentCount == 1 %}
+                    1 Comment
+                {% elseif post.commentCount < 11 %}
+                    {{post.commentCount}} comments
+                {% else %}
+                    <a href="#" class="showAllComments" data-id="{{post.id}}">View all {{post.commentCount}} comments</a>
+                {% endif %}
+            </h3>
+            <img src="{{ asset('images/ajax-pink.gif') }}" id="commentsLoading">
+            <ul id="activityList" class="postActivity">
+                {% for row in activity %}
+                    {% include 'PWPostBundle:Activity:partials/activity.html.twig' with {'activity': row, 'showReplyForm' : true} %}
+                {% endfor %}
+            </ul>
+            <div class="postComment commentsAdd">
+                <form id="commentsAddForm" class="postCommentForm" action="{{ path('pw_post_activity_comment', {'id': post.id}) }}" method="post" {{ form_enctype(form) }}>
+                    {{ form_errors(form) }}
+                    {{ form_errors(form.content) }}
+                    {{ form_widget(form.content) }}
+                    {{ form_rest(form) }}
+                    <a class="button">Post Comment</a>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts filter='?yui_js' combine=true
+        'js/libs/jquery.jcarousel.js'
+        'js/libs/jquery.jcarousel.control.js'
+        'js/libs/jquery.fullscreen.js'
+        'js/boards.js'
+        'js/spark.js'
+        'js/flag.js'
+        '@PWPostBundle/Resources/public/js/spark-comments.js'
+    %}
+        <script src="{{ asset_url }}"></script>
+
+    {% set count = allBoards.count %}
+    <script type="text/javascript" charset="utf-8">
+        function CollectionCounter() {
+            var self = this;
+            var total_collections;
+            var current;
+            var template = '';
+            jQuery.extend(this, {
+                init: function() {
+                    self.total_collections =  {{ count | raw }};
+                    self.current = 1;
+                    self.template = 'Collection {x} of ' + self.total_collections;
+
+                    $(document).ready(function() {
+                        self.update_template(1);
+                    });
+
+                    $('.itemBoards').delegate('.jcarousel-next', 'click', function(e){
+                        self.current++;
+                        self.update_template(self.current);
+                    });
+
+                    $('.itemBoards').delegate('.jcarousel-prev', 'click', function(e){
+                        self.current--;
+                        self.update_template(self.current);
+                    });
+
+                },
+                update_template: function(number) {
+                    $('#collections-header-paragraph').html(this.template.replace('{x}', number));
+                }
+            });
+        };
+
+        c = new CollectionCounter;
+        c.init();
+    </script>
+    
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    
+    {% if post.createdBy() == 'celebs@sparkrebel.com' %}
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_trackEvent', 'Celebs', 'View', '{{ post.id }}']);
+    </script>
+    {% endif %}
+    {% endjavascripts %}
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends '::admin/base.html.twig' %}
+
+{% block title %}Admin - Invite Requests{% endblock %}
+
+{% block content %}
+    <header class="adminNav">
+        <ul>
+            <li><h2><a href="{{ path('admin_dashboard_index') }}">Admin</a> : </h2></li>
+            <li><h3><a href="{{ path('admin_invite_request_index') }}">Invite Requests</a></h3></li>
+        </ul>
+    </header>
+
+    <div style="margin-left: 10px; margin-top: 20px">
+        {% include 'PWInviteBundle:Admin/Request:partials/assignForm.html.twig' %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+<script>
+$(function() {
+    $("#form_type").live("change", function(e) {
+        e.preventDefault();
+        if ($(this).val() == 'custom') {
+            $("#form_code")
+                .parent("li")
+                .slideDown("fast")
+                .attr("disabled", false);
+        } else {
+            $("#form_code")
+                .parent("li")
+                .slideUp("fast")
+                .attr("disabled", true);
+        }
+    });
+});
+</script>
+{% endblock %}

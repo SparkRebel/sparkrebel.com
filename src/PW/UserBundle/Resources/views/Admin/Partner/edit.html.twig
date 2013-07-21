@@ -1,0 +1,58 @@
+{% extends '::admin/base.html.twig' %}
+
+{% block title %}Admin - Partner - Edit{% endblock %}
+
+{% block content %}
+    <header>
+        <h2>Admin - Partner - Edit</h2>
+    </header>
+
+    <ul>
+        <li><a href="{{ path('admin_user_partner_index') }}">Partners</a></li>
+    </ul>
+
+    <form action="{{ path('admin_user_partner_edit', {id: partner.id}) }}" method="post" {{ form_enctype(form) }}>
+        {{ form_errors(form) }}
+        <fieldset>
+            <ul>
+                <li>
+                    {{ form_errors(form.email) }}
+                    {{ form_label(form.email) }}
+                    {{ form_widget(form.email) }}
+                </li>
+                <li>
+                    {{ form_errors(form.name) }}
+                    {{ form_label(form.name) }}
+                    {{ form_widget(form.name) }}
+                </li>
+                <li>
+                    {{ form_errors(form.phone) }}
+                    {{ form_label(form.phone) }}
+                    {{ form_widget(form.phone) }}
+                </li>
+                <li>
+                    {{ form_errors(form.link) }}
+                    {{ form_label(form.link) }}
+                    {{ form_widget(form.link) }}
+                </li>
+                <li>
+                    {{ form_errors(form.requestedSlug) }}
+                    {{ form_label(form.requestedSlug) }}
+                    {{ form_widget(form.requestedSlug) }}
+                </li>
+                <li>
+                    {% if partner.icon is defined %}
+                        <img src="{{ partner.icon.url }}" alt="">
+                    {% endif %}
+                    {% if form.icon is defined %}
+                        {{ form_errors(form.icon) }}
+                        {{ form_label(form.icon) }}
+                        {{ form_widget(form.icon) }}
+                    {% endif %}
+                </li>
+            </ul>
+        </fieldset>
+        {{ form_rest(form) }}
+        <input type="submit" value="Save">
+    </form>
+{% endblock %}

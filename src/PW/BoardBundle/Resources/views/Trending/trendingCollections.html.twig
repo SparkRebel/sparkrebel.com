@@ -1,0 +1,178 @@
+{% set baseUri = url('home') | replace({'app_dev.php/': ''}) %}
+{% set baseImageUri = baseUri ~ 'images/' %}
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td width="274">
+            {% if trending.0 is defined %}
+            <table border="0" cellpadding="5" cellspacing="0" width="274" style="background: url({{ baseImageUri }}backgrounds/bg.nav.noise.png) repeat; border-radius: 4px; margin-bottom: 5px;">
+                <tr>
+                    <td height="60">
+                        <h4 style="font-family: Arial; margin: 0 0 8px; padding: 0;"><a href="{{ url('pw_board_default_view', {'id': trending.0.item.id, 'slug': trending.0.item.slug} ) }}?{{ tracking }}" title="{{ trending.0.item.name }}" style="color: #ffffff; text-decoration: none;">{{ trending.0.item.name }}</a></h4>
+                        <h5 style="color: #ed2978; font-family: Arial; font-size: 14px; margin: 0; padding: 0;">{{ trending.0.item.createdBy.name|truncate(18) }}</h5>
+                    </td>
+                </tr>
+            </table>
+            <a href="{{ url('pw_board_default_view', {'id': trending.0.item.id, 'slug': trending.0.item.slug} ) }}?{{ tracking }}" title="{{ trending.0.item.name }}">
+                <table border="0" cellpadding="0" cellspacing="0" width="274">
+                    <tr>
+                        <td align="center" height="274" valign="middle" width="274" style="background-color: #ffffff; border-radius: 4px;">
+                            <img src="{{ trending.0.item.images.first | version('large', true) }}" style="border-radius: 4px; max-height: 270px; max-width: 270px;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table border="0" cellpadding="0" cellspacing="0" width="274" style="margin-top: 5px;">
+                                <tr>
+                                    <td align="center" height="87" width="32%" style="background-color: #ffffff; border-radius: 4px;">
+                                        <img src="{{ trending.0.item.images.next | version('small', true) }}" style="border-radius: 4px; max-height: 82px; max-width: 82px;">
+                                    </td>
+                                    <td width="5">&nbsp;</td>
+                                    <td align="center" height="87" width="32%" style="background-color: #ffffff; border-radius: 4px;">
+                                        <img src="{{ trending.0.item.images.next | version('small', true) }}" style="border-radius: 4px; max-height: 82px; max-width: 82px;">
+                                    </td>
+                                    <td width="5">&nbsp;</td>
+                                    <td align="center" height="87" width="32%" style="background-color: #ffffff; border-radius: 4px;">
+                                        <img src="{{ trending.0.item.images.next | version('small', true) }}" style="border-radius: 4px; max-height: 82px; max-width: 82px;">
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </a>
+            {% endif %}
+        </td>
+        <td width="2%">
+            &nbsp;
+        </td>
+        <td width="274">
+            {% if trending.1 is defined %}
+            <table border="0" cellpadding="5" cellspacing="0" width="274" style="background: url({{ baseImageUri }}backgrounds/bg.nav.noise.png) repeat; border-radius: 4px; margin-bottom: 5px;">
+                <tr>
+                    <td height="60">
+                        <h4 style="font-family: Arial; margin: 0 0 8px; padding: 0;"><a href="{{ url('pw_board_default_view', {'id': trending.1.item.id, 'slug': trending.1.item.slug} ) }}?{{ tracking }}" title="{{ trending.1.item.name }}" style="color: #ffffff; text-decoration: none;">{{ trending.1.item.name }}</a></h4>
+                        <h5 style="color: #ed2978; font-family: Arial; font-size: 14px; margin: 0; padding: 0;">{{ trending.1.item.createdBy.name|truncate(18) }}</h5>
+                    </td>
+                </tr>
+            </table>
+            <a href="{{ url('pw_board_default_view', {'id': trending.1.item.id, 'slug': trending.1.item.slug} ) }}?{{ tracking }}" title="{{ trending.1.item.name }}">
+                <table border="0" cellpadding="0" cellspacing="0" width="274">
+                    <tr>
+                        <td align="center" height="274" valign="middle" width="274" style="background-color: #ffffff; border-radius: 4px;">
+                            <img src="{{ trending.1.item.images.first | version('large', true) }}" style="border-radius: 4px; max-height: 270px; max-width: 270px;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table border="0" cellpadding="0" cellspacing="0" width="274" style="margin-top: 5px;">
+                                <tr>
+                                    <td align="center" height="87" width="32%" style="background-color: #ffffff; border-radius: 4px;">
+                                        <img src="{{ trending.1.item.images.next | version('small', true) }}" style="border-radius: 4px; max-height: 82px; max-width: 82px;">
+                                    </td>
+                                    <td width="5">&nbsp;</td>
+                                    <td align="center" height="87" width="32%" style="background-color: #ffffff; border-radius: 4px;">
+                                        <img src="{{ trending.1.item.images.next | version('small', true) }}" style="border-radius: 4px; max-height: 82px; max-width: 82px;">
+                                    </td>
+                                    <td width="5">&nbsp;</td>
+                                    <td align="center" height="87" width="32%" style="background-color: #ffffff; border-radius: 4px;">
+                                        <img src="{{ trending.1.item.images.next | version('small', true) }}" style="border-radius: 4px; max-height: 82px; max-width: 82px;">
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </a>
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">&nbsp;</td>
+    </tr>
+    <tr>
+        <td width="274">
+            {% if trending.2 is defined %}
+            <table border="0" cellpadding="5" cellspacing="0" width="274" style="background: url({{ baseImageUri }}backgrounds/bg.nav.noise.png) repeat; border-radius: 4px; margin-bottom: 5px;">
+                <tr>
+                    <td height="60">
+                        <h4 style="font-family: Arial; margin: 0 0 8px; padding: 0;"><a href="{{ url('pw_board_default_view', {'id': trending.2.item.id, 'slug': trending.2.item.slug} ) }}?{{ tracking }}" title="{{ trending.2.item.name }}" style="color: #ffffff; text-decoration: none;">{{ trending.2.item.name }}</a></h4>
+                        <h5 style="color: #ed2978; font-family: Arial; font-size: 14px; margin: 0; padding: 0;">{{ trending.2.item.createdBy.name|truncate(18) }}</h5>
+                    </td>
+                </tr>
+            </table>
+            <a href="{{ url('pw_board_default_view', {'id': trending.2.item.id, 'slug': trending.2.item.slug} ) }}?{{ tracking }}" title="{{ trending.2.item.name }}">
+                <table border="0" cellpadding="0" cellspacing="0" width="274">
+                    <tr>
+                        <td align="center" height="274" valign="middle" width="274" style="background-color: #ffffff; border-radius: 4px;">
+                            <img src="{{ trending.2.item.images.first | version('large', true) }}" style="border-radius: 4px; max-height: 270px; max-width: 270px;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table border="0" cellpadding="0" cellspacing="0" width="274" style="margin-top: 5px;">
+                                <tr>
+                                    <td align="center" height="87" width="32%" style="background-color: #ffffff; border-radius: 4px;">
+                                        <img src="{{ trending.2.item.images.next | version('small', true) }}" style="border-radius: 4px; max-height: 82px; max-width: 82px;">
+                                    </td>
+                                    <td width="5">&nbsp;</td>
+                                    <td align="center" height="87" width="32%" style="background-color: #ffffff; border-radius: 4px;">
+                                        <img src="{{ trending.2.item.images.next | version('small', true) }}" style="border-radius: 4px; max-height: 82px; max-width: 82px;">
+                                    </td>
+                                    <td width="5">&nbsp;</td>
+                                    <td align="center" height="87" width="32%" style="background-color: #ffffff; border-radius: 4px;">
+                                        <img src="{{ trending.2.item.images.next | version('small', true) }}" style="border-radius: 4px; max-height: 82px; max-width: 82px;">
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </a>
+            {% endif %}
+        </td>
+        <td width="2%">
+            &nbsp;
+        </td>
+        <td width="274">
+            {% if trending.3 is defined %}
+            <table border="0" cellpadding="5" cellspacing="0" width="274" style="background: url({{ baseImageUri }}backgrounds/bg.nav.noise.png) repeat; border-radius: 4px; margin-bottom: 5px;">
+                <tr>
+                    <td height="60">
+                        <h4 style="font-family: Arial; margin: 0 0 8px; padding: 0;"><a href="{{ url('pw_board_default_view', {'id': trending.3.item.id, 'slug': trending.3.item.slug} ) }}?{{ tracking }}" title="{{ trending.3.item.name }}" style="color: #ffffff; text-decoration: none;">{{ trending.3.item.name }}</a></h4>
+                        <h5 style="color: #ed2978; font-family: Arial; font-size: 14px; margin: 0; padding: 0;">{{ trending.3.item.createdBy.name|truncate(18) }}</h5>
+                    </td>
+                </tr>
+            </table>
+            <a href="{{ url('pw_board_default_view', {'id': trending.3.item.id, 'slug': trending.3.item.slug} ) }}?{{ tracking }}" title="{{ trending.3.item.name }}">
+                <table border="0" cellpadding="0" cellspacing="0" width="274">
+                    <tr>
+                        <td align="center" height="274" valign="middle" width="274" style="background-color: #ffffff; border-radius: 4px;">
+                            <img src="{{ trending.3.item.images.first | version('large', true) }}" style="border-radius: 4px; max-height: 270px; max-width: 270px;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table border="0" cellpadding="0" cellspacing="0" width="274" style="margin-top: 5px;">
+                                <tr>
+                                    <td align="center" height="87" width="32%" style="background-color: #ffffff; border-radius: 4px;">
+                                        <img src="{{ trending.3.item.images.next | version('small', true) }}" style="border-radius: 4px; max-height: 82px; max-width: 82px;">
+                                    </td>
+                                    <td width="5">&nbsp;</td>
+                                    <td align="center" height="87" width="32%" style="background-color: #ffffff; border-radius: 4px;">
+                                        <img src="{{ trending.3.item.images.next | version('small', true) }}" style="border-radius: 4px; max-height: 82px; max-width: 82px;">
+                                    </td>
+                                    <td width="5">&nbsp;</td>
+                                    <td align="center" height="87" width="32%" style="background-color: #ffffff; border-radius: 4px;">
+                                        <img src="{{ trending.3.item.images.next | version('small', true) }}" style="border-radius: 4px; max-height: 82px; max-width: 82px;">
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </a>
+            {% endif %}
+        </td>
+    </tr>
+</table>

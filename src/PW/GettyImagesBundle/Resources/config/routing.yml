@@ -1,0 +1,3 @@
+pw_getty_images_admin:
+    resource: "@PWGettyImagesBundle/Controller/Admin"
+    type:     annotation

@@ -1,0 +1,13 @@
+{% block content %}
+    <li>
+        <a href="{{ path('user_profile_view', {'name' : subactivity.createdBy.name}) }}" class="userPicture" title="{{ subactivity.createdBy.name }}"><img src="{{ subactivity.createdBy | user_icon('thumb') }}" alt="" width="50" height="50"></a>
+        <p class="commentDetails">
+            <a href="{{ path('user_profile_view', {'name' : subactivity.createdBy.name}) }}" data-class="User" data-id="{{ subactivity.createdBy.id }}" >{{ subactivity.createdBy.name }}</a>
+            <br>
+            {{ subactivity.content | e | emoji }} <small>{{ subactivity.created | humane_date | raw }}</small>
+            {% if is_granted("ROLE_ADMIN") %}
+                <a data-confirm="Are you sure you want to delete this comment?" data-method="delete" data-replace-on-submit="true" href="{{ path('pw_post_comment_delete', {id: subactivity.id}) }}">(x)</a>
+            {% endif %}
+        </p>
+    </li>
+{% endblock %}

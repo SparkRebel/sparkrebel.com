@@ -1,0 +1,21 @@
+{% set baseUri = url('home') | replace({'app_dev.php/': ''}) %}
+{% set baseImageUri = baseUri ~ 'images/' %}
+
+{% if trending|length > 0 %}
+<table border="0" cellpadding="10" cellspacing="0" width="100%" style="background: url({{ baseImageUri }}backgrounds/bg.nav.noise.png) repeat; border-radius: 4px;">
+    <tr>
+        <td>
+            <h2 style="color: #ed2978; font-family: 'Arial Narrow'; margin-bottom: 10px;">CHECK OUT THIS WEEK'S POPULAR CELEBS</h2>
+            <table bgcolor="#191919" border="0" cellpadding="0" cellspacing="15" width="100%" style="background-color: #191919; border-radius: 4px;">
+                <tr>
+                    {% for trending in trending %}
+                        <td width="16.67%">
+                            <a href="{{ url('pw_board_default_view', {'id': trending.item.id, 'slug': trending.item.slug} ) }}?{{ tracking }}"><img src="{{ trending.item | board_icon('thumb', true) }}" width="50px" height="50px" style="border-radius: 4px;"></a>
+                        </td>
+                    {% endfor %}
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+{% endif %}

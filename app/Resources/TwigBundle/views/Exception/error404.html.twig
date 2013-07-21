@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>{{ status_text }}</title>
+        {% block stylesheets %}
+            {% stylesheets filter='compass,?yui_css' combine=true 'css/typography.scss' 'css/errors.scss' %}
+                <link rel="stylesheet" href="{{ asset_url }}">
+            {% endstylesheets %}
+		{% endblock %}
+    </head>
+    <body>
+        <div id="error404">
+            <div id="errorImage"></div>
+            <h1>Bummer!</h1>
+            <h2>Page not found (#404)</h2>
+            <p>(Apparently there's nothing at "{{ app.request.requestUri }}")</p>
+        </div>
+    </body>
+</html>

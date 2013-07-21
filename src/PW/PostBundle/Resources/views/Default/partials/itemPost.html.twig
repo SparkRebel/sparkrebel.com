@@ -1,0 +1,48 @@
+{% block content %}
+<div class="itemFromStore">
+  <h2>{{ item.name }}</h2>
+  <div class="itemAuthor">
+      {% if item.brandUser %}
+        <p>by: <a href="{{ path('pw_user_brand_view', {'slug': item.brandUser.username} ) }}">{{ item.brandUser.name }}</a></p>
+      {% else %}
+        <p>by: {{ item.brandName }}</p>
+      {% endif %}
+
+  </div>
+  <p class="itemPrice">
+     {% if item.isOnSale %}
+         <strong>Sale!</strong>
+         <span class="oldPrice">{{ item.pricePrevious | craue_currency }}</span>
+         <span class="newPrice">{{ item.price | craue_currency }}</span>
+     {% else %}
+         <span class="newPrice">{{ item.price | craue_currency }}</span>
+     {% endif %}
+  </p>
+  <div class="itemButtons">
+    <a href="{{ item.link }}" target="_blank" class="button itemBuy">Buy it from 
+    {% if post.target.merchantName %}
+        {{ post.target.merchantName }}
+    {% else %}
+        {{ post.original.createdBy.name | default(post.createdBy.name) }}
+    {% endif %}
+    </a>
+  </div>
+  <!-- <a href="#" class="button itemCreate">Create an outfit with this</a> -->
+  <!-- <hr class="dashed">
+  <div class="itemOffers">
+     <div class="itemsOffersArrow"></div>
+     <ul>
+       <li>
+           <h4>$20 Off Any Order Over $75</h4>
+           <p>Use Code <span>75AFFND</span> at checkout.</p>
+           <p><a href="#">Buy it from dELiA*s</a></p>
+       </li>
+       <li>
+           <h4>Free Shipping On Orders Over $25</h4>
+           <p>Use Code <span>25AFFND</span> at checkout.</p>
+           <p><a href="#">Buy it from dELiA*s</a></p>
+       </li>
+     </ul>
+  </div> -->
+</div>
+{% endblock %}

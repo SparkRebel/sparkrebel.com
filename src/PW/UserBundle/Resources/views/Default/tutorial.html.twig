@@ -1,0 +1,53 @@
+
+<div id="tutorial" class="deck-container">
+    <div class="slide step1">
+        <h2>This is a stream of <strong>SPARKS.</strong></h2>
+        <h3>They appear on the home page and all 20 style categories.</h3>
+        <img src="{{ asset('images/tutorial/step1-01.jpg') }}" alt="Stream" class="image1">
+    </div>
+    <div class="slide step2">
+        <h2>Love a <strong>SPARK?</strong></h2>
+        <h3>Save it by <span>RESPARKING</span> it to one of your own <strong>collections.</strong></h3>
+        <div class="arrow"></div>
+        <img src="{{ asset('images/tutorial/step2-01.jpg') }}" alt="Resparking" class="image1">
+    </div>
+    <div class="slide step3">
+        <h2><span>RESPARKED</span> <strong>SPARKS</strong><br>go into one of your <strong>collections.</strong></h2>
+        <img src="{{ asset('images/tutorial/step3-01.jpg') }}" alt="Resparked" class="image1">
+        <h3>Your collections are saved on your <em>profile page.</em></h3>
+    </div>
+    <div class="slide step4">
+        <h2>CREATE a <strong>collection</strong> for <em>everything</em> you love.</h2>
+        <img src="{{ asset('images/tutorial/step4-01.jpg') }}" alt="Colelctions" class="image1">
+    </div>
+    <div class="slide step5">
+        <h2>See a <strong>collection</strong> you love? <strong>Follow it.</strong></h2>
+        <div class="arrow1"></div>
+        <img src="{{ asset('images/tutorial/step5-01.jpg') }}" alt="Follow collection" class="image1">
+        <h3>Collections you follow will show up on your homepage stream.</h3>
+        <div class="arrow2"></div>
+        <img src="{{ asset('images/tutorial/step5-02.jpg') }}" alt="My Stream" class="image2">
+    </div>
+    <div class="slide step6">
+        <h2>Add <strong>SPARKS</strong> via our Spark It! button on the ‘Add’ page.</h2>
+        <img src="{{ asset('images/tutorial/step6-01.jpg') }}" alt="Add page" class="image1">
+    </div>
+    <div class="slide step7">
+        <h2><strong>SPARK</strong> anything that inspires you & your personal style.</h2>
+        <img src="{{ asset('images/tutorial/step7-01.png') }}" alt="Your style" class="image1">
+    </div>
+    <div class="slide step8">
+        <h2>Add <strong>SPARKS</strong> via URL entry or directly uploading an image on the ‘Add’ page.</h2>
+        <img src="{{ asset('images/tutorial/step8-01.png') }}" alt="Add forms" class="image1">
+    </div>
+    <a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+    <a href="#" class="deck-next-link" title="Next">&#8594;</a>
+</div>
+
+{% javascripts filter='?yui_js' combine=true
+    'js/libs/deck.core.js'
+    'js/libs/deck.navigation.js'
+%}
+    <script src="{{ asset_url }}"></script>
+    <script>$(function() { $.deck('.slide'); });</script>
+{% endjavascripts %}

@@ -1,0 +1,11 @@
+/*--------------------------------------
+    Mixins
+----------------------------------------*/
+@mixin size($width: 5px, $height: 5px) {
+    height: $height;
+    width: $width;
+}
+
+@mixin square($size: 5px) {
+    @include size($size, $size);
+}

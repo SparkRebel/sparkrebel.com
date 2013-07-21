@@ -1,0 +1,107 @@
+{% extends '::base.newsletter.twig' %}
+
+{% block subject %}{% cache 'subject' ~ newsletter.id %}{{ newsletter.subject|raw }}{% endcache %}{% endblock %}
+
+{% block viewAsWebpage %}
+    {% if viewAsWebpage %}
+        {% include "PWNewsletterBundle:Newsletter:viewAsWebpage.html.twig" with {'log': log, 'tracking': tracking} %}
+    {% endif %}
+{% endblock %}
+
+{% block topType %}
+
+    {% cache 'topType' ~ newsletter.id %}
+        {% if newsletter.topType == 'curated' %}
+            <table border="0" cellpadding="10" cellspacing="0" width="100%" style="background: url({{ baseImageUri }}backgrounds/bg.nav.noise.png) repeat; border-radius: 4px;">
+                <tr>
+                    <td>
+                        <h2 style="color: #ed1a78; font-family: 'Arial Narrow'; line-height: 1.1; margin-bottom: 10px; text-transform: uppercase;">{{ newsletter.curatedTopTitle }}</h2>
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                                <td valign="top" width="274" style="padding-top: 20px;">
+                                    <a href="{{ newsletter.curatedTopLinkParsed(baseUri, tracking)|raw }}" title="{{ newsletter.curatedTopTitle }}">
+                                        <img src="{{ newsletter.curatedTopImage | version('large',true) }}" width="100%" style="border-radius: 4px;">
+                                    </a>
+                                </td>
+                                <td width="2%">
+                                    &nbsp;
+                                </td>
+                                <td valign="top" width="274" style="font-family: Arial; font-size: 16px;">
+                                    {{ newsletter.curatedTopContentParsed(baseUri, tracking)|raw }}
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        {% endif %}
+        {% if newsletter.topType == 'celebs' %}
+            {% render "PWUserBundle:Celebs:trendingFollowers" with {'tracking': tracking} %}
+        {% endif %}
+        {% if newsletter.topType == 'brands' %}
+            {% render "PWUserBundle:Brand:trendingFollowers" with {'tracking': tracking} %}
+        {% endif %}
+        {% if newsletter.topType == 'events' %}
+            {% include "PWBoardBundle:Default:newsletterEvent.html.twig" with {'collection': newsletter.eventsTopBoard, 'tracking': tracking} %}
+        {% endif %}
+    {% endcache %}
+{% endblock %}
+
+{% block trendingCollections %}
+    {% if newsletter.showTrendingCollections %}
+        {% cache 'trendingCollections' ~ newsletter.id %}
+            {% render "PWBoardBundle:Trending:trendingCollections" with {'tracking': tracking} %}
+        {% endcache %}
+    {% endif %}
+{% endblock %}
+
+{% block fromYourStream %}
+    {% if newsletter.showFromYourStream %}
+        {% render "PWPostBundle:Stream:newsletterUserStream" with {'user': user, 'tracking': tracking} %}
+    {% endif %}
+{% endblock %}
+
+{% block fromYourFavoriteBrands %}
+    {% if newsletter.showFromYourFavoriteBrands %}
+        {% render "PWPostBundle:Stream:newsletterBrandsStream" with {'user': user, 'tracking': tracking} %}
+    {% endif %}
+{% endblock %}
+
+{% block bottomType %}
+
+    {% cache 'bottomType' ~ newsletter.id %}
+        {% if newsletter.bottomType == 'curated' %}
+            <table border="0" cellpadding="10" cellspacing="0" width="100%" style="background: url({{ baseImageUri }}backgrounds/bg.nav.noise.png) repeat; border-radius: 4px;">
+                <tr>
+                    <td>
+                        <h2 style="color: #ed1a78; font-family: 'Arial Narrow'; line-height: 1.1; margin-bottom: 10px; text-transform: uppercase;">{{ newsletter.curatedBottomTitle }}</h2>
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                                <td valign="top" width="274" style="padding-top: 20px;">
+                                    <a href="{{ newsletter.curatedBottomLinkParsed(baseUri, tracking)|raw }}" title="{{ newsletter.curatedBottomTitle }}">
+                                        <img src="{{ newsletter.curatedBottomImage | version('large',true) }}" width="100%" style="border-radius: 4px;">                                        
+                                    </a>
+                                </td>
+                                <td width="2%">
+                                    &nbsp;
+                                </td>
+                                <td valign="top" width="274" style="font-family: Arial; font-size: 16px;">
+                                    {{ newsletter.curatedBottomContentParsed(baseUri, tracking)|raw }}
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        {% endif %}
+        {% if newsletter.bottomType == 'celebs' %}
+            {% render "PWUserBundle:Celebs:trendingFollowers" with {'tracking': tracking} %}
+        {% endif %}
+        {% if newsletter.bottomType == 'brands' %}
+            {% render "PWUserBundle:Brand:trendingFollowers" with {'tracking': tracking} %}
+        {% endif %}
+        {% if newsletter.bottomType == 'events' %}
+            {% include "PWBoardBundle:Default:newsletterEvent.html.twig" with {'collection': newsletter.eventsBottomBoard, 'tracking': tracking} %}
+        {% endif %}
+    {% endcache %}
+{% endblock %}

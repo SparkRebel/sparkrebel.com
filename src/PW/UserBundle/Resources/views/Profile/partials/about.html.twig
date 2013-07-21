@@ -1,0 +1,6 @@
+{% if user.about is defined and user.about is not empty %}
+    <div class="userAbout">
+        <h4>About</h4>
+        {{ user.about }}
+    </div>
+{% endif %}

@@ -1,0 +1,10 @@
+{% if res.standard is defined %}
+<h3>Sparks</h3>
+<ul class="sparksList">
+    {% for data in res.standard %}
+        <li>
+        {% include 'PWSearchBundle:Default:partials/postView.html.twig' %}
+        </li>
+    {% endfor %}
+</ul>
+{% endif %}

@@ -1,0 +1,1 @@
+db.users.update({isActive : null, 'type': {$in: ['brand', 'merchant']}}, {$set: {isActive: true}}, false, true);

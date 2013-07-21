@@ -1,0 +1,7 @@
+pw_job:
+    resource: "@PWJobBundle/Controller/"
+    type:     annotation
+
+pw_admin_job:
+    resource: "@PWUserBundle/Controller/Admin/"
+    type:     annotation

@@ -1,0 +1,11 @@
+{% block content %}
+
+{% for activity in activities %}
+    <li class="{{ activity.type }}">
+		{# this would be better {{ activity.html }} #}
+		{% set template = 'PWActivityBundle:Activity:partials/' ~ activity.type ~ '.html.twig' %}
+		{% include [ template, 'PWActivityBundle:Activity:partials/unknown.html.twig'] %}
+	</li>
+{% endfor %}
+
+{% endblock %}
